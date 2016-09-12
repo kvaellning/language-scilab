@@ -8,7 +8,7 @@
 
   {
     'comment': 'Scilab function definition'
-    'begin': '[ \\t]*\\b(function)\\s*'
+    'begin': '[ \\t]*\\b(function)\\s+'
     'end': '\\)(\\s*)'
     'name': 'meta.function.scilab'
 
@@ -33,7 +33,7 @@
 
       {
         'comment': 'return values'
-        'match': '[^/]{2,}\\='
+        'match': '[^/]{2,}(\\=)'
         'captures':
           '0':
             'patterns':[
@@ -43,11 +43,10 @@
                 'name':  'invalid.illegal.scilab'
               }
 
-              {  'include':  '#name_too_long'           }
-              {  'include':  '#constants'           }
-              {  'include':  '#invalid_parameter_signs' }
-              {  'include':  '#parameters_output'       }
-              {  'include':  '#parameters_separator'    }
+              { 'include': '#std_environment' }
+
+              { 'include': '#parameters_output'       }
+              { 'include': '#parameters_separator'    }
             ]
       }
 
@@ -208,16 +207,16 @@
 
       {
         'comment': 'invalid stuff'
-        'match': '([a-zA-Z_%\\$\\?!])(\\.)' +  # (definition that some variable character is standing in front of a dot)
+        'match': '([\\w%\\$\\?!#]*)(\\.)' +  # (definition that some variable character is standing in front of a dot)
                 '(?:'                       +
-                  '(\\d)|'                  + # trailing dot and number afterwards (struct error)
+                  '(?=\\d)|'                + # trailing dot and number afterwards (struct error)
                   '(?=\\s|\\Z)'             + # lonely trailing dot
                 ')'
         'captures':
           '1':
             'name': 'variable.other.object.scilab'
           '2':
-            'name': 'keyword.operator.invalid.illegal.scilab'
+            'name': 'punctuation.separator.object.invalid.illegal.scilab'
       }
     ]
 
@@ -512,7 +511,7 @@
   'line_comment':
     {
       'match': '//.*\\Z'
-      'name': 'comment.line.comment.scilab'
+      'name': 'comment.line.double-slash.scilab'
     }
 
   'continuation_mark':
