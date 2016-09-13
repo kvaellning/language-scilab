@@ -4,6 +4,7 @@
     'autoIndentOnPaste': true
     'softTabs': true
     'tabLength': 3
+    'showIndentGuide': true
     'commentStart': '// '
     'increaseIndentPattern': '^\\s*(function|if|else|elseif|then|select|case|try|catch|for|while)\\b(?!.*end).*$'
     'decreaseIndentPattern': '^\\s*(case|catch|elseif|else|then|end|endfunction)\\b.*\\s*$'
