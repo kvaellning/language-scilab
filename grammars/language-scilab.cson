@@ -476,18 +476,18 @@
     {
       'comment': 'invalid operator combinations'
       'match':
-        '[&\\|><~\\+\\-\\\\:]{2,}'     +  # match invalid doubling
-        '(?<![<>\\-]|&~)'           +  # exceptions
-        '|(?:\\=|\\*){3,}'          +  # match from 3 occurences
-        '|\\.{1,}[&\\|><~]|\\.{2,}[\\+\\-\\\\]'          +  # leading dot(s) (.)
-        '|(?:'                                +  # leading equal(=) group
-          '\\={1,}[&\\|><~\\+\\*/\\\\:;]'              +  # standard for all but minus (-)
-          '|(?:\\=|[\\=]{3,})\\-'                   +  # special case if minus, since a ==-1 is a valid statement
-        ')'                                  +  # NOTE: SPECIAL CASE SHOULD BE CHANGED IF CONDITIONALS ARE TREATED AS OWN SCOPE
-        '|[&\\|><~]\\.{1,}|[\\+\\-\\*/\\\\]\\.{1,}\\D'      +  # trailing dot (.)
-        '|[&\\|\\+\\-\\*/\\.\\\\]\\={1,}|[<~]\\={2,}'      +  # trailing equal (=)
+        '[&\\|><~\\+\\-\\\\:]{2,}'      +  # match invalid doubling
+        '(?<![<>\\-]|&~)'               +  # exceptions
+        '|(?:\\=|\\*){3,}'              +  # match from 3 occurences
+        '|\\.{1,}[&\\|><~]|\\.{2,}[\\+\\-\\\\]' +  # leading dot(s) (.)
+        '|(?:'                                  +  # leading equal(=) group
+          '\\={1,}[&\\|><~\\*/\\\\:;]'          +  # standard for all but trailing minus (-) and plus (+)
+          '|[\\=]{3,}(\\+|\\-)'                 +  # special cases for minus and plus, since the following operator is interpreted as (polarity) sign of a number
+        ')'                                     +  # NOTE: SPECIAL CASE SHOULD BE CHANGED IF CONDITIONALS ARE TREATED AS OWN SCOPE
+        '|[&\\|><~]\\.{1,}|[\\+\\-\\*/\\\\]\\.{1,}\\D'  +  # trailing dot (.)
+        '|[&\\|\\+\\-\\*/\\.\\\\]\\={1,}|[<~]\\={2,}'   +  # trailing equal (=)
         '|[\\+\\-\\*/\\\\]{2,}(?<!\\*\\*)'              +  # operator mixing
-        '|[!\\=\\?]{2,}(?<!\\=\\=)'                    # not available operator combinations
+        '|[!\\=\\?]{2,}(?<!\\=\\=)'                        # not available operator combinations
       'name': 'keyword.operator.invalid.illegal.scilab'
     }
 
