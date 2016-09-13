@@ -59,7 +59,7 @@
         'patterns':[
           {  'include':  '#line_comment'            }
           {  'include':  '#name_too_long'           }
-          {  'include':  '#constants'           }
+          {  'include':  '#constants'               }
           {  'include':  '#continuation_mark'       }
           {  'include':  '#invalid_parameter_signs' }
           {  'include':  '#parameters_input'        }
@@ -189,10 +189,8 @@
     'patterns':[
       {
         'comment': 'struct element foo.foo'
-        'match': '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)(?=\\.[a-zA-Z_%\\$\\?!#])'
-        'captures':
-          '1':
-            'name': 'variable.other.object.scilab'
+        'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\.[a-zA-Z_%\\$\\?!#])'
+        'name': 'variable.other.object.scilab'
       }
 
       {
@@ -230,7 +228,8 @@
         '1':
           'name':  'variable.assignment.scilab'
           'patterns':[
-              {  'include':  '#struct_tlist' }
+              { 'include': '#struct_tlist' }
+              { 'include': '#constants'    }
           ]
         '2':
           'name':  'variable.assignment.scilab'
