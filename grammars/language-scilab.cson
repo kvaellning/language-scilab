@@ -33,7 +33,7 @@
 
       {
         'comment': 'return values'
-        'match': '[^/]{2,}(\\=)'
+        'match': '[^/]{2,}\\s*\\='
         'captures':
           '0':
             'patterns':[
@@ -338,10 +338,10 @@
   'constants_scilab':
     {
       'comment': 'Scilab built-in constants'
-      'match': '\\B(' +
-              '%(pi|e|i|eps|inf|nan|t|T|f|F|s|z)' + # constants which yield values
-            ')\\b'    +
-            '|\\B(\\[\\])\\B'                       # the empty matrix []
+      'match':  '\\B(' +
+                  '%(pi|e|i|eps|inf|nan|t|T|f|F|s|z)|SCI' + # constants which yield values
+                ')\\b'    +
+                '|\\B(\\[\\])\\B'                           # the empty matrix []
       'name': 'support.constant.scilab'
     }
 
