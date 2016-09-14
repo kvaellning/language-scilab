@@ -25,7 +25,7 @@
     'patterns':[
       {  'include':  '#line_comment'      }
       {  'include':  '#name_too_long'     }
-      {  'include':  '#constants'     }
+      {  'include':  '#constants'         }
       {  'include':  '#continuation_mark' }
 
       {  'include':  '#invalid_parameter_signs' }
@@ -42,11 +42,34 @@
                 'match': '[\\(\\)\\{\\}]'
                 'name':  'invalid.illegal.scilab'
               }
+              {
+                'match': '\\['
+                'name': 'punctuation.section.brackets.begin.scilab'
+              }
+
+              # structs and tlists are invalid here
+              {
+                'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\.[a-zA-Z_%\\$\\?!#])'
+                'name': 'variable.other.object.invalid.illegal.scilab'
+              }
+              {
+                'match': '(\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
+                'captures':
+                  '1':
+                    'name': 'punctuation.accessor.invalid.illegal.scilab'
+                  '2':
+                    'name': 'variable.other.object.invalid.illegal.scilab'
+              }
 
               { 'include': '#std_environment' }
 
               { 'include': '#parameters_output'       }
               { 'include': '#parameters_separator'    }
+
+              {
+                'match': '\\]'
+                'name': 'punctuation.section.brackets.end.scilab'
+              }
             ]
       }
 
@@ -77,14 +100,14 @@
 
   {
     'comment': 'variable assignment'
-    'match': '(?:' +
-            '(?:' +
-              '\\.?'                    + # leading dot for last element of a struct or tlist
-              '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*' + # variable name
-              '(?:\\s*\\(.*\\))?'            + # optional brackets
-              '|\\[.*\\]'                 + # everything in square brackets
-            ')'  +
-          ')\\s*(?![\\=]{2,})(?=\\=)'          #  ...and only allow if not more than 2 equal signs are present
+    'match': '(?:'      +
+                '(?:'   +
+                  '\\.?'                                + # leading dot for last element of a struct or tlist
+                  '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'   + # variable name
+                  '(?:\\s*\\(.*\\))?'                   + # optional brackets
+                  '|\\[.*\\]'                           + # everything in square brackets
+                ')'  +
+              ')\\s*(?![\\=]{2,})(?=\\=)'                 #  ...and only allow if not more than 2 equal signs are present
     'captures':
       '0':
         'patterns':[
@@ -198,7 +221,7 @@
         'match': '(\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
         'captures':
           '1':
-            'name': 'punctuation.separator.object.scilab'
+            'name': 'punctuation.accessor.scilab'
           '2':
             'name': 'variable.other.object.scilab'
       }
@@ -214,7 +237,7 @@
           '1':
             'name': 'variable.other.object.scilab'
           '2':
-            'name': 'punctuation.separator.object.invalid.illegal.scilab'
+            'name': 'punctuation.accessor.invalid.illegal.scilab'
       }
     ]
 
