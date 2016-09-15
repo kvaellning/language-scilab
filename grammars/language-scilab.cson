@@ -101,7 +101,7 @@
                 '(?:'   +
                   '\\.?'                                + # leading dot for last element of a struct or tlist
                   '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'   + # variable name
-                  '(?:\\s*\\(.*\\))?'                   + # optional brackets
+                  '(?:\\s*\\([^;]*\\))?'                + # optional brackets
                   '|\\[.*\\]'                           + # everything in square brackets
                 ')'  +
               ')\\s*(?![\\=]{2,})(?=\\=)'                 #  ...and only allow if not more than 2 equal signs are present
