@@ -1,9 +1,9 @@
-describe "Scilab MAT2 grammar", ->
+describe "Scilab grammar", ->
   grammar = null
 
   beforeEach ->
     waitsForPromise ->
-      atom.packages.activatePackage("language-scilab-MAT2")
+      atom.packages.activatePackage("language-scilab")
 
     runs ->
       grammar = atom.grammars.grammarForScopeName("source.scilab")
@@ -393,6 +393,41 @@ describe "Scilab MAT2 grammar", ->
     expect(tokens[5][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.section.function.begin.scilab']
 
     expect(tokens[5][8]).not.toBeDefined()
+
+  it 'checks assignments', ->
+    tokens = grammar.tokenizeLines('foo =struct(); //foobar() = 1;')
+
+    # foo = struct(); //foobar = 1;
+    expect(tokens[0][0].value).toBe 'foo'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'variable.assignment.scilab']
+
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][2].value).toBe '='
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'keyword.operator.assignment.scilab']
+
+    expect(tokens[0][3].value).toBe 'struct'
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'support.function.builtin.scilab']
+
+    expect(tokens[0][4].value).toBe '()'
+    expect(tokens[0][4].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][5].value).toBe ';'
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'punctuation.terminator.scilab']
+
+    expect(tokens[0][6].value).toBe ' '
+    expect(tokens[0][6].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][7].value).toBe '//foobar() = 1;'
+    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'comment.line.double-slash.scilab']
+
+    expect(tokens[0][8]).not.toBeDefined()
+    expect(tokens[0][9]).not.toBeDefined()
+    expect(tokens[0][10]).not.toBeDefined()
+    expect(tokens[0][11]).not.toBeDefined()
+    expect(tokens[0][12]).not.toBeDefined()
+    expect(tokens[0][13]).not.toBeDefined()
 
   it "checks structs or tlists", ->
     tokens = grammar.tokenizeLines('foo.bar\nfoo2.bar2\nfoo.bar.baz\n' + # valid
