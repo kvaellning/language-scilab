@@ -23,6 +23,7 @@ As for the current version (0.3.2) which is based on [language-scilab 0.1.0](htt
    - *wherami* compatible line numbering
    - [GIT](https://git-scm.com/) support
    - matrix scope
+   - If necessary, an [autocomplete-plus]() provider.
 
 ## Changelog
    - #### 0.3.2
