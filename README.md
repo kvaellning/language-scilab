@@ -14,36 +14,49 @@ As for the current version (0.3.2) which is based on [language-scilab 0.1.0](htt
    - and many more (and to come!)
 
 ## Known issues
-   - Scilab functions might be missing
-   - Definition of <code>function</code> might lead to errors if the continuation mark <code>...</code> is used for/after return values
-   - In general some problems with the continuation mark (e.g. <code>|...</code> will be marked as error)
-   - __Performance is not so great.__ In near future, the regular expression have to be revised.
+  - Scilab functions might be missing
+  - Definition of `function` might lead to errors if the continuation mark `...` is used for/after return values
+  - Problems with `function` without input parameter brackets `()`
+  - In general some problems with the continuation mark (e.g. `|...` will be marked as error)
+  - __Performance of the regular expressions seems not so great.__ In near future, the regular expression have to be revised.
 
 ## Planned features
-   - *wherami* compatible line numbering
-   - [GIT](https://git-scm.com/) support
-   - matrix scope
-   - If necessary, an [autocomplete-plus]() provider.
+  - *wherami* compatible line numbering
+  - [GIT](https://git-scm.com/) support
+  - matrix scope
+  - If necessary, an [autocomplete-plus]() provider.
 
 ## Changelog
-   - #### 0.3.2
-      - fixed error if two or more variable assignments occur
-      - fixed error for nested struct/tlist extraction (e.g. <code>foo(bar)(foo)</code>)
-      - fixed error for vector assignments by introducing a global vector definition
-      - added missing symbol <code>!</code> to all variable/function names
+  - #### 0.3.3
+    - fixed problems related to `=-` and `=+`
+    - fixed indentation for scopes
+    - fixed constants assignments
+    - adds (some) missing Scilab functions
+    - adds struct/tlist accessor recognization (foo('a'), foo(1)('a') etc.)
+    - includes spec for Unit-Tests (still incomplete)
 
-   - #### 0.3.1
-      - fixed errors for leading and trailing dot (<code>.</code>) operator
-      - fixed error in the variable assignment
-      - fixed error in the conditions (a ==-1 etc.)
+  - #### 0.3.2
+    - fixed error if two or more variable assignments occur
+    - fixed error for nested struct/tlist extraction (e.g. `foo(bar)(foo)`)
+    - fixed error for vector assignments by introducing a global vector definition
+    - added missing symbols `! #` to all variable/function names
+    - fixed indent pattern for automatic indentation
+    - fixed vector matching problems
+    - added coffeelint ignores
+    - added punctuation modifier for `structs` and `tlists`
 
-   - #### 0.3.0
-      - added invalid operators, operator combinations etc.
-      - added snippets
-      - added support for function line-break (currently input values only)
-      - added Scilab grammar (might be not all)
-      - added constants such as %pi and empty matrix
-      - added keywords, operators etc.
+  - #### 0.3.1
+    - fixed errors for leading and trailing dot (`.`) operator
+    - fixed error in the variable assignment
+    - fixed error in the conditions (a ==-1 etc.)
+
+  - #### 0.3.0
+    - added invalid operators, operator combinations etc.
+    - added snippets
+    - added support for function line-break (currently input values only)
+    - added Scilab grammar (might be not all)
+    - added constants such as %pi and empty matrix
+    - added keywords, operators etc.
 
    - #### 0.2.2
       - Snippets

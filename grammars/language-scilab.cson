@@ -135,13 +135,17 @@
 
         { 'include':  '#constants_matrix_vector' }
 
-        { 'include':  '#struct_tlist' }
         { 'include':  '#constants'    }
         { 'include':  '#keywords'     }
 
-        { 'include':  '#strings'  }
+        { 'include':  'source.scilab.predefined-functions#_scilab_functions'  }
 
-        { 'include':  'source.scilab.predefined-functions#_scilab_functions' }
+        { 'include': '#statement_terminator' }
+
+        { 'include':  '#struct_tlist' }
+        #{ 'include':  '#parenthesis_accessor' }
+        { 'include':  '#strings'  }
+        #{ 'include': '#accessor_parenthesis' }
       ]
     }
   # ------------------------------
@@ -207,9 +211,20 @@
 
   'struct_tlist':
     'patterns':[
+      # ----------------------------------------------
+      # dot (.)-accessor patters
+      # ----------------------------------------------
       {
         'comment': 'struct element foo.foo'
-        'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\.[a-zA-Z_%\\$\\?!#])'
+        'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  +
+                  '(?=' +
+                    '(?<self>'  +
+                      '\\(' +
+                      '(?:[^\\(\\);]+|\\g<self>)+?' +
+                      '\\)' +
+                      ')?'  +
+                    '(?:\\.[a-zA-Z_%\\$\\?!#])' +
+                  ')'
         'name': 'variable.other.object.scilab'
       }
 
@@ -222,13 +237,52 @@
           '2':
             'name': 'variable.other.object.scilab'
       }
+      # ----------------------------------------------
+      # parenthesis ()-accessor patterns
+      # ----------------------------------------------
+
+      {
+        'comment':  'Automation object function accessor foo(\'bar\', ...)'
+        'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  + # valid element character
+                 '(?='+
+                    '\\s*\\(\\s*' +
+                      '(?:' +
+                        '(?:\'.+?\')' +
+                        '|(?:".+?")'  +
+                      ')'   +
+                      '\\s*(?:,.+)?' +
+                      '\\)' +
+                      '(?!\\s*\\()'+
+                  ')'
+        'name': 'variable.other.object.automation.scilab'
+      }
+
+      {
+        'comment': 'scilab struct/tlist accessors foo(1)(a)(b), foo(a(1)(a)) etc. ...'
+        # Thanks to LukStorms from StackOverflow for the base pattern
+        # see: http://stackoverflow.com/questions/39540931/atom-language-definition-using-nested-regex-patterns/39544714#39544714
+        'match':  '\\w+'  +
+                  '(?='   +
+                    '(?<recursion>' +
+                      '\\('   +
+                      '(?:[^\\(\\)\\[\\];]+|\\g<recursion>)*?' + # without recursion, this thing will only match the innermost occurence of an extraction
+                      '\\)'   +
+                    ')\\s*' +
+                    '(?:' +
+                      '(?:\\(.*?\\))' +
+                      '|(?:.\\w+)'    +
+                    ')' +
+                  ')'
+
+        'name': 'variable.other.object.scilab'
+      }
 
       {
         'comment': 'invalid stuff'
-        'match': '([\\w%\\$\\?!#]*)(\\.)' +  # (definition that some variable character is standing in front of a dot)
-                '(?:'                       +
-                  '(?=\\d)|'                + # trailing dot and number afterwards (struct error)
-                  '(?=\\s|\\Z)'             + # lonely trailing dot
+        'match': '([\\w%\\$\\?!#]+)(\\.)' +  # (definition that some variable character is standing in front of a dot)
+                '(?:'                     +
+                  '(?=\\d)|'              + # trailing dot and number afterwards (struct error)
+                  '(?=\\s|\\Z)'           + # lonely trailing dot
                 ')'
         'captures':
           '1':
@@ -237,6 +291,34 @@
             'name': 'punctuation.accessor.invalid.illegal.scilab'
       }
     ]
+
+  'parenthesis_accessor':
+    {
+      'comment': 'describes a (nested) accessor using parenthesis'
+      'begin':  '(?:'  +
+                  #'(?:(?<=\\))\\s*)'                        + # closing parenthesis beforehand
+                  '(?:[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'  + # character beforehand
+                ')' +
+               '(\\()'
+      'end': '(?>(\\)))'#'\\s*([\\w%\\$\\?!#])?'
+
+      'name': 'banana'
+
+      'beginCaptures':
+        '1':
+          'name': 'punctuation.section.parens.begin.scilab'
+      'endCaptures':
+        '1':
+          'name': 'punctuation.section.parens.end.scilab'
+        '2':
+          'name': 'banana.invalid.illegal.scilab'
+
+      'patterns':[
+        { 'include': '#struct_tlist'}
+        { 'include': '#std_environment'  }
+      ]
+
+    }
 
   'assignment_element_rhs':
     {
@@ -557,4 +639,27 @@
       'comment': 'continuation mark'
       'match': '\\.\\.\\.\\s*$'
       'name': 'punctuation.separator.continuation.scilab'
+    }
+
+  'statement_terminator':
+    {
+      'comment': 'indicates a terminated statement, even in line'
+      'match': ';'
+      'name': 'punctuation.terminator.scilab'
+    }
+
+  'accessor_parenthesis':
+    {
+      'comment': 'parenthesis (), which are used to access elements'
+      'patterns':
+        [
+          {
+            'match':  '\\('
+            'name':   'punctuation.accessor.parens.begin.scilab'
+          }
+          {
+            'match':  '\\)'
+            'name':   'punctuation.accessor.parens.end.scilab'
+          }
+        ]
     }
