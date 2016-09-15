@@ -24,9 +24,6 @@
 
     'patterns':[
       {  'include':  '#line_comment'      }
-      {  'include':  '#name_too_long'     }
-      {  'include':  '#constants'         }
-      {  'include':  '#continuation_mark' }
 
       {  'include':  '#invalid_parameter_signs' }
       {  'include':  '#invalid_signs'           }
@@ -46,21 +43,13 @@
                 'match': '\\['
                 'name': 'punctuation.section.brackets.begin.scilab'
               }
-
-              # structs and tlists are invalid here
               {
-                'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\.[a-zA-Z_%\\$\\?!#])'
-                'name': 'variable.other.object.invalid.illegal.scilab'
-              }
-              {
-                'match': '(\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
-                'captures':
-                  '1':
-                    'name': 'punctuation.accessor.invalid.illegal.scilab'
-                  '2':
-                    'name': 'variable.other.object.invalid.illegal.scilab'
+                'comment': 'numbers only are clearly illegal'
+                'match': '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\[|,)\\d+'
+                'name': 'variable.parameter.output.invalid.illegal.scilab'
               }
 
+              { 'include': '#invalid_parameter_struct-tlist' }
               { 'include': '#std_environment' }
 
               { 'include': '#parameters_output'       }
@@ -79,14 +68,22 @@
         'comment': 'input values'
         'begin': '\\('
         'end': '(?=\\))'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.section.parens.begin.scilab'
+
         'patterns':[
-          {  'include':  '#line_comment'            }
-          {  'include':  '#name_too_long'           }
-          {  'include':  '#constants'               }
-          {  'include':  '#continuation_mark'       }
-          {  'include':  '#invalid_parameter_signs' }
-          {  'include':  '#parameters_input'        }
-          {  'include':  '#parameters_separator'    }
+          {
+            'comment': 'numbers only are clearly illegal'
+            'match': '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\(|,)\\d+'
+            'name': 'variable.parameter.input.invalid.illegal.scilab'
+          }
+
+          { 'include': '#invalid_parameter_struct-tlist' }
+          { 'include': '#std_environment' }
+
+          { 'include':  '#parameters_input'     }
+          { 'include':  '#parameters_separator' }
         ]
       }
     ]
@@ -525,6 +522,25 @@
     {
       'match': '[^\\w!\\?\"\\$%\\&/\\(\\)\\=\\[\\]\\\\+\\-\\*\\^~\'#<>\\|\\s:;,\\.]'
       'name': 'invalid.illegal.scilab'
+    }
+
+  'invalid_parameter_struct-tlist':
+    {
+      'patterns':[
+        # structs and tlists are invalid here
+        {
+          'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\.[a-zA-Z_%\\$\\?!#])'
+          'name': 'variable.other.object.invalid.illegal.scilab'
+        }
+        {
+          'match': '(\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
+          'captures':
+            '1':
+              'name': 'punctuation.accessor.invalid.illegal.scilab'
+            '2':
+              'name': 'variable.other.object.invalid.illegal.scilab'
+        }
+      ]
     }
 
   # ------------------------------
