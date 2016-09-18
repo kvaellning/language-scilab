@@ -11,28 +11,7 @@ describe "Scilab grammar", ->
   it "parses the grammar", ->
     expect(grammar).toBeDefined()
     expect(grammar.scopeName).toBe "source.scilab"
-
-  it "checks the Script-Header", ->
-    tokens = grammar.tokenizeLines('/// $BEGIN ScriptHeader\n/// Type\n/// $END ScriptHeader')
-
-    # Line 0
-    expect(tokens[0][0].value).toBe '/// $BEGIN ScriptHeader'
-    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'comment.block.scriptheader.scilab', 'comment.block.scriptheader.begin.scilab']
-
-    expect(tokens[0][1]).not.toBeDefined()
-
-    # Line 1
-    expect(tokens[1][0].value).toBe '/// Type'
-    expect(tokens[1][0].scopes).toEqual ['source.scilab', 'comment.block.scriptheader.scilab']
-
-    expect(tokens[1][1]).not.toBeDefined()
-
-    # Line 2
-    expect(tokens[2][0].value).toBe '/// $END ScriptHeader'
-    expect(tokens[2][0].scopes).toEqual ['source.scilab', 'comment.block.scriptheader.scilab', 'comment.block.scriptheader.end.scilab']
-
-    expect(tokens[2][1]).not.toBeDefined()
-
+    
   it "checks comments", ->
     tokens = grammar.tokenizeLines('// comment\n\n/// comment')
 
@@ -429,7 +408,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][12]).not.toBeDefined()
     expect(tokens[0][13]).not.toBeDefined()
 
-  it "checks structs or tlists", ->
+  it "checks structs or tlists (simple access)", ->
     tokens = grammar.tokenizeLines('foo.bar\nfoo2.bar2\nfoo.bar.baz\n' + # valid
                                    'foo.123\nfoo. ')
 
@@ -499,6 +478,23 @@ describe "Scilab grammar", ->
 
     expect(tokens[4][3]).not.toBeDefined()
 
+  it "Checks structs / tlists (using parenthesis)", ->
+    tokens = grammar.tokenizeLines('foo(\'foo\')\n' +
+                                   'foo(\'a\',b,c)\n')
+
+  it "Checks structs / tlists ( parenthesis)", ->
+    tokens = grammar.tokenizeLines('foo(1)(a)\n'    +
+                                   'foo(\'foo\')(1)(1)\n' +
+                                   'foo(foo(a))(a)\n' +
+                                   'foo(a.b)(a)\n'  +
+                                   'foo(a.b).foo\n' +
+                                   'foo( a(foo)(a(foo).b) )\n'  +
+                                   'foo( foo(1)(2)(3)(4))')
+
+  it "Checks invalid structs / tlists", ->
+    tokens = grammar.tokenizeLines('.foo\n'
+                                   'foo.1\n'
+                                   '.foo(1).foo')
   it "tokenizes some invalid signs", ->
     tokens = grammar.tokenizeLines('!\n?\n"\n$\n%\n&\n\\\n/\n(\n)\n[\n]\n=\n+\n-\n*\n^\n~\n\'\n#\n<\n>\n|\n \n:\n;\n,\n.\na\n0\n_')
 

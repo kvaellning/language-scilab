@@ -97,19 +97,34 @@
 
   {
     'comment': 'variable assignment'
-    'match': '(?:'      +
-                '(?:'   +
-                  '\\.?'                                + # leading dot for last element of a struct or tlist
-                  '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'   + # variable name
-                  '(?:\\s*\\([^;]*\\))?'                + # optional brackets
-                  '|\\[.*\\]'                           + # everything in square brackets
-                ')'  +
-              ')\\s*(?![\\=]{2,})(?=\\=)'                 #  ...and only allow if not more than 2 equal signs are present
+    'match':  '(\\w+)?\\s*' +
+              '(?<paren>' +
+                '(\\()'  +
+                  '(?:(?:[^\\(\\)]+|\\g<parens>)+?)' +
+                '(\\))'  +
+              ')?'  +
+              '(?:' +
+                '(?:(\\.)\\s)'  +
+                '|(\\.)'  +
+              ')?' +
+              '(?![\\=]{2,})(?=\\=)'                 #  ...and only allow if not more than 2 equal signs are present
+
+    #'name':  'variable.assignment.scilab'
     'captures':
-      '0':
-        'patterns':[
-          {  'include':  '#assignment_element_rhs'  }
-        ]
+      # '0':
+      #   'patterns':[
+      #     { 'include': '#std_environment' }
+      #   ]
+      '1':
+        'name': 'variable.assignment.scilab'
+      '2':
+        'name': 'variable.assignment.begin.scilab'
+      '3':
+        'name': 'variable.assignment.end.scilab'
+      '4':
+        'name': 'punctuation.accessor.invalid.illegal.scilab'
+      '4':
+        'name': 'punctuation.accessor.scilab'
   }
 
   { 'include':  '#vector_colon'  }
@@ -143,9 +158,8 @@
         { 'include': '#statement_terminator' }
 
         { 'include':  '#struct_tlist' }
-        #{ 'include':  '#parenthesis_accessor' }
+        # { 'include':  '#parenthesis_accessor' }
         { 'include':  '#strings'  }
-        #{ 'include': '#accessor_parenthesis' }
       ]
     }
   # ------------------------------
@@ -230,11 +244,17 @@
 
       {
         'comment': 'struct sub-element foo.FOO'
-        'match': '(?<=[\\w%\\$\\?!#\\)])(\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
+        'match':  '(?:' +
+                    '(?:(?<![\\w%\\$\\?!#\\)])(\\.))'  +  # invalid dot in front
+                    '|(\\.)'  +
+                  ')' +
+                  '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
         'captures':
           '1':
-            'name': 'punctuation.accessor.scilab'
+            'name': 'punctuation.accessor.invalid.illegal.scilab'
           '2':
+            'name': 'punctuation.accessor.scilab'
+          '3':
             'name': 'variable.other.object.scilab'
       }
       # ----------------------------------------------
@@ -263,6 +283,7 @@
         # see: http://stackoverflow.com/questions/39540931/atom-language-definition-using-nested-regex-patterns/39544714#39544714
         'match':  '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  +
                   '(?='   +
+                    '\\s*'  +
                     '(?<self>'  +
                       '\\('   +
                       '(?:'   +
@@ -271,7 +292,7 @@
                       ')+?' +
                       '\\)' +
                     ')\\s*' +
-                    '(?:\\((?:\\g<chars>[^;])+?\\))'  +
+                    '(?:\\((?:\\g<chars>[^;])+?\\))'  + # ...and of course, foo('foo')(1) is a total valid extraction...
                   ')'
 
         'name': 'variable.other.object.scilab'
@@ -279,11 +300,12 @@
 
       {
         'comment': 'invalid stuff'
-        'match': '([\\w%\\$\\?!#]+)(\\.)' +  # (definition that some variable character is standing in front of a dot)
-                '(?:'                     +
-                  '(?=\\d)|'              + # trailing dot and number afterwards (struct error)
-                  '(?=\\s|\\Z)'           + # lonely trailing dot
-                ')'
+        'match':  '([\\w%\\$\\?!#]+)(\\.)'  +  # (definition that some variable character is standing in front of a dot)
+                  '(?:'                     +
+                    '(?=\\d)|'              + # trailing dot and number afterwards (struct error)
+                    '(?=\\s|\\Z)'           + # lonely trailing dot
+                  ')'
+
         'captures':
           '1':
             'name': 'variable.other.object.scilab'
@@ -435,8 +457,8 @@
   'constants':
     {
       'patterns':[
-        {  'include':  '#constants_scilab'        }
-        {  'include':  '#constants_matrix_vector' }
+        { 'include': '#constants_scilab'              }
+        { 'include': '#constants_matrix_vector'       }
       ]
     }
 
@@ -646,20 +668,4 @@
       'comment': 'indicates a terminated statement, even in line'
       'match': ';'
       'name': 'punctuation.terminator.scilab'
-    }
-
-  'accessor_parenthesis':
-    {
-      'comment': 'parenthesis (), which are used to access elements'
-      'patterns':
-        [
-          {
-            'match':  '\\('
-            'name':   'punctuation.accessor.parens.begin.scilab'
-          }
-          {
-            'match':  '\\)'
-            'name':   'punctuation.accessor.parens.end.scilab'
-          }
-        ]
     }
