@@ -261,17 +261,17 @@
         'comment': 'scilab struct/tlist accessors foo(1)(a)(b), foo(a(1)(a)) etc. ...'
         # Thanks to LukStorms from StackOverflow for the base pattern
         # see: http://stackoverflow.com/questions/39540931/atom-language-definition-using-nested-regex-patterns/39544714#39544714
-        'match':  '\\w+'  +
+        'match':  '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  +
                   '(?='   +
-                    '(?<recursion>' +
+                    '(?<self>'  +
                       '\\('   +
-                      '(?:[^\\(\\)\\[\\];]+|\\g<recursion>)*?' + # without recursion, this thing will only match the innermost occurence of an extraction
-                      '\\)'   +
+                      '(?:'   +
+                        '(?:(?<chars>(?!//))[^\\(\\);])+' + # unfortunatly, (?!//) must examined after consumation of a single sign. This prevents matching based on parenthesis in the comments.
+                        '|\\g<self>'  + # without recursion, this thing will only match the innermost occurence of an extraction
+                      ')+?' +
+                      '\\)' +
                     ')\\s*' +
-                    '(?:' +
-                      '(?:\\(.*?\\))' +
-                      '|(?:.\\w+)'    +
-                    ')' +
+                    '(?:\\((?:\\g<chars>[^;])+?\\))'  +
                   ')'
 
         'name': 'variable.other.object.scilab'
