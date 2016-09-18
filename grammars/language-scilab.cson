@@ -230,7 +230,7 @@
 
       {
         'comment': 'struct sub-element foo.FOO'
-        'match': '(\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
+        'match': '(?<=[\\w%\\$\\?!#\\)])(\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
         'captures':
           '1':
             'name': 'punctuation.accessor.scilab'
