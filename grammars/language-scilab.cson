@@ -196,7 +196,16 @@
       # ----------------------------------------------
       {
         'comment': 'struct element foo.foo'
-        'match': '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)(\\(.*?\\))?(?=\\.[a-zA-Z_%\\$\\?!#])'
+        'match':  '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)' + # characters at begin
+                  '(?>\\(([^\\=;]+)\\))?'               + # all what is inside brackets
+                  '(?=\\.[a-zA-Z_%\\$\\?!#])'             # with trailing dot and character
+
+        # example for the second line (all inside of brackets):
+        # 1. Consume every valid character until reaching of an opening parenthesis
+        # 2. Avoid backtracking and match the rest of the line (or break if = or ; is reached)
+        # 3. Backtrack to the first available closing parenthesis
+        # 4. Check against the dot
+
         'captures':
           '1':
             'name': 'variable.other.object.scilab'
@@ -222,35 +231,37 @@
             'name': 'variable.other.object.scilab'
       }
 
-      # ----------------------------------------------
-      # simple ()-accessor patterns
-      # ----------------------------------------------
-      {
-        'comment':  'Automation object function accessor foo(\'bar\', ...)'
-        'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  + # valid element character
-                  '(?='+
-                     '\\s*\\(\\s*' +
-                       '\'.+?\'' +
+      # --------------------------------------------------------------
+      # Automation access is currently not supported.
+      # Actually, this is too unspecific, since this might also be a "normal" function call
+      # (which it actually really is...). More interpretation of the code needed beforehand.
+      # --------------------------------------------------------------
 
-                       '\\s*(?:,.+)?' +
-                       '\\)'+
-                       '(?!\\s*\\()'+
-                   ')'
-        'name': 'variable.other.object.automation.scilab'
-       }
+      # --------------------------------------------------------------
+      # Deep recognition of structs using ()()-extraction is currently not supported.
+      # The code below will work, but it will also eat up performance excessivly.
+      # Feature needs re-evaluation.
 
-       {
-        'comment': 'struct element elementary accessor foo(\'bar\')'
-        'match':  '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  + # valid element character
-                  '(?=' +
-                     '\\s*\\(\\s*'   + # await filled parenthesis with string
-                       '(?:\'.+?\')' + # either '...'
-                       '|(?:".+?")'  + # or     "..."
-                       '\\s*\\)'     +
-                     '(?!\\s*\\()'   + # no trailing opening parenthesis
-                   ')'
-        'name': 'variable.other.object.scilab'
-      }
+      # {
+      #   'comment': 'scilab struct/tlist accessors foo(1)(a)(b), foo(a(1)(a)) etc. ...'
+      #   # Thanks to LukStorms from StackOverflow for the base pattern
+      #   # see: http://stackoverflow.com/questions/39540931/atom-language-definition-using-nested-regex-patterns/39544714#39544714
+      #   'match':  '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  +
+      #             '(?='   +
+      #               '\\s*'  +
+      #               '(?<self>'  +
+      #                 '\\('   +
+      #                 '(?:'   +
+      #                   '(?:(?<chars>(?!//))[^\\(\\);])+' + # unfortunatly, (?!//) must examined after consumation of a single sign. This prevents matching based on parenthesis in the comments.
+      #                   '|\\g<self>'  + # without recursion, this thing will only match the innermost occurence of an extraction
+      #                 ')+?' +
+      #                 '\\)' +
+      #               ')\\s*' +
+      #               '(?:\\((?:\\g<chars>[^;])+?\\))'  + # ...and of course, foo('foo')(1) is a total valid extraction...
+      #             ')'
+      #
+      #   'name': 'variable.other.object.scilab'
+      # }
 
       {
         'comment': 'invalid stuff'
