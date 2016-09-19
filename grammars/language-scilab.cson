@@ -96,7 +96,7 @@
 
   {
     'comment': 'variable assignment'
-    'match':  '(?!\\s*//)'  + # leading slashes notate comments
+    'match':  '(?![^/]*//)' + # leading slashes notate comments
               '(?:'     +
                 '(?:\\['  + # option one: variables enclosed by brackets
                 '(?<chars>' +
@@ -251,7 +251,7 @@
   'struct_tlist':
     'patterns':[
       # ----------------------------------------------
-      # dot (.)-accessor patters
+      # dot (.)-accessor patterns
       # ----------------------------------------------
       {
         'comment': 'struct element foo.foo'
@@ -279,6 +279,36 @@
             'name': 'punctuation.accessor.scilab'
           '3':
             'name': 'variable.other.object.scilab'
+      }
+
+      # ----------------------------------------------
+      # simple ()-accessor patterns
+      # ----------------------------------------------
+      {
+        'comment':  'Automation object function accessor foo(\'bar\', ...)'
+        'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  + # valid element character
+                  '(?='+
+                     '\\s*\\(\\s*' +
+                       '\'.+?\'' +
+
+                       '\\s*(?:,.+)?' +
+                       '\\)'+
+                       '(?!\\s*\\()'+
+                   ')'
+        'name': 'variable.other.object.automation.scilab'
+       }
+
+       {
+        'comment': 'struct element elementary accessor foo(\'bar\')'
+        'match':  '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  + # valid element character
+                  '(?=' +
+                     '\\s*\\(\\s*'   + # await filled parenthesis with string
+                       '(?:\'.+?\')' + # either '...'
+                       '|(?:".+?")'  + # or     "..."
+                       '\\s*\\)'     +
+                     '(?!\\s*\\()'   + # no trailing opening parenthesis
+                   ')'
+        'name': 'variable.other.object.scilab'
       }
 
       {

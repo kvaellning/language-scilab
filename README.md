@@ -18,6 +18,8 @@ As for the current version (0.3.2) which is based on [language-scilab 0.1.0](htt
   - Definition of `function` might lead to errors if the continuation mark `...` is used for/after return values
   - Problems with `function` without input parameter brackets `()`
   - In general some problems with the continuation mark (e.g. `|...` will be marked as error)
+  - Extractions like `foo('a')('a')` will not be included.
+    Originally, this feature was planned, but due the high amount of recursion, this feature is set on hold.
   - __Performance of the regular expressions seems not so great.__ In near future, the regular expression have to be revised.
 
 ## Planned features
