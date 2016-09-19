@@ -343,10 +343,12 @@
   'constants_scilab':
     {
       'comment': 'Scilab built-in constants'
-      'match':  '\\B(' +
-                  '%(pi|e|i|eps|inf|nan|t|T|f|F|s|z)|SCI' + # constants which yield values
-                ')\\b'    +
-                '|\\B(\\[\\])\\B'                           # the empty matrix []
+      'match':  '(?<![\\w%\\$\\?!#\\.])'  +
+                '(?:' +
+                  '%(?:pi|e|i|eps|inf|nan|t|T|f|F|s|z)' + # constants which yield values
+                  '|SCI|TMPDIR'                         + # other variables
+                  '|(?:\\[\\])'                         +   # the empty matrix []
+                ')(?![\\w%\\$\\?!#\\.])'
       'name': 'support.constant.scilab'
     }
 
@@ -354,7 +356,7 @@
     {
       'comment': 'matrix/vector access symbols : & $'
       'match': '(?<![\\w%\\$\\?!#\'\"]):(?![\\w%\\$\\?!#\'\"])' + # (:) is only a constant if nothing is written in front or behind
-            '|(?<![\\w%\\$\\?!#\'\"\\+\\-\\*\\\\])\\$'         # ($) is only a constant if nothing is written in front
+               '|(?<![\\w%\\$\\?!#\'\"\\+\\-\\*\\\\])\\$'         # ($) is only a constant if nothing is written in front
       'name' : 'support.constant.scilab'
     }
 
