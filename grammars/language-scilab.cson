@@ -94,68 +94,9 @@
     'name': 'storage.section.function.end.scilab'
   }
 
-  {
-    'comment': 'variable assignment'
-    'match':  '(?![^/]*//)' + # leading slashes notate comments
-              '(?:'     +
-                '(?:\\['  + # option one: variables enclosed by brackets
-                '(?<chars>' +
-                  '(?:' +
-                    '(?!(?:[\\=]{2,})|(?:[\\+\\-\\*\\./\\\\<>\\~\\&\\|\\=]+\\=))' + # invalid signs. NOTE: SPECIAL CASE SHOULD BE CHANGED IF CONDITIONALS ARE TREATED AS OWN SCOPE
-                    '[^;\\=]'           + # any variable char
-                    '(?!\\s*[\\=]{2,})' + # more than one equal sign
-                  ')'     +
-                ')+'      + # ... as often as possible, but at least one time
-                '\\])'    + # closing bracket / end of option one
-                '|\\g<chars>+' + # option two, not enclosed
-              ')\\s*' +
-              '(?=\\=)'
-
-    'captures':
-      '0':
-        'patterns':[
-          {
-            'comment': 'illegal number on lhs [123 =]'
-            'match': '(?<=^|;)\\d+'
-            'name': 'variable.assignment.invalid.illegal.scilab'
-          }
-
-          { 'include': '#std_environment' }
-
-          {
-            'comment': 'illegal empty assignments [() = or ( = or ) = or (1) =]'
-            'match':  '(?<=^|;)'  +
-                      '(?:'  +
-                        '[\\s\\d]*' +
-                        '(?:' +
-                          '(?:\\(\\s*$)'    +
-                          '|(?:\\((?:\\s*|\\d+)\\))' +
-                          '|(?:\\))'  +
-                        ')' +
-                      ')'
-            'name': 'invalid.illegal.scilab'
-          }
-
-          {
-            'comment': 'exclude stuff in brackets'
-            'match': '\\(.*?\\)'
-            'captures':
-              '0':
-                'patterns': [
-                  { 'include': '#std_environment' }
-                ]
-          }
-
-          {
-            'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
-            'name': 'variable.assignment.scilab'
-          }
-        ]
-  }
-
-  { 'include':  '#vector_colon'  }
-
-  { 'include':  '#std_environment'  }
+  { 'include': '#assignment'      }
+  { 'include': '#vector_colon'    }
+  { 'include': '#std_environment' }
 ]
 
 # ------------------------------
@@ -620,4 +561,63 @@
       'comment': 'indicates a terminated statement, even in line'
       'match': ';'
       'name': 'punctuation.terminator.scilab'
+    }
+
+  'assignment':
+    {
+      'comment': 'variable assignment'
+      'match':  '(?![^/]*//)' + # leading slashes notate comments
+                '(?:'     +
+                  '(?:\\['  + # option one: variables enclosed by brackets
+                  '(?<chars>' +
+                    '(?:' +
+                      '[^;\\=]'           + # any variable char
+                      '(?!\\s*[\\=]{2,})' + # more than one equal sign
+                    ')'     +
+                  ')+'      + # ... as often as possible, but at least one time
+                  '\\])'    + # closing bracket / end of option one
+                  '|\\g<chars>+' + # option two, not enclosed
+                ')\\s*' +
+                '(?=\\=)'
+
+      'captures':
+        '0':
+          'patterns':[
+            {
+              'comment': 'illegal number on lhs [123 =]'
+              'match': '(?<=^|;)\\d+'
+              'name': 'variable.assignment.invalid.illegal.scilab'
+            }
+
+            { 'include': '#std_environment' }
+
+            {
+              'comment': 'illegal empty assignments [() = or ( = or ) = or (1) =]'
+              'match':  '(?<=^|;)'  +
+                        '(?:'  +
+                          '[\\s\\d]*' +
+                          '(?:' +
+                            '(?:\\(\\s*$)'    +
+                            '|(?:\\((?:\\s*|\\d+)\\))' +
+                            # '|(?:\\))'  + # too unspecific
+                          ')' +
+                        ')'
+              'name': 'invalid.illegal.scilab'
+            }
+
+            {
+              'comment': 'exclude stuff in brackets'
+              'match': '\\(.*?\\)'
+              'captures':
+                '0':
+                  'patterns': [
+                    { 'include': '#std_environment' }
+                  ]
+            }
+
+            {
+              'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+              'name': 'variable.assignment.scilab'
+            }
+          ]
     }
