@@ -599,7 +599,7 @@
                     '\\(\\s*["\']?'                 + # beginning parenthesis
                       '(?:.(?!["\']\\s*//["\']))+?' + # again anything
                     '["\']?\\s*\\)'                 + # ending parenthesis
-                    '(?:\\g<charsSimple>+)?'        + # optional stuff on the end
+                    '(?:\\.\\g<charsSimple>+)?'    + # optional stuff on the end
                   ')' +
                 ')\\s*' +
                 '(?!\\s*[\\=]{2,})' + # more than one equal sign
