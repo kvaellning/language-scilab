@@ -594,13 +594,13 @@
                 ')' +
                 '|(?:'  +
                   '(?<charsSimple>[\\w%\\$\\?!#](?!\\s*//))+' + # case 3: "simple" assignment with no parenthesis (NOTE: [^;,\\(\\)\\="\'] would also work)
-                  '|(?:'                                      + # case 4: assignment with parenthesis
-                    '(?:[^,;\\=](?!\\s*//))+'       + # any character, except //, ;, = and ,
+                  '(?:'                                       +
+                    '(?:[^,;\\=](?!\\s*//))+'       +  # case 4: assignment with parenthesis any character, except //, ;, = and ,
                     '\\(\\s*["\']?'                 + # beginning parenthesis
-                      '(?:.(?!["\']\\s*//["\']))+?' + # again anything
+                      '.+?'                         + # again anything
                     '["\']?\\s*\\)'                 + # ending parenthesis
-                    '(?:\\.\\g<charsSimple>+)?'    + # optional stuff on the end
-                  ')' +
+                    '(?:\\.\\g<charsSimple>+)?'     + # optional stuff on the end
+                  ')?' +
                 ')\\s*' +
                 '(?!\\s*[\\=]{2,})' + # more than one equal sign
                 '(?=\\=)'
