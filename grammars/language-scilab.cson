@@ -45,8 +45,8 @@
                   { 'include': '#invalid_parameter_struct-tlist' }
                   { 'include': '#std_environment' }
 
-                  { 'include': '#parameters_output'       }
-                  { 'include': '#parameters_separator'    }
+                  { 'include': '#parameters_output'    }
+                  { 'include': '#parameters_separator' }
 
                   {
                     'match': '\\]'
@@ -585,22 +585,26 @@
       'name': 'punctuation.terminator.scilab'
     }
 
-  'assignment':
+  'variable_assignment':
     {
-      'comment': 'variable assignment'
-      'match':  '(?![^/]*//)' + # leading slashes notate comments
-                '(?:'     +
-                  '(?:\\['  + # option one: variables enclosed by brackets
-                  '(?<chars>' +
-                    '(?:' +
-                      '[^;\\=]'           + # any variable char
-                      '(?!\\s*[\\=]{2,})' + # more than one equal sign
-                    ')'     +
-                  ')+'      + # ... as often as possible, but at least one time
-                  '\\])'    + # closing bracket / end of option one
-                  '|\\g<chars>+' + # option two, not enclosed
+      'match':  '(?:'   +
+                  '(?:\'.*?\')' + # case 1: yet another string with single quotes
+                  '|(?:".*?")'  + # case 2: yet another string with double quotes
+                ')' +
+                '|(?:'  +
+                  '(?<charsSimple>[\\w%\\$\\?!#](?!\\s*//))+' + # case 3: "simple" assignment with no parenthesis (NOTE: [^;,\\(\\)\\="\'] would also work)
+                  '|(?:'                                      + # case 4: assignment with parenthesis
+                    '(?:[^,;\\=](?!\\s*//))+'       + # any character, except //, ;, = and ,
+                    '\\(\\s*["\']?'                 + # beginning parenthesis
+                      '(?:.(?!["\']\\s*//["\']))+?' + # again anything
+                    '["\']?\\s*\\)'                 + # ending parenthesis
+                    '(?:\\g<charsSimple>+)?'        + # optional stuff on the end
+                  ')' +
                 ')\\s*' +
+                '(?!\\s*[\\=]{2,})' + # more than one equal sign
                 '(?=\\=)'
+
+      'name': 'meta.name.assignment.scilab'
 
       'captures':
         '0':
@@ -635,6 +639,11 @@
                   'patterns': [
                     { 'include': '#std_environment' }
                   ]
+            }
+
+            {
+              'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\s*(?:\\(["\'])|\\.)'
+              'name': 'variable.other.object.scilab'
             }
 
             {
