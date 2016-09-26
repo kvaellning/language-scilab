@@ -3,10 +3,8 @@
 module.exports =
 
 class SciViewWhereAmI
-  constructor: (@editor) ->
-    if !(@editor?) || @editor.getGrammar().scopeName != 'source.scilab'
-      return
 
+  constructor: (@editor) ->
     @subscriptions = new CompositeDisposable()
     @editorView    = atom.views.getView(@editor)
     @editorBuffer  = @editor.buffer
@@ -24,156 +22,231 @@ class SciViewWhereAmI
     #   - ends with "endfunction", or
     #   - has a beginning // for comment, so that we can ignore it furthermore
     @regExpressions =
-      anchors:        new RegExp('(?:((?:(?:^|[;,])\\s*function))(?:\\s))|(//.*?endfunction)|(endfunction)', 'g')
-      funcBegin:      new RegExp('function')
-      funcEnd:        new RegExp('endfunction')
-      funcEndInvalid: new RegExp('//')
+      anchors:     new RegExp('((//.*(?:(?:function)|(?:endfunction)))|(?:function(?=\\s|$))|(?:endfunction))', 'g')
+      funcBegin:   new RegExp('function')
+      funcEnd:     new RegExp('endfunction')
+      funcInvalid: new RegExp('//')
 
-    @lastLine  = undefined # array with [lineNumber, hasAnchorElem] used to determine if the contents of the line has changed
-    @lastRange = undefined # used to store the range of the last line
+    @lineInfo   = undefined # array with [lineNumber, hasAnchorElem] used to determine if the contents of the line has changed
+    @totalLines = @editor.getLineCount()
+
+    @whereamiActive = atom.config.get('language-scilab.whereamiCompatible')
+
+    if @whereamiActive
+      @UpdateAnchors()
 
     try
-      @subscriptions.add @editorBuffer.onDidChange(@CheckLine)
+      # subscribe to any change
+      @subscriptions.add @editor.onDidChange(@UpdateGutter)
     catch
-      # Subscribe to initialization and editor changes
-      @subscriptions.add @editorView.onDidAttach(@CheckLine)
-      @subscriptions.add @editor.onDidStopChanging(@CheckLine)
+      # Fallback: subscribe to initialization and editor changes
+      @subscriptions.add @editorView.onDidAttach(@UpdateGutter)
+      @subscriptions.add @editor.onDidStopChanging(@UpdateGutter)
+      @subscriptions.add @editor.onDidSave(@UpdateOnSave)
 
     # Subscribe to Scilab whereami flag-changes
-    @subscriptions.add atom.config.onDidChange 'language-kl-scilab.wheramiCompatible', =>
-      @whereamiActive = atom.config.get('language-kl-scilab.wheramiCompatible')
+    @subscriptions.add atom.config.onDidChange 'language-scilab.whereamiCompatible', =>
+      @whereamiActive = atom.config.get('language-scilab.whereamiCompatible')
 
-      if whereamiActive
+      if @whereamiActive
         @UpdateAnchors()
-
-      @UpdateView()
+        @UpdateGutter()
+      else
+        @Undo()
 
     # subscribe for cursor position changes
+    # Only check if the text changed and if this will affect somewhat the anchors
     @subscriptions.add @editor.onDidChangeCursorPosition(@CheckLine)
 
     # subscribe if the user scrolls around
-    @subscriptions.add @editorView.onDidChangeScrollTop(@UpdateView)
+    @subscriptions.add @editorView.onDidChangeScrollTop(@UpdateGutter)
 
     # Dispose the subscriptions when the editor is destroyed.
     @subscriptions.add @editor.onDidDestroy =>
       @subscriptions.dispose()
-
-    @UpdateAnchors()
-    @UpdateView()
 
   destroy: () ->
     @subscriptions.dispose()
     @Undo()
     @gutter.destroy()
 
+
+  # ---------------------------------------------------------
+  # Calculates the amount of soft-wrapping
+  # ---------------------------------------------------------
   Spacer: (totalLines, currentIndex) ->
     width = Math.max(0, totalLines.toString().length - currentIndex.toString().length)
     Array(width + 1).join '&nbsp;'
 
+  # ---------------------------------------------------------
+  # Updates the gutter on save.
+  #
+  # If <code>\@editor.onDidChange</code> subscription does not worked,
+  # this function is called on every save to update the anchors and the gutter.
+  # ---------------------------------------------------------
+  UpdateOnSave: () =>
+    @UpdateAnchors()
+    @UpdateGutter()
+
+  # ---------------------------------------------------------
   # Used to check if the content of the current line will affect the displayed line numbers
-  CheckLine: () =>
+  # ---------------------------------------------------------
+  CheckLine: (event) =>
     if @editor.isDestroyed()
       return
 
-    editorLine = @editor.lineTextForBufferRow(@editor.getCursorBufferPosition().row)
-    actLine = [editorLine, @LineHoldsAnchor(editorLine)]
+    if event.textChanged
+      actTotalLines = @editor.getLineCount()
+      lineNum       = @editor.getCursorBufferPosition().row
 
-    if (actLine[0] != @lastLine?[0]) || (actLine[1] != @lastLine?[1])
-      @lastLine = actLine
-      @UpdateAnchors()
-      @UpdateView()
+      line = [lineNum, @LineHoldsAnchor( @editor.lineTextForBufferRow(lineNum) )]
 
+      if (Math.abs(actTotalLines-@totalLines) ||                                # number of lines has changed
+          (line[0] == @lineInfo?[0])  || (line[1] != @lineInfo?[1])) # keyword in a line has changed
+
+        @totalLines = actTotalLines
+        @lineInfo   = line
+
+        @UpdateAnchors()
+
+
+  # ---------------------------------------------------------
   # checks if a line \c lineText holds anchors
   #
   # @param[in]  lineText  String with the line contents which is checked
   # @returns    \c true if the line holds anchors, \c false otherwise
+  # ---------------------------------------------------------
   LineHoldsAnchor: (lineText) =>
     if !(lineText?)
-      holdsAnchor = false
-      return
+      return false
 
-    lineMatches = lineText.match(@regExpAnchors)
+    lineMatches = lineText.match(@regExpressions.anchors)
 
     if lineMatches?
       for m in lineMatches
-        if m.match(@regExpFuncEndInvalid) # invalid end (holds a comment descriptor (//) somewhere)
+        if (m.match(@regExpressions.funcInvalid))? # invalid end (holds a comment descriptor (//) somewhere)
           ;
-        else if m.match(@regExpFuncBegin) || result.matchText.match(@regExpFuncEnd) # function end
-          holdsAnchor = true
-          return
+        else if (m.match(@regExpressions.funcBegin))? || (m.match(@regExpressions.funcEnd))? # function end
+          return true
 
-    holdsAnchor = false
+    return false
 
+  # ---------------------------------------------------------
+  # Updates the anchors (stuff need to define the scopes)
+  #
+  # This will change the global variable \@anchors to a new value.
+    # ---------------------------------------------------------
   UpdateAnchors: () =>
+    if !@whereamiActive
+      return
+
     searchRange =  [[0, 0], @editor.getEofBufferPosition()] # search for stuff from row zero to the last
 
-    funcRanges = []
+    funcStarts = []
     @anchors   = []
 
     @editor.scanInBufferRange @regExpressions.anchors, searchRange,
       (result) =>
 
-        if result.matchText.match(@regExpressions.funcEndInvalid) # invalid end (holds a comment descriptor (//) somewhere)
+        if (result.matchText.match(@regExpressions.funcInvalid))? # invalid end (holds a comment descriptor (//) somewhere)
           ;
-        else if result.matchText.match(@regExpressions.funcBegin)
-          funcRanges[funcRanges.length] = new Range(result.range.start) # function begin
-        else if result.matchText.match(@regExpressions.funcEnd) && funcRanges[funcRanges.length-1]? # function end
-          @anchors[@anchors.length] = funcRanges.pop()
-          @anchors[@anchors.length].end = result.range.end
+        else if (result.matchText.match(@regExpressions.funcEnd))? && funcStarts[funcStarts.length-1]? # function end
+          anchorRange       = result.range      # work around the issue that "new Range" returns a range from the Window...
+          anchorRange.start = funcStarts.pop();
 
+          @anchors[@anchors.length] = anchorRange
+
+        else if (result.matchText.match(@regExpressions.funcBegin))?
+          funcStarts[funcStarts.length] = result.range.start # function begin
+
+
+  # ---------------------------------------------------------
   # calculate the line number based on the available anchors
+  # ---------------------------------------------------------
   LineNumberFromAnchor: (actLine) =>
-    if @anchors.length == 0
-      retLine = actLine
-      return
+    functionScope = undefined
 
-    if !@lastRange.intersectsRow(actLine)
-      @lastRange = undefined
-      for m in @anchors
-        if m.intersectsRow(actLine)
-          @lastRange = m # the first match has the highest priority,
-                        # since nested functions will be pushed earlier to the anchor buffer than the enclosing functions
-          break
+    for m in @anchors
+      if m.intersectsRow(actLine)
+        functionScope = m # the first match has the highest priority, since nested functions will be pushed earlier to the anchor buffer than the enclosing functions
+        break
 
-    if @lastRange?
-      retLine = actLine - @lastRange.start.row
+    if functionScope?
+      return actLine - functionScope.start.row
     else
-      retLine = actLine # do nothing
+      return -1 # do nothing
 
+
+  # ---------------------------------------------------------
   # Update the line numbers on the editor
-  UpdateView: () =>
+  # ---------------------------------------------------------
+  UpdateGutter: () =>
     # If the gutter is updated asynchronously, we need to do the same thing
     # otherwise our changes will just get reverted back.
     if @editorView.isUpdatedSynchronously()
-      @UpdateViewSync()
+      @UpdateGutterImpl()
     else
-      atom.views.updateDocument () => @UpdateViewSync()
+      atom.views.updateDocument () => @UpdateGutterImpl()
 
-  UpdateViewSync: () =>
+
+  # ---------------------------------------------------------
+  # Updates one line of the line-number gutter
+  # @todo: Implement own gutter
+  #
+  # @param[in]  lineNumberElement  \c Node representing the line number of the gutter
+  # @param[in]  offset             Offset which is added to the row number. Useful to comb with wrap signs in the gutter
+  #
+  # @returns  new offset
+  # ---------------------------------------------------------
+  UpdateGutterLine: (lineNumberElement, offset) =>
     if @editor.isDestroyed()
-      return
+      return offset
 
-    totalLines         = @editor.getLineCount()
-    lineNumberElements = @editorView.rootElement?.querySelectorAll('.line-number')
+    # convert to number
+    # The row is used to determine the new line number
+    row = lineNumberElement.getAttribute('data-screen-row') * 1
 
-    for lineNumberElement in lineNumberElements
-      # "|| 0" is used given data-screen-row is undefined for the first row
-      row = Number(lineNumberElement.getAttribute('data-screen-row')) || 0
+    if isNaN(row)
+      return offset
 
-      whereami  = @LineNumberFromAnchor(row)
-      whereami += 1
+    if isFinite(lineNumberElement.innerText) # check finite of text. If not finite, then a soft wrap linebreak occured.
+      whereami = @LineNumberFromAnchor(row-offset)
 
-      whereamiClass = 'relative'
+      # leave unchanged if not inside a function-region
+      if whereami == -1
+        return offset
 
-      whereamiText = @Spacer(totalLines, whereami) + whereami
+      whereami    += 1
+      whereamiText = @Spacer(@totalLines, whereami) + whereami
 
       # Keep soft-wrapped lines indicator
       if lineNumberElement.innerHTML.indexOf('â€¢') == -1
-        lineNumberElement.innerHTML = "<span class=\"#{whereamiClass}\">#{whereamiText}</span><div class=\"icon-right\"></div>"
+        lineNumberElement.innerHTML = "<span style=\"font-weight:bolder\">#{whereamiText}</span><div class=\"icon-right\"></div>"
+    else
+      return offset + 1
 
+    return offset
+
+  # ---------------------------------------------------------
+  # Implementation for updating the whole gutter
+  # ---------------------------------------------------------
+  UpdateGutterImpl: () =>
+    if @editor.isDestroyed()
+      return
+
+    lineNumberElements = @editorView.rootElement?.querySelectorAll('.line-number')
+
+    offset = 0
+
+    for lineNumberElement in lineNumberElements
+      offset = @UpdateGutterLine(lineNumberElement, offset)
+
+
+  # ---------------------------------------------------------
   # Undo changes to DOM
+  # ---------------------------------------------------------
   Undo: () =>
-    Update()
+    UpdateGutter()
     totalLines = @editor.getLineCount()
     lineNumberElements = @editorView.rootElement?.querySelectorAll('.line-number')
 

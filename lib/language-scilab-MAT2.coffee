@@ -3,14 +3,20 @@ SciViewWhereAmI       = require './whereami-view'
 
 module.exports =
   subscriptions: null
+  whereamiView: null
 
   activate: (state) ->
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.workspace.observeTextEditors (editor) ->
+      if !(editor?) || (editor.getGrammar().scopeName != 'source.scilab')
+        return
+
       if not editor.gutterWithName('whereami-scilab')
-        new SciViewWhereAmI(editor)
+        @whereamiView = new SciViewWhereAmI(editor)
+
+      #@whereamiView?.UpdateGutter()
 
   deactivate: () ->
-    @subscriptions.dispose()
+    @subscriptions?.dispose()
     for editor in atom.workspace.getTextEditors()
-      editor.gutterWithName('whereami-scilab').view?.destroy()
+      editor.gutterWithName('whereami-scilab')?.view?.destroy()

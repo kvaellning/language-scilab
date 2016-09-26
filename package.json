@@ -11,7 +11,7 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "configSchema": {
-    "wheramiCompatible": {
+    "whereamiCompatible": {
       "title": "Show \"whereami\"- compatible line numbering",
       "description": "If activated, this option will display the line numbers **Scilab**. Typically, this means that every <code>function</code>-Tag will start a relative line numbering beginning at 1.",
       "type": "boolean",
