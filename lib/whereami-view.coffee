@@ -23,11 +23,10 @@ class SciViewWhereAmI
     #   - starts (valid) with "function", or
     #   - ends with "endfunction", or
     #   - has a beginning // for comment, so that we can ignore it furthermore
-    @regExpressions =
-      anchors:     new RegExp('((//.*(?:(?:function)|(?:endfunction)))|(?:function(?=\\s|$))|(?:endfunction))', 'g')
-      funcBegin:   new RegExp('function')
-      funcEnd:     new RegExp('endfunction')
-      funcInvalid: new RegExp('//')
+    @patterns =
+      reAnchors:   new RegExp('(?:function(?=\\s|$))|(?:endfunction)', 'g')
+      funcBegin:   'function'
+      funcEnd:     'endfunction'
 
     @lineInfo   = [0,false] # array with [lineNumber, hasAnchorElem] used to determine if the contents of the line has changed
     @totalLines = @editor.getLineCount()
@@ -145,14 +144,12 @@ class SciViewWhereAmI
       return false
 
     lineText    = @editor.lineTextForBufferRow(position.row)
-    lineMatches = lineText?.match(@regExpressions.anchors)
+    lineMatches = @patterns.reAnchors.exec(lineText)
 
     if lineMatches?
 
       for m in lineMatches
-        if (m.match(@regExpressions.funcInvalid))? # invalid end (holds a comment descriptor (//) somewhere)
-          ;
-        else if (m.match(@regExpressions.funcBegin))? || (m.match(@regExpressions.funcEnd))? # function end
+        if (m.indexOf(@patterns.funcBegin) != -1) || (m.indexOf(@patterns.funcEnd) != -1) # function end
           return true
 
     return false
@@ -171,13 +168,13 @@ class SciViewWhereAmI
     funcStarts = []
     @anchors   = []
 
-    @editor.scanInBufferRange @regExpressions.anchors, searchRange,
+    @editor.scanInBufferRange @patterns.reAnchors, searchRange,
       (result) =>
 
         scopes = @editor.scopeDescriptorForBufferPosition(result.range.start)?.getScopesArray() # scope where the match is found
         return unless scopes?.length
 
-        if (result.matchText.match(@regExpressions.funcEnd))? && funcStarts[funcStarts.length-1]? # function end
+        if (result.matchText.indexOf(@patterns.funcEnd) != -1)? && funcStarts[funcStarts.length-1]? # function end
           # The grammar provides the 'storage.type.function.end' for the "endfunction" keyword at the end of the scope array
           if scopes?[scopes.length-1].indexOf('storage.type.function.end') == -1
             return
@@ -187,7 +184,7 @@ class SciViewWhereAmI
 
           @anchors[@anchors.length] = anchorRange
 
-        else if (result.matchText.match(@regExpressions.funcBegin))?
+        else if (result.matchText.indexOf(@patterns.funcBegin) != -1)
           # The grammar provides the 'storage.type.function.begin' for the "function" keyword at the end of the scope array
           if scopes?[scopes.length-1].indexOf('storage.type.function.begin') == -1
             return
