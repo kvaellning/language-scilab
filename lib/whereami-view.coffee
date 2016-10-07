@@ -9,6 +9,8 @@ class SciViewWhereAmI
     @editorView    = atom.views.getView(@editor)
     @editorBuffer  = @editor.buffer
 
+    @lineNumber = @editor.gutterWithName('line-number')
+
     @gutter = @editor.addGutter
       name:    'whereami-scilab'
       visible: false
@@ -125,7 +127,7 @@ class SciViewWhereAmI
 
     if event.textChanged
       lineNum = @editor.getCursorBufferPosition().row
-      line    = [lineNum, @LineHoldsAnchor( @editor.lineTextForBufferRow(lineNum) )]
+      line    = [event.newBufferPosition.row, @LineHoldsAnchor(event.newBufferPosition)]
 
       if (line[0] == @lineInfo[0]) && (line[1] != @lineInfo?[1]) # only update if we have previous information about the line and the keyword  has changed
         @UpdateAnchors()
@@ -138,13 +140,15 @@ class SciViewWhereAmI
   # @param[in]  lineText  String with the line contents which is checked
   # @returns    \c true if the line holds anchors, \c false otherwise
   # ---------------------------------------------------------
-  LineHoldsAnchor: (lineText) =>
-    if !(lineText?)
+  LineHoldsAnchor: (position) =>
+    if !(position?)
       return false
 
-    lineMatches = lineText.match(@regExpressions.anchors)
+    lineText    = @editor.lineTextForBufferRow(position.row)
+    lineMatches = lineText?.match(@regExpressions.anchors)
 
     if lineMatches?
+
       for m in lineMatches
         if (m.match(@regExpressions.funcInvalid))? # invalid end (holds a comment descriptor (//) somewhere)
           ;
@@ -170,15 +174,24 @@ class SciViewWhereAmI
     @editor.scanInBufferRange @regExpressions.anchors, searchRange,
       (result) =>
 
-        if (result.matchText.match(@regExpressions.funcInvalid))? # invalid end (holds a comment descriptor (//) somewhere)
-          ;
-        else if (result.matchText.match(@regExpressions.funcEnd))? && funcStarts[funcStarts.length-1]? # function end
+        scopes = @editor.scopeDescriptorForBufferPosition(result.range.start)?.getScopesArray() # scope where the match is found
+        return unless scopes?.length
+
+        if (result.matchText.match(@regExpressions.funcEnd))? && funcStarts[funcStarts.length-1]? # function end
+          # The grammar provides the 'storage.type.function.end' for the "endfunction" keyword at the end of the scope array
+          if scopes?[scopes.length-1].indexOf('storage.type.function.end') == -1
+            return
+
           anchorRange       = result.range      # work around the issue that "new Range" returns a range from the Window...
           anchorRange.start = funcStarts.pop();
 
           @anchors[@anchors.length] = anchorRange
 
         else if (result.matchText.match(@regExpressions.funcBegin))?
+          # The grammar provides the 'storage.type.function.begin' for the "function" keyword at the end of the scope array
+          if scopes?[scopes.length-1].indexOf('storage.type.function.begin') == -1
+            return
+
           funcStarts[funcStarts.length] = result.range.start # function begin
 
     @updateWholeGutter = true
