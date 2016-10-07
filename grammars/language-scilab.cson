@@ -88,6 +88,8 @@
                         'name': 'punctuation.parens.begin.invalid.illegal.scilab'
                   }
 
+                  { 'include': '#scilab_comment' }
+
                   { 'include': '#invalid_parameter_struct-tlist' }
                   { 'include': '#std_environment' }
 
