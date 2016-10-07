@@ -29,6 +29,15 @@ As for the current version (0.3.2) which is based on [language-scilab 0.1.0](htt
   - Revisit (and if necessary rewrite) grammar-regexp
 
 ## Changelog
+  - #### 0.4.2
+    - #### whereami:
+      - increased robustness
+      - some performance tweaks
+    - #### language pre-defines:
+      - operator `/.` (linear system feedback operator)
+      - constants `SCIHOME` and `%io`
+      - various missing functions
+      
   - #### 0.4.1
     - ##### whereami:
       - increase of robustness

@@ -1,6 +1,6 @@
 {
   "name": "language-scilab",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Scilab language (fork) support in Atom. This package is roughly based on language-scilab of Jeremy Heleine.",
   "main": "./lib/language-scilab",
   "engines": { "atom": ">=1.0.0 <2.0.0" },
