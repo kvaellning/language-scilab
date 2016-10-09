@@ -6,13 +6,13 @@ This package is roughly based on [language-scilab](https://atom.io/packages/lang
 ## Changes in respect to the original package
 As for the current version (0.3.2) which is based on [language-scilab 0.1.0](https://github.com/JeremyHeleine/language-scilab/tree/f68888450e46ce23e1f8847b85cef49a31bf96fb) nearly everything in the code is altered. [language-scilab](https://atom.io/packages/language-scilab) was originally used as a sceletal implementation for this specific idiom. Since that time, the package has seen a lot of redesigns and specializations, e.g.:
 
-   - including most of the Scilab built-in functions, as best as possible
-   - added Scilab constants
-   - Markup of errors, as far as they can be reflected by the grammar Definition
-   - Snippets for often used Scilab blocks
-   - Proper definition of indentation depths
+  - including most of the Scilab built-in functions, as best as possible
+  - added Scilab constants
+  - Markup of errors, as far as they can be reflected by the grammar Definition
+  - Snippets for often used Scilab blocks
+  - Proper definition of indentation depths
   - *whereami*-compatible line-numbering
-   - and many more (and to come!)
+  - and many more (and to come!)
 
 ## Known issues
   - Scilab functions might be missing
@@ -29,6 +29,12 @@ As for the current version (0.3.2) which is based on [language-scilab 0.1.0](htt
   - Revisit (and if necessary rewrite) grammar-regexp
 
 ## Changelog
+  - #### 0.4.3
+    - adds new language keywords
+    - #### whereami:
+      - use scope-based function detection<br>
+        (*bug:* race-condition since the complete resolved scopes are only available after the anchors are loaded. Next step: serialize state on Atom end and keep the anchors from the last session)
+
   - #### 0.4.2
     - #### whereami:
       - increased robustness
@@ -37,7 +43,7 @@ As for the current version (0.3.2) which is based on [language-scilab 0.1.0](htt
       - operator `/.` (linear system feedback operator)
       - constants `SCIHOME` and `%io`
       - various missing functions
-      
+
   - #### 0.4.1
     - ##### whereami:
       - increase of robustness

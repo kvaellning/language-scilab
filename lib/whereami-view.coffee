@@ -174,23 +174,15 @@ class SciViewWhereAmI
         scopes = @editor.scopeDescriptorForBufferPosition(result.range.start)?.getScopesArray() # scope where the match is found
         return unless scopes?.length
 
-        blubb = result.matchText.indexOf(@patterns.funcEnd)
-
-        if (result.matchText.indexOf(@patterns.funcEnd) != -1) && funcStarts[funcStarts.length-1]? # function end
+        if (scopes?[scopes.length-1].indexOf('storage.type.function.end') != -1) && funcStarts[funcStarts.length-1]? # function end
           # The grammar provides the 'storage.type.function.end' for the "endfunction" keyword at the end of the scope array
-          if scopes?[scopes.length-1].indexOf('storage.type.function.end') == -1
-            return
-
           anchorRange       = result.range      # work around the issue that "new Range" returns a range from the Window...
           anchorRange.start = funcStarts.pop();
 
           @anchors[@anchors.length] = anchorRange
 
-        else if result.matchText.indexOf(@patterns.funcBegin) != -1
+        else if scopes?[scopes.length-1].indexOf('storage.type.function.begin') != -1
           # The grammar provides the 'storage.type.function.begin' for the "function" keyword at the end of the scope array
-          if scopes?[scopes.length-1].indexOf('storage.type.function.begin') == -1
-            return
-
           funcStarts[funcStarts.length] = result.range.start # function begin
 
     @updateWholeGutter = true
