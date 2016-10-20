@@ -128,6 +128,11 @@
           'comment': 'end variable declaration'
           'name': 'storage.section.function.begin.scilab'
    }
+   {
+     'comment': 'End of a function (a.k.a. "endfunction" tag'
+     'match': '^\\s*endfunction'
+     'name': 'storage.section.function.end.scilab'
+   }
 
    {
       'comment': 'strings with \''
@@ -220,7 +225,7 @@
       {
          'comment': 'keywords that alter flow from within a block'
          'name': 'keyword.control.statement.scilab'
-         'match': '\\b(break|continue|return|end|endfunction)\\b'
+         'match': '\\b(break|continue|return|end)\\b'
       }
 
    'sci_loops':
