@@ -4,6 +4,12 @@ This package adds the support of Scilab language including Klippel additions in 
 This package is based on "language-scilab" by Jeremy Heleine.
 
 ### Changelog
+#### 0.3.0
+ - fixed indentation patterns (again)
+ - improved grammar:
+    - better scopes
+    - display invalid stuff
+
 #### 0.2.2
  - Snippets
  - improved grammar
