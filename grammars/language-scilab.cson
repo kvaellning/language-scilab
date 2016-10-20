@@ -39,10 +39,8 @@
 
    {
       'comment': 'global scope identifier'
-      'captures':
-         '1':
-            'name': 'storage.modifier.global.scilab'
       'match': '\\b(global)\\b'
+      'name': 'storage.modifier.global.scilab'
    }
 
    {
@@ -67,10 +65,11 @@
 
    {
       'comment': 'Scilab function definition'
-      'match': '\\b(function)(?:(.*)\\=)?\\s*(.*)\\s*\\((.*)\\)(\\s*)'
+      'begin': '\\b(function)(?:(.*)\\=)?\\s*(.*)\\s*\\('
+      'end': '\\)(\\s*)'
       'name': 'meta.function.scilab'
 
-      'captures':
+      'beginCaptures':
         '1':
           'comment': 'function keyword'
           'name': 'storage.type.function.scilab'
@@ -96,38 +95,27 @@
                 'name': 'entity.name.function.scilab'
              }
           ]
-
-        '4':
-          'comment': 'function parameters'
-          'contentName': 'meta.function.parameters.scilab'
-
-          'begin': '(\\()'
-          'end': '(\\))'
-
-          'beginCaptures':
-             '1':
-                'name': 'punctuation.definition.parameters.begin.scilab'
-          'endCaptures':
-             '1':
-                'name': 'punctuation.definition.parameters.end.scilab'
-
-          'patterns':[
-            {  'include': '#continuation_mark' }
-            {  'include': '#sci_all_constants' }
-            {
-              'match': '[a-zA-Z_][a-zA-Z_0-9]*'
-              'name': 'variable.parameter.function.scilab'
-            }
-            {
-              'match': ','
-              'name': 'punctuation.separator.parameters.scilab'
-            }
-           ]
-
-        '5':
+      'endCaptures':
+        '1':
           'comment': 'end variable declaration'
           'name': 'storage.section.function.begin.scilab'
+
+      'patterns':[
+        {  'include': '#continuation_mark' }
+        {  'include': '#sci_all_constants' }
+        {  'include': '#line_comment'      }
+        {  'include': '#continuation_mark '}
+        {
+          'match': '[a-zA-Z_][a-zA-Z_0-9]*'
+          'name': 'variable.parameter.function.scilab'
+        }
+        {
+          'match': ','
+          'name': 'punctuation.separator.parameters.scilab'
+        }
+      ]
    }
+
    {
      'comment': 'End of a function (a.k.a. "endfunction" tag'
      'match': '^\\s*endfunction'
@@ -135,7 +123,9 @@
    }
 
    {
-      'comment': 'strings with \''
+      'comment': 'single quoted strings'
+      'name': 'string.quoted.single.scilab'
+
       'begin': '(?<![\\w\\]\)])\''
       'beginCaptures':
          '0':
@@ -144,7 +134,6 @@
       'endCaptures':
          '0':
             'name': 'punctuation.definition.string.end.scilab'
-      'name': 'string.quoted.single.scilab'
       'patterns': [
          {
             'match': '\'\'|""'
@@ -154,7 +143,9 @@
    }
 
    {
-      'comment': 'strings with "'
+      'comment': 'double quoted strings'
+      'name': 'string.quoted.double.scilab'
+
       'begin': '"'
       'beginCaptures':
          '0':
@@ -163,7 +154,6 @@
       'endCaptures':
          '0':
             'name': 'punctuation.definition.string.end.scilab'
-      'name': 'string.quoted.double.scilab'
       'patterns': [
          {
             'match': '\'\'|""'
@@ -186,7 +176,7 @@
    'line_comment':
       {
         'match': '//.*\\n'
-        'name': 'punctuation.definition.comment.scilab'
+        'name': 'comment.line.comment.scilab'
       }
 
    'continuation_mark':
@@ -361,7 +351,7 @@
    'sci_builtin_functions_p':
       {
          'comment': 'Scilab 5.4.1 pre-defined functions beginning with p'
-         'match': '\\b(?<!\\.)(param3d|param3d1|part|pinv|plot2d|plot2d1|plot2d2|plot2d3|plot2d4|plot3d|plot3d1|poly|ppol|pppdiv|predef|print|prod)\\b'
+         'match': '\\b(?<!\\.)(param3d|param3d1|part|pinv|plot2d|plot2d1|plot2d2|plot2d3|plot2d4|plot3d|plot3d1|poly|ppol|pppdiv|predef|print|prod|progressionbar|proj|projsl|projspec|prompt|psmall|pspect|pwd)\\b'
          'name': 'support.function.builtin.scilab'
       }
    'sci_builtin_functions_q':
@@ -385,7 +375,7 @@
    'sci_builtin_functions_t':
       {
          'comment': 'Scilab 5.4.1 pre-defined functions beginning with t'
-         'match': '\\b(?<!\\.)(testmatrix|tic|timer|toc|toolbar|tlist|tr_zer|tril|tokens|triu|type|typename|typeof)\\b'
+         'match': '\\b(?<!\\.)(testmatrix|tic|timer|toc|toolbar|tlist|tr_zer|tril|tohome|tokens|triu|type|typename|typeof)\\b'
          'name': 'support.function.builtin.scilab'
       }
    'sci_builtin_functions_u':
