@@ -1,0 +1,9 @@
+
+'.source.scilab':
+  'editor':
+    'autoIndentOnPaste': false
+    'softTabs': true
+    'tabLength': 3
+    'commentStart': '// '
+    'increaseIndentPattern': '^\\s*((?:function)|if|else|elseif|select|case|try|catch|for|while)\\b.*\\s*$'
+    'decreaseIndentPattern': '^\\s*(elseif|else|end|endfunction)\\b.*\\s*$'
