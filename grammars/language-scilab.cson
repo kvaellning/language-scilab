@@ -168,7 +168,7 @@
    }
 
    {
-      'comment': 'matrix/vector extraction :'
+      'comment': 'matrix/vector extraction symbols : & $'
       'match': '(?<![a-zA-Z_0-9])[:\\$]'
       'name' : 'support.constant.scilab'
    }
