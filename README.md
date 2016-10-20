@@ -1,8 +1,10 @@
+# language-scilab package
+
 This package adds the support of Scilab language in Atom, with syntax highlighting.
 This package is roughly based on [language-scilab](https://atom.io/packages/language-scilab) by Jeremy Heleine.
 
 ## Changes in respect to the original package
-As for the current version (0.3.1) which is based on [language-scilab 0.2.0](https://github.com/JeremyHeleine/language-scilab/tree/d3c7248d7ff840c9b7f10902d4e5886200fd4e5b) nearly everything in the code is altered. [language-scilab](https://atom.io/packages/language-scilab) was originally used as a sceletal implementation for this specific idiom. Since that time, the package has seen a lot of redesigns and specializations, e.g.:
+As for the current version (0.3.2) which is based on [language-scilab 0.1.0](https://github.com/JeremyHeleine/language-scilab/tree/f68888450e46ce23e1f8847b85cef49a31bf96fb) nearly everything in the code is altered. [language-scilab](https://atom.io/packages/language-scilab) was originally used as a sceletal implementation for this specific idiom. Since that time, the package has seen a lot of redesigns and specializations, e.g.:
 
    - including most of the Scilab built-in functions, as best as possible
    - added Scilab constants
@@ -15,12 +17,20 @@ As for the current version (0.3.1) which is based on [language-scilab 0.2.0](htt
    - Scilab functions might be missing
    - Definition of <code>function</code> might lead to errors if the continuation mark <code>...</code> is used for/after return values
    - In general some problems with the continuation mark (e.g. <code>|...</code> will be marked as error)
+   - __Performance is not so great.__ In near future, the regular expression have to be revised.
 
 ## Planned features
    - *wherami* compatible line numbering
    - [GIT](https://git-scm.com/) support
+   - matrix scope
 
 ## Changelog
+   - #### 0.3.2
+      - fixed error if two or more variable assignments occur
+      - fixed error for nested struct/tlist extraction (e.g. <code>foo(bar)(foo)</code>)
+      - fixed error for vector assignments by introducing a global vector definition
+      - added missing symbol <code>!</code> to all variable/function names
+
    - #### 0.3.1
       - fixed errors for leading and trailing dot (<code>.</code>) operator
       - fixed error in the variable assignment
