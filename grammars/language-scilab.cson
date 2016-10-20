@@ -33,7 +33,7 @@
 
    {
       'comment': 'Arithmetic operators'
-      'match': '\\+|\\-|\\*|\\*\\*|\\^|/|\\.\\*|\\.\\*\\*|\\.^|\\^|/'
+      'match': '\\+|\\-|\\.?(\\*|/|\\\\|\\^|(?<=[\\.\\w\\]\\)])\')'
       'name': 'keyword.operator.arithmetic.scilab'
    }
 
@@ -169,7 +169,7 @@
 
    {
       'comment': 'matrix/vector extraction symbols : & $'
-      'match': '(?<![a-zA-Z_0-9])[:\\$]'
+      'match': '(?<![a-zA-Z_0-9\\s])[:\\$]'
       'name' : 'support.constant.scilab'
    }
 ]
@@ -203,7 +203,7 @@
    'sci_builtins':
       {
          'comment': 'Scilab built-in constants'
-         'match': '%(pi|e|i|eps|inf|nan|t|T|f|F|s|z)|\\$\\b'
+         'match': '%(pi|e|i|eps|inf|nan|t|T|f|F|s|z)\\b'
          'name': 'support.constant.scilab'
       }
 
@@ -374,7 +374,7 @@
    'sci_builtin_functions_s':
       {
          'comment': 'Scilab 5.4.1 pre-defined functions beginning with s'
-         'match': '\\b(?<!\\.)(save|savewave|schur|sci_tree2|sci_tree3|sci_tree4|sciargs|scicosim|sctree|semidef|set|setbpt|setfield|setmenu|setscicosvars|sfact|sfinit|sign|simp|simp_mode|sin|size|sleep|sort|sparse|spchol|spcompack|spec|spget|splin|sqrt|stacksize|str2code|strcat|strindex|string|strsubst|struct|subf|sum|sva|svd|sylv|symfcti|syredi)\\b'
+         'match': '\\b(?<!\\.)(save|savewave|schur|sci2exp|sci_tree2|sci_tree3|sci_tree4|sciargs|scicosim|sctree|semidef|set|setbpt|setfield|setmenu|setscicosvars|sfact|sfinit|sign|simp|simp_mode|sin|size|sleep|sort|sparse|spchol|spcompack|spec|spget|splin|sqrt|stacksize|str2code|strcat|strindex|string|strsubst|struct|subf|sum|sva|svd|sylv|symfcti|syredi)\\b'
          'name': 'support.function.builtin.scilab'
       }
    'sci_builtin_functions_t':
