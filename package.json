@@ -9,5 +9,14 @@
      "url": "https://github.com/kvaellning/language-scilab"
   },
   "license": "MIT",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "configSchema": {
+    "wheramiCompatible": {
+      "title": "Show \"whereami\"- compatible line numbering",
+      "description": "If activated, this option will display the line numbers **Scilab**. Typically, this means that every <code>function</code>-Tag will start a relative line numbering beginning at 1.",
+      "type": "boolean",
+      "default": false,
+      "order": 1
+    }
+  }
 }
