@@ -28,8 +28,11 @@
         {  'include':  'source.scilab.predefined-functions#_functions_v'  }
         {  'include':  'source.scilab.predefined-functions#_functions_w'  }
         {  'include':  'source.scilab.predefined-functions#_functions_x'  }
+        {  'include':  'source.scilab.predefined-functions#_functions_z'  }
         {  'include':  'source.scilab.predefined-functions#_functions_%'  }
-        {  'include':  'source.scilab.predefined-functions#_colormaps'    }
+
+        {  'include':  'source.scilab.predefined-functions#_colormaps' }
+        {  'include':  'source.scilab.predefined-functions#_xcos'      }
       ]
     }
 
@@ -37,19 +40,19 @@
   '_functions_a':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with a'
-      'match': '(?<!\\.)\\b(abcd|abinv|abort|about|abs|accept_func_default|accept_func_vfsa|acos|acosd|acosh|acoshm|acosm|acot|acotd|acoth|acsc|acscd|acsch|add_param|addcolor|addhistory|addmenu|addf|addinter|addmenu|adj2sp|aff2ab|amell|analpf|analyze|and|aplat|apropos|argn|arhnk|arl2|arma2p|arma2ss|armax|armax1|arsimul|ascii|asciimat|asec|asecd|asech|asin|asind|asinh|asinhm|asinm|atan|atand|atanh|atanhm|atanm|augment|auread|auwrite)\\b'
+      'match': '(?<!\\.)\\b(abcd|abinv|abort|about|abs|accept_func_default|accept_func_vfsa|acos|acosd|acosh|acoshm|acosm|acot|acotd|acoth|acsc|acscd|acsch|add_param|add_profiling|addcolor|addhistory|addmenu|addf|addinter|addmenu|adj2sp|aff2ab|amell|analpf|analyze|and|aplat|apropos|argn|arhnk|arl2|arma2p|arma2ss|armax|armax1|arsimul|ascii|asciimat|asec|asecd|asech|asin|asind|asinh|asinhm|asinm|atan|atand|atanh|atanhm|atanm|augment|auread|auwrite)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_b':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with b'
-      'match': '(?<!\\.)\\b(balanc|balreal|banner|bar|barh|barhomogenize|base2dec|basename|bdiag|beep|bessel|besselh|besseli|besselj|besselk|bessely|beta|bezout|bilin|bilt|bin2dec|binominal|bitand|bitcmp|bitget|bitor|bitset|bitxor|black|blanks|bloc2exp|bloc2ss|block_parameter_error|bode|bool2s|browsehistory|browsevar|bsplin3val|bstap|buildouttb|buttmag|bvode|bvodeS|bytecode|bytecodewalk)\\b'
+      'match': '(?<!\\.)\\b(balanc|balreal|banner|bar|barh|barhomogenize|base2dec|basename|bdiag|beep|bessel|besselh|besseli|besselj|besselk|bessely|beta|bezout|bilin|bilt|bin2dec|binominal|bitand|bitcmp|bitget|bitor|bitset|bitxor|black|blanks|bloc2exp|bloc2ss|bode|bool2s|browsehistory|browsevar|bsplin3val|bstap|buildouttb|buttmag|bvode|bvodeS|bytecode|bytecodewalk)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_c':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with c'
-      'match': '(?<!\\.)\\b(cainv|calendar|calerf|c_link|calerf|calfrq|call|canon|captions|casc|cat|ccontrg|cdfbet|cdfbin|cdfchi|cdfchn|cdff|cdffnc|cdfgam|cdfnbn|cdfnor|cdfpoi|cdft|ceil|cell|cell2mat|cellstr|center|cepstrum|champ|champ1|char|chart|chdir|cheb1mag|cheb2mag|chepol|chfact|chol|chsolve|classmarkov|clc|clean|clearfun|clf|clipboard|clock|close|cls2dls|cmb_lin|cmndred|cmoment|code2str|coding_ga_binary|coding_ga_identity|coeff|coff|coffg|colcomp|colcompr|colinout|color|colorbar|colordef|comet|comet3d|comp|companion|completion|complex|compute_initial_temp|cond|cond2sp|condestsp|conj|cont_frm|cont_mat|contour|contour2d|contour2di|contourf|contr|contrss|conv|conv2|convol|convol2d|copfac|copy|copyfile|convstr|corr|correl|cos|cosd|cosh|coshm|cosm|cotd|cotg|coth|cothm|covar|createGUID|createdir|crossover_ga_binary|crossover_ga_default|csc|cscd|csch|csgn|cshep2d|csim|cspect|csvDefault|csvRead|csvTextScan|csvWrite|ctr_gram|cumprod|cumsum|curblock|czt)\\b'
+      'match': '(?<!\\.)\\b(cainv|calendar|calerf|c_link|calerf|calfrq|call|canon|captions|casc|cat|ccontrg|cdfbet|cdfbin|cdfchi|cdfchn|cdff|cdffnc|cdfgam|cdfnbn|cdfnor|cdfpoi|cdft|ceil|cell|cell2mat|cellstr|center|cepstrum|champ|champ1|char|chart|chdir|cheb1mag|cheb2mag|check_gateways|chepol|chfact|chol|chsolve|classmarkov|clc|clean|clearfun|clf|clipboard|clock|close|cls2dls|cmb_lin|cmndred|cmoment|code2str|coding_ga_binary|coding_ga_identity|coeff|coff|coffg|colcomp|colcompr|colinout|color|colorbar|colordef|comet|comet3d|comp|companion|completion|complex|compute_initial_temp|cond|cond2sp|condestsp|conj|cont_frm|cont_mat|contour|contour2d|contour2di|contourf|contr|contrss|conv|conv2|convertindex|convol|convol2d|copfac|copy|copyfile|convstr|corr|correl|cos|cosd|cosh|coshm|cosm|cotd|cotg|coth|cothm|covar|createGUID|createdir|createfun|crossover_ga_binary|crossover_ga_default|csc|cscd|csch|csgn|cshep2d|csim|cspect|csvDefault|csvRead|csvTextScan|csvWrite|ctr_gram|cumprod|cumsum|curblock|czt)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_d':
@@ -67,25 +70,25 @@
   '_functions_f':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with f'
-      'match': '(?<!\\.)\\b(fac3d|factor|factorial|factors|faurre|fchamp|fcontour|fcontour2d|fec|feval|fcountour|ffilt|fft|fft2|fftshift|fftw_flags|fftw_forget_wisdom|fgrayplot|fieldnames|figure|file|fileext|fileinfo|fileparts|filesep|filt_sinc|filter|find|findAC|findBD|findBDK|find_freq|findfileassociation|findfiles|findm|findobj|findR|findx0BD|firstnonsingleton|fit_dat|fix|flipdim|floor|flts|fminsearch|format|fort|fourplan|fplot2d|fplot3d|fplot3d1|fprintfMat|frep2tf|freq|freson|fexp|frfit|frmag|fscanfMat|fsfirlin|fsolve|fspec|fspecg|fstabst|fstair|ftest|ftune|full|fulldile|fullpath|fullrf|fullrfk|fun2str|funcprot|funptr)\\b'
+      'match': '(?<!\\.)\\b(fac3d|factor|factorial|factors|faurre|fchamp|fcontour|fcontour2d|fec|feval|fcountour|ffilt|fft|fft2|fftshift|fftw_flags|fftw_forget_wisdom|fgrayplot|fieldnames|figure|file|fileext|fileinfo|fileparts|filesep|filt_sinc|filter|find|findAC|findBD|findBDK|find_freq|findfileassociation|findfiles|findm|findobj|findR|findx0BD|firstnonsingleton|fit_dat|fix|flipdim|floor|flts|fminsearch|format|fort|fourplan|fplot2d|fplot3d|fplot3d1|fprintf|fprintfMat|frep2tf|freq|freson|fexp|frfit|frmag|fsanf|fscanfMat|fsfirlin|fsolve|fspec|fspecg|fstabst|fstair|ftest|ftune|full|fullfile|fullpath|fullrf|fullrfk|fun2string|funcprot|funptr)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_g':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with g'
-      'match': '(?<!\\.)\\b(G_make|g_margin|gainplot|gamitg|gamma|gammaln|gca|gcare|gcbo|gcd|gce|gcf|gda|gdf|ged|genfac3d|genmarkov|geom3d|geomean|get|get_param|getblocklabel|getcallbackobject|getcolor|getd|getdate|getdebuginfo|getdefaultlanguage|getdrives|getdynlibnext|getenv|getfield|getfont|gethistory|gethistoryfile|getinstalledlookandfeels|getio|getlanguage|getlongpathname|getlookandfeel|getmd5|getmemory|getmodules|getos|getpid|getrelativefilename|getscilabkeywords|getscilabmode|getshell|getshortpathname|getsymmetrics|gettext|getvalue|getvariablesonstack|getversion|gfare|gfrancis|givens|glever|gmres|graduate|grand|grayplot|graypolarplot|grep|group|gschur|gsort|gstacksize|gtild)\\b'
+      'match': '(?<!\\.)\\b(G_make|g_margin|gainplot|gamitg|gamma|gammaln|gca|gcare|gcbo|gcd|gce|gcf|gda|gdf|ged|genfac3d|genlib|genmarkov|geom3d|geomean|get|get_function_path|get_param|get_profile|getblocklabel|getcallbackobject|getcolor|getd|getdate|getdebuginfo|getdefaultlanguage|getdrives|getdynlibnext|getenv|getfield|getfont|gethistory|gethistoryfile|getinstalledlookandfeels|getio|getlanguage|getlongpathname|getlookandfeel|getmd5|getmemory|getmodules|getos|getpid|getrelativefilename|getscilabkeywords|getscilabmode|getshell|getshortpathname|getsymmetrics|gettext|getvalue|getvariablesonstack|getversion|gfare|gfrancis|givens|glever|gmres|graduate|grand|grayplot|graypolarplot|grep|group|gschur|gsort|gstacksize|gtild)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_h':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with h'
-      'match': '(?<!\\.)\\b(h2norm|h_cl|h_inf|h_inf_st|h_norm|hallchart|hank|hankelsv|harmean|haveacompiler|havewindow|help|help_from_sci|help_skeleton|hermit|hess|hex2dec|hilb|hilbert|hinf|hist3d|histplot|horner|host|householder|hrmt|hsv2rgb|htrianr|hypermat)\\b'
+      'match': '(?<!\\.)\\b(h2norm|h_cl|h_inf|h_inf_st|h_norm|hallchart|hank|hankelsv|harmean|haveacompiler|havewindow|head_comments|help|help_from_sci|help_skeleton|hermit|hess|hex2dec|hilb|hilbert|hinf|hist3d|histplot|horner|host|householder|hrmt|hsv2rgb|htrianr|hypermat)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_i':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with i'
-      'match': '(?<!\\.)\\b(iconvert|ieee|iir|iirgroup|iirlp|ilib_build|ilib_compile|ilib_for_link|ilib_gen_Make|ilib_gen_cleaner|ilib_gen_gateway|ilib_gen_loader|ilib_include_flag|ilib_mex_build|ilib_verbose|imag|impl|imrep2ss|imult|ind2sub|inistate|init_ga_default|init_param|input|int|int2d|int3d|int8|int16|int32|intc|intdec|integrate|interp|interp1|interp2d|interp3d|interpln|intersect|intg|intl|intppty|intsplin|inttrap|inttype|inv|inv_coeff|invr|invsyslin|iqr|is_absolute_path|is_handle_valid|is_hdf5_file|isalphanum|isascii|iscell|iscellstr|isdef|isdigit|isdir|isempty|isequal|isequalbitwise|iserror|isfield|isfile|isglobal|isinf|isletter|isnan|isnum|isoview|isreal|issparse|isstruct|istssession|isvector)\\b'
+      'match': '(?<!\\.)\\b(iconvert|ieee|iir|iirgroup|iirlp|ilib_build|ilib_compile|ilib_for_link|ilib_gen_Make|ilib_gen_cleaner|ilib_gen_gateway|ilib_gen_loader|ilib_include_flag|ilib_mex_build|ilib_verbose|imag|impl|imrep2ss|imult|ind2sub|inistate|init_ga_default|init_param|input|int|int2d|int3d|int8|int16|int32|intc|intdec|integrate|interp|interp1|interp2d|interp3d|interpln|intersect|intg|intl|intppty|intsplin|inttrap|inttype|inv|inv_coeff|invr|invrs|invsyslin|iqr|is_absolute_path|is_handle_valid|is_hdf5_file|isalphanum|IsAScalar|isascii|iscell|iscellstr|isdef|isdigit|isdir|isempty|isequal|isequalbitwise|iserror|isfield|isfile|isglobal|isinf|isletter|isnan|isnum|isoview|isreal|issparse|isstruct|istssession|isvector)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_j':
@@ -97,19 +100,19 @@
   '_functions_k':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with k'
-      'match': '(?<!\\.)\\b(kal|karmarkar|kernel|kpure|krac2|kron|kroneck)\\b'
+      'match': '(?<!\\.)\\b(kalm|karmarkar|kernel|kpure|krac2|kron|kroneck)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_l':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with l'
-      'match': '(?<!\\.)\\b(lasterror|lattn|lattp|lcf|lcm|lcmdiag|ldiv|ldivf|leastsq|legend|legendre|legends|length|leqr|lev|levin|lft|lib|librarieslist|libraryinfo|lin|lin2mu|lindquist|linear_interpn|lines|linf|linfn|link|linmeq|linsolve|linspace|list|list2vec|listfiles|listfunctions|listvarinfile|lmisolver|lmitool|load|loadmatfile|loadwave|locate|log|log10|log1p|log2|logm|logspace|lqe|lqg|lqg2stan|lqg_ltr|lqr|ls|lsq|lsq_splin|lsqrsolve|lsslist|lstcat|lstsize|ltitr|lu|ludel|lufact|luget|lusolve|lyap)\\b'
+      'match': '(?<!\\.)\\b(lasterror|lattn|lattp|lcf|lcm|lcmdiag|ldiv|ldivf|leastsq|legend|legendre|legends|length|leqe|leqr|lev|levin|lex_sort|lft|lib|librarieslist|libraryinfo|lin|lin2mu|lindquist|linear_interpn|lines|linf|linfn|link|linmeq|linsolve|linspace|list|list2vec|listfiles|listfunctions|listvarinfile|lmisolver|lmitool|load|loadmatfile|loadwave|locate|log|log10|log1p|log2|logm|logspace|lqe|lqg|lqg2stan|lqg_ltr|lqr|ls|lsq|lsq_splin|lsqrsolve|lsslist|lstcat|lstsize|ltitr|lu|ludel|lufact|luget|lusolve|lyap)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_m':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with m'
-      'match': '(?<!\\.)\\b(m6bandred|m6bmatch|m6busack|m6cent|m6chcm|m6clique|m6clique1|m6compc|m6compfc|m6concom|m6deumesh|m6dfs|m6dfs2|m6diam|m6dijkst|m6dmtree|m6edge2st|m6findiso|m6flomax|m6floqua|m6fordfulk|m6frang|m6hamil|m6hullcvex|m6inimet|m6johns|m6kilter|m6knapsk|m6loadg|m6lp2tad|m6lp2tau|m6mesh2b|m6meshmesh|m6metasync|m6ns2p|m6p2ns|m6pcchna|m6permuto|m6prevn2p|m6prevn2st|m6prfmatch|m6relax|m6saveg|m6sconcom|m6showg|m6showns|m6showp|m6ta2lpd|m6ta2lpu|m6tconex|m6transc|m6umtree|m6umtree1|m6visitor|macr2lst|mapsound|matrix|max|maxi|mclearerr|mclose|meof|merror|messagebox|mfprintf|mfscanf|mget|mgetstr|mesh|milk_drop|min|mini|mlist|mode|modulo|moment|mopen|mprintf|mput|mputl|mputstr|mscanf|mseek|msprintf|msscanf|mtell|mtlb_mode|mtlb_sparse|mtlb_strcmp|mu2lin|mulf|mutation_ga_binary|mutation_ga_default)\\b'
+      'match': '(?<!\\.)\\b(m6bandred|m6bmatch|m6busack|m6cent|m6chcm|m6clique|m6clique1|m6compc|m6compfc|m6concom|m6deumesh|m6dfs|m6dfs2|m6diam|m6dijkst|m6dmtree|m6edge2st|m6findiso|m6flomax|m6floqua|m6fordfulk|m6frang|m6hamil|m6hullcvex|m6inimet|m6johns|m6kilter|m6knapsk|m6loadg|m6lp2tad|m6lp2tau|m6mesh2b|m6meshmesh|m6metasync|m6ns2p|m6p2ns|m6pcchna|m6permuto|m6prevn2p|m6prevn2st|m6prfmatch|m6relax|m6saveg|m6sconcom|m6showg|m6showns|m6showp|m6ta2lpd|m6ta2lpu|m6tconex|m6transc|m6umtree|m6umtree1|m6visitor|m_circle|macglov|macr2lst|markp2ss|macrovar|mapsound|matrix|max|maxi|mclearerr|mclose|mdelete|meof|merror|messagebox|mfprintf|mfscanf|mget|mgetstr|mesh|milk_drop|min|minreal|minss|mlist|mode|modulo|moment|mopen|mprintf|mput|mputl|mputstr|mscanf|mseek|msprintf|msscanf|mtell|mtlb_mode|mtlb_sparse|mtlb_strcmp|mu2lin|mulf|mutation_ga_binary|mutation_ga_default)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_n':
@@ -127,7 +130,7 @@
   '_functions_p':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with p'
-      'match': '(?<!\\.)\\b(p_margin|pack|param3d|param3d1|paramfplot2d|pareto_filter|parrot|part|pathconvert|pathsep|pbig|pca|pcg|pdiv|pen2ea|pencan|penlaur|perctl|perl|perms|permute|pertrans|pfss|phasemag|phaseplot|phc|pie|pinv|PlotSparse|playsnd|plot|plot2d|plot2d1|plot2d2|plot2d3|plot2d4|plot3d|plot3d1|plotprofile|plzr|pmodulo|pol2des|pol2str|polar|polarplot|polfact|poly|powershell|ppol|prbs_a|predef|preferences|prettyprint|primes|princomp|print|printfigure|printsetupbox|prod|profile|progressionbar|proj|projsl|projspec|prompt|psmall|pspect|pwd)\\b'
+      'match': '(?<!\\.)\\b(p_margin|pack|param3d|param3d1|paramfplot2d|pareto_filter|parrot|part|pathconvert|pathsep|pbig|pca|pcg|pdiv|pen2ea|pencan|penlaur|perctl|perl|perms|permute|pertrans|pfss|phasemag|phaseplot|phc|pie|pinv|PlotSparse|playsnd|plot|plot2d|plot2d1|plot2d2|plot2d3|plot2d4|plot3d|plot3d1|plotframe|plotprofile|plzr|pmodulo|pol2des|pol2str|polar|polarplot|polfact|poly|powershell|ppol|prbs_a|predef|preferences|prettyprint|primes|princomp|print|printfigure|printsetupbox|prod|profile|progressionbar|proj|projsl|projspec|prompt|psmall|pspect|pwd)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_q':
@@ -139,43 +142,49 @@
   '_functions_r':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with r'
-      'match': '(?<!\\.)\\b(rafiter|rand|randpencil|rank|rankqr|rat|rcond|rdivf|read|read4b|readb|readgif|readmps|readxbm|real|recons|remez|repmat|resize_matrix|res_with_prec|residu|resume|rgb2name|ricc|rlist|roots|round|rowshuff|rpem|rref|rtitr)\\b'
+      'match': '(?<!\\.)\\b(rafiter|rand|randpencil|rank|rankqr|rat|rcond|rdivf|read|read4b|readb|readgif|readmps|readxbm|real|recompilefunction|recons|regexp|reglin|remez|remezb|remove_profiling|repfreq|replot|repmat|reset_profiling|resize_matrix|res_with_prec|residu|resume|rgb2name|ric_desc|ricc|riccati|rlist|roots|rotate_axes|round|routh_t|rowinout|rowregul|rowshuff|rpem|rref|rtitr)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_s':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with s'
-      'match': '(?<!\\.)\\b(save|savewave|schur|show_pca|sci2exp|sci_tree2|sci_tree3|sci_tree4|sciargs|scicosim|sctree|secto3d|selection_ga_elitist|selection_ga_random|semidef|set|setbpt|setfield|setmenu|setscicosvars|sfact|sfinit|sign|simp|simp_mode|sin|size|sleep|sort|sound|soundsec|sparse|spchol|spcompack|spec|spget|splin|sqrt|squeeze|ssrand|stacksize|str2code|strcat|strchr|strcmp|strcmpi|strncpy|strindex|string|strsubst|strtod|strtok|struct|subf|sum|surf|sva|svd|sylv|symfcti|syredi|sysconv|sysdiag|system_getproperty|system_setproperty)\\b'
+      'match': '(?<!\\.)\\b(save|savewave|sca|schur|show_pca|sci2exp|sci_tree2|sci_tree3|sci_tree4|sciargs|scicosim|sctree|sda|sdiff|sec|sech|secd|secto3d|selection_ga_elitist|selection_ga_random|semidef|sensi|set|setbpt|setdiff|setfield|setmenu|setscicosvars|sfact|sfinit|sgrid|show_margins|showprofile|sign|signm|simp|simp_mode|sin|size|sleep|sm2ss|smga|solve|sort|sound|soundsec|sparse|spchol|spcompack|spec|specfact|spget|splin|sqrt|squarewave|squeeze|ss2des|ss2ss|ss2tf|ssrand|stacksize|st_ility|stabil|statgain|str2code|strcat|strchr|strcmp|strcmpi|strncpy|strindex|string|strsubst|strtod|strtok|struct|sub2ind|subf|subplot|sum|surf|sva|svd|svplot|sylv|symfcti|syredi|sysconv|sysdiag|sysfact|syslin|syssize|system|system_getproperty|system_setproperty)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_t':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with t'
-      'match': '(?<!\\.)\\b(tabul|taucs_chdel|taucs_chfact|taucs_chget|taucs_chinfo|taucs_chsolve|temp_law_csatemp_law_default|temp_law_fsa|temp_law_huang|temp_law_vfsa|testmatrix|thrownan|tic|timer|toc|toolbar|tlist|tr_zer|tril|tohome|tokens|trace|trfmod|triu|type|typename|typeof)\\b'
+      'match': '(?<!\\.)\\b(tabul|taucs_chdel|taucs_chfact|taucs_chget|taucs_chinfo|taucs_chsolve|temp_law_csatemp_law_default|temp_law_fsa|temp_law_huang|temp_law_vfsa|testmatrix|tf2des|tf2ss|thrownan|tic|timer|tlist|toc|tohome|tokens|toolbar|tr_zer|trace|trans|trianfml|tril|trisolve|triu|trzeros|trfmod|type|typename|typeof)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_u':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with u'
-      'match': '(?<!\\.)\\b(uint16|uint32|uint8|uicontrol|uicontextmenu|uigetdir|ulink|umf_ludel|umf_lufact|umf_luget|umf_luinfo|umf_lusolve|umfpack|unique|unix|unpack|unsetmenu|user)\\b'
+      'match': '(?<!\\.)\\b(uint16|uint32|uint8|uicontrol|uicontextmenu|uigetdir|ui_observer|ulink|umf_ludel|umf_lufact|umf_luget|umf_luinfo|umf_lusolve|umfpack|unique|unix|unobs|unpack|unsetmenu|unzoom|user)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_v':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with v'
-      'match': '(?<!\\.)\\b(var2vec|varn|vec2list|vec2var|ver)\\b'
+      'match': '(?<!\\.)\\b(var2vec|varn|vec2list|vec2var|vectorfind|ver)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_w':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with w'
-      'match': '(?<!\\.)\\b(waitbar|warning|wavread|wavwrite|what|where|whereami|whereis|who|who_user|whos|winsid|with_embedded_jre|with_javasci|with_macros_source|with_module|with_tk|writb|write|write4b)\\b'
+      'match': '(?<!\\.)\\b(waitbar|warning|warnobsolete|wavread|wavwrite|wfir|what|where|whereami|whereis|who|who_user|whos|wiener|wiegner|window|winsid|with_embedded_jre|with_javasci|with_macros_source|with_module|with_tk|writb|write|write4b)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_x':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with x'
       'match': '(?<!\\.)\\b(x_choose|x_dialog|x_mdialog|xarc|xarcs|xarrows|xaxis|xchange|xchoicesi|xclea|xclear|xclick|xdel|xend|xfarc|xfarcs|xfpoly|xfpolys|xfrect|xg2ps|xget|xgetech|xgetfile|xgetmouse|xgraduate|xgrid|xinfo|xinit|xlfont|xload|xname|xnumb|xpause|xpoly|xpolys|xrect|xrects|xs2fig|xsave|xsegs|xselect|xset|xsetech|xstring|xstringl|xtape|xtitle)\\b'
+      'name': 'support.function.scilab'
+    }
+  '_functions_z':
+    {
+      'comment': 'Scilab 5.4.1 pre-defined functions beginning with z'
+      'match': '(?<!\\.)\\b(zeropen|zeros|zgrid|znaupd|zneupd|zoom_rect|zpbutt|zpch1|zpch2|zpell)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_%':
@@ -188,5 +197,11 @@
     {
       'comment': 'Scilab 5.4.1 pre-defined colormaps'
       'match': '(?<!\\.)\\b(autumncolormap|bonecolormap|coolcolormap|coppercolormap|graycolormap|hotcolormap|hsvcolormap|jetcolormap|oceancolormap|pinkcolormap|rainbowcolormap|springcolormap|summercolormap|whitecolormap|wintercolormap)\\b'
-      'name': 'support.function.scilab'
+      'name': 'support.function.colormaps.scilab'
+    }
+  '_xcos':
+    {
+      'comment': 'Scilab 5.4.1 pre-defined xcos functions'
+      'match': '(?<!\\.)\\b(block_parameter_error|find_scicos_version|fixedpointgcd|get_file_path|get_scicos_version|initial_scicos_tables|lincos|returntoscilab|scicos_getvalue|scicos_workspace_init|with_modelica_compiler|scicos_simulate|steadycos)\\b'
+      'name': 'support.function.xcos.scilab'
     }

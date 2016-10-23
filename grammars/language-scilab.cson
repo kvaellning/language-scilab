@@ -100,7 +100,8 @@
   }
 
   { 'include': '#variable_assignment' }
-  { 'include': '#vector_colon'    }
+  { 'include': '#vector_colon'        }
+
   { 'include': '#std_environment' }
 ]
 
