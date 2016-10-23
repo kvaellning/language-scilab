@@ -558,7 +558,7 @@
             '1':
               'name': 'punctuation.accessor.invalid.illegal.scilab'
             '2':
-              'name': 'variable.other.object.invalid.illegal.scilab'
+              'name': 'variable.other.member.invalid.illegal.scilab'
         }
       ]
     }
@@ -640,6 +640,11 @@
                   'patterns': [
                     { 'include': '#std_environment' }
                   ]
+            }
+
+            {
+              'match': '(?<=\\.)[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+              'name': 'variable.other.member.scilab'
             }
 
             {
