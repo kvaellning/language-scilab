@@ -11,6 +11,7 @@ As for the current version (0.3.2) which is based on [language-scilab 0.1.0](htt
    - Markup of errors, as far as they can be reflected by the grammar Definition
    - Snippets for often used Scilab blocks
    - Proper definition of indentation depths
+  - *whereami*-compatible line-numbering
    - and many more (and to come!)
 
 ## Known issues
@@ -22,12 +23,25 @@ As for the current version (0.3.2) which is based on [language-scilab 0.1.0](htt
   - __Performance of the regular expressions seems not so great.__ In near future, the regular expression have to be revised.
 
 ## Planned features
-  - *wherami* compatible line numbering
-  - [GIT](https://git-scm.com/) support
   - matrix scope
   - If necessary, an [autocomplete-plus]() provider.
+  - If necessary, linter support
+  - Revisit (and if necessary rewrite) grammar-regexp
 
 ## Changelog
+  - #### 0.4.1
+    - ##### whereami:
+      - increase of robustness
+      - added option that function anchors should only be updated on save
+        (this might increase performance)
+    - fixed long name recognization for `function` declarations
+    - adds display for invalid parenthesis in function input parameters
+
+  - #### 0.4.0
+    - fixed some assignment related stuff (hopefully last time)
+    - added *whereami* support
+      **Note: This feature is actually treated as experimental and may have slow performance and/or some strange line-numbering issues**
+
   - #### 0.3.3
     - fixed problems related to `=-` and `=+`
     - fixed indentation for scopes

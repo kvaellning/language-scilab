@@ -1,7 +1,8 @@
 {
   "name": "language-scilab",
-  "version": "0.3.3",
-  "description": "Scilab language (fork) support in Atom. This package is based on language-scilab of Jeremy Heleine.",
+  "version": "0.4.1",
+  "description": "Scilab language (fork) support in Atom. This package is roughly based on language-scilab of Jeremy Heleine.",
+  "main": "./lib/language-scilab",
   "engines": { "atom": ">=1.0.0 <2.0.0" },
   "dependencies": {},
   "repository":{
@@ -9,14 +10,5 @@
      "url": "https://github.com/kvaellning/language-scilab"
   },
   "license": "MIT",
-  "readmeFilename": "README.md",
-  "configSchema": {
-    "whereamiCompatible": {
-      "title": "Show \"whereami\"- compatible line numbering",
-      "description": "If activated, this option will display the line numbers **Scilab**. Typically, this means that every <code>function</code>-Tag will start a relative line numbering beginning at 1.",
-      "type": "boolean",
-      "default": false,
-      "order": 1
-    }
-  }
+  "readmeFilename": "README.md"
 }
