@@ -63,13 +63,10 @@
             'name': 'meta.function.parameters.scilab'
 
             'captures':
-              '0':
-                'patterns':[
-                  { 'include': '#continuation_mark' }
-                ]
               '1':
                 'name': 'punctuation.section.parens.begin.scilab'
               '2':
+                'name': 'blubb'
                 'patterns':[
                   {
                     'comment': 'numbers only are clearly illegal'
@@ -99,10 +96,10 @@
     'name': 'storage.section.function.end.scilab'
   }
 
+  { 'include': '#std_environment' }
+
   { 'include': '#variable_assignment' }
   { 'include': '#vector_colon'        }
-
-  { 'include': '#std_environment' }
 ]
 
 # ------------------------------
@@ -111,27 +108,28 @@
 'repository':
   'std_environment':
     {
+      'comment': 'This includes all constants and data types which are used for scoping'
       'patterns':[
-        { 'include':  '#continuation_mark' }
-        { 'include':  '#numbers'           }
+        { 'include': '#continuation_mark' }
+        { 'include': '#numbers'           }
 
-        { 'include':  '#name_too_long'         }
-        { 'include':  '#invalid_signs'         }
-        { 'include':  '#invalid_operators_all' }
+        { 'include': '#name_too_long'         }
+        { 'include': '#invalid_signs'         }
+        { 'include': '#invalid_operators_all' }
 
-        { 'include':  '#operators' }
+        { 'include': '#operators' }
 
-        { 'include':  '#constants_matrix_vector' }
+        { 'include': '#constants_matrix_vector' }
 
-        { 'include':  '#constants'    }
-        { 'include':  '#keywords'     }
+        { 'include': '#constants'    }
+        { 'include': '#keywords'     }
 
-        { 'include':  'source.scilab.predefined-functions#_scilab_functions'  }
+        { 'include': 'source.scilab.predefined-functions#_scilab_functions'  }
 
         { 'include': '#statement_terminator' }
 
-        { 'include':  '#struct_tlist' }
-        { 'include':  '#strings'  }
+        { 'include': '#strings'  }
+        { 'include': '#struct_tlist' }
       ]
     }
   # ------------------------------
@@ -228,6 +226,7 @@
                     '|(\\.)'  +
                   ')' +
                   '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
+
         'captures':
           '1':
             'name': 'punctuation.accessor.invalid.illegal.scilab'
@@ -352,7 +351,7 @@
       'match':  '(?<![\\w%\\$\\?!#\\.])'  +
                 '(?:' +
                   '%(?:pi|e|i|eps|inf|nan|t|T|f|F|s|z)' + # constants which yield values
-                  '|SCI|TMPDIR'                         + # other variables
+                  '|SCI|TMPDIR|varargin|varargout'      + # other variables
                   '|(?:\\[\\])'                         +   # the empty matrix []
                 ')(?![\\w%\\$\\?!#\\.])'
       'name': 'support.constant.scilab'
@@ -365,7 +364,6 @@
                '|(?<![\\w%\\$\\?!#\'\"\\+\\-\\*\\\\])\\$'         # ($) is only a constant if nothing is written in front
       'name' : 'support.constant.scilab'
     }
-
   'constants':
     {
       'patterns':[
@@ -588,20 +586,24 @@
 
   'variable_assignment':
     {
-      'match':  '(?:'   +
-                  '(?:\'.*?\')' + # case 1: yet another string with single quotes
-                  '|(?:".*?")'  + # case 2: yet another string with double quotes
-                ')' +
-                '|(?:'  +
-                  '(?<charsSimple>[\\w%\\$\\?!#](?!\\s*//))+' + # case 3: "simple" assignment with no parenthesis (NOTE: [^;,\\(\\)\\="\'] would also work)
-                  '(?:'                                       +
-                    '(?:[^,;\\=](?!\\s*//))+'       +  # case 4: assignment with parenthesis any character, except //, ;, = and ,
-                    '\\(\\s*["\']?'                 + # beginning parenthesis
-                      '.+?'                         + # again anything
-                    '["\']?\\s*\\)'                 + # ending parenthesis
-                    '(?:\\.\\g<charsSimple>+)?'     + # optional stuff on the end
-                  ')?' +
-                ')\\s*' +
+      'match':  '(?:' +
+                  '(?:'   +
+                    '(?<assign>'  +
+                      '(?<charsSimple>[\\w%\\$\\?!#](?!\\s*//))+' + # case 1: "simple" assignment with no parenthesis
+                      '(?:'                                       + # case 2: assignment with parenthesis
+                        '\\(\\s*["\']?'                 + # beginning parenthesis
+                          '.+?'                         + # again anything
+                        '["\']?\\s*\\)'                 + # ending parenthesis
+                        '(?:\\.\\g<charsSimple>+)?'     + # optional stuff on the end
+                      ')?' +
+                    ')' +
+                    '|(?:'  +
+                      '\\[[^;\\=]*?\\]' + # grab the stuff in squared brackets
+                    ')'     +
+                  ')' +
+                  '|(?:\\g<charsSimple>\\.\\g<assign>)' + # case 3: assignment with a dot any anything other behind
+                ')'   +
+                '\\s*' +
                 '(?!\\s*[\\=]{2,})' + # more than one equal sign
                 '(?=\\=)'
 
