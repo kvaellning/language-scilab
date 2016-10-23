@@ -14,7 +14,7 @@ module.exports =
       if not editor.gutterWithName('whereami-scilab')
         @whereamiView = new SciViewWhereAmI(editor)
 
-      #@whereamiView?.UpdateGutter()
+      @whereamiView?.UpdateGutter()
 
   deactivate: () ->
     @subscriptions?.dispose()

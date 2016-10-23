@@ -20,7 +20,6 @@ As for the current version (0.3.2) which is based on [language-scilab 0.1.0](htt
   - In general some problems with the continuation mark (e.g. `|...` will be marked as error)
   - Extractions like `foo('a')('a')` will not be included.
     Originally, this feature was planned, but due the high amount of recursion, this feature is set on hold.
-  - __Performance of the regular expressions seems not so great.__ In near future, the regular expression have to be revised.
 
 ## Planned features
   - matrix scope
@@ -31,6 +30,7 @@ As for the current version (0.3.2) which is based on [language-scilab 0.1.0](htt
 ## Changelog
   - #### 0.4.3
     - adds new language keywords
+    - fixes issues with strings statring with `'`
     - #### whereami:
       - use scope-based function detection<br>
         (*bug:* race-condition since the complete resolved scopes are only available after the anchors are loaded. Next step: serialize state on Atom end and keep the anchors from the last session)

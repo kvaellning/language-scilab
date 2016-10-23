@@ -459,7 +459,7 @@
     {
       'comment': 'single quoted strings'
 
-      'begin': '(?<![\\w\\]\)])\''
+      'begin': '(?<![\\w\\]\\)\\.])\''
       'end': '\'(?!\')'
 
       'contentName': 'string.quoted.single.scilab'
