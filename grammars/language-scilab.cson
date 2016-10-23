@@ -303,6 +303,13 @@
   # ------------------------------
   # operators
   # ------------------------------
+  'operator_linear_system':
+    {
+      'comment': 'Operators used for linear system simulation'
+      'match': '/\\.' # feedback operator
+      'name': 'keyword.operator.CACSD.scilab'
+    }
+
   'operators_arithmetic':
     {
       'comment': 'Arithmetic operators'
@@ -335,10 +342,11 @@
   'operators':
     {
       'patterns': [
-        {  'include':  '#operators_arithmetic' }
-        {  'include':  '#operators_logic'      }
-        {  'include':  '#operators_comparison' }
-        {  'include':  '#operators_assignment' }
+        { 'include': '#operator_linear_system' }
+        { 'include': '#operators_arithmetic'   }
+        { 'include': '#operators_logic'        }
+        { 'include': '#operators_comparison'   }
+        { 'include': '#operators_assignment'   }
       ]
     }
 
@@ -366,9 +374,9 @@
       'comment': 'Scilab built-in constants'
       'match':  '(?<![\\w%\\$\\?!#\\.])'  +
                 '(?:' +
-                  '%(?:pi|e|i|eps|inf|nan|t|T|f|F|s|z)' + # constants which yield values
-                  '|SCI|TMPDIR|varargin|varargout'      + # other variables
-                  '|(?:\\[\\])'                         +   # the empty matrix []
+                  '%(?:pi|e|eps|i|inf|io|nan|t|T|f|F|s|z)' + # constants which yield values
+                  '|SCI|SCIHOME|TMPDIR|varargin|varargout'         + # other variables
+                  '|(?:\\[\\])'                            + # the empty matrix []
                 ')(?![\\w%\\$\\?!#\\.])'
       'name': 'support.constant.scilab'
     }
@@ -540,7 +548,7 @@
           '\\={1,}[&\\|><~\\*/\\\\:;]'          +  # standard for all but trailing minus (-) and plus (+)
           '|[\\=]{3,}(\\+|\\-)'                 +  # special cases for minus and plus, since the following operator is interpreted as (polarity) sign of a number
         ')'                                     +  # NOTE: SPECIAL CASE SHOULD BE CHANGED IF CONDITIONALS ARE TREATED AS OWN SCOPE
-        '|[&\\|><~]\\.{1,}|[\\+\\-\\*/\\\\]\\.{1,}\\D'  +  # trailing dot (.)
+        '|[&\\|><~]\\.{1,}|[\\+\\-\\*\\\\]\\.{1,}\\D'   +  # trailing dot (.)
         '|[&\\|\\+\\-\\*/\\.\\\\]\\={1,}|[<~]\\={2,}'   +  # trailing equal (=)
         '|[\\+\\-\\*/\\\\]{2,}(?<!\\*\\*)'              +  # operator mixing
         '|[!\\=\\?]{2,}(?<!\\=\\=)'                        # not available operator combinations
