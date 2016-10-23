@@ -33,7 +33,9 @@ As for the current version (0.3.2) which is based on [language-scilab 0.1.0](htt
     - fixed indentation for scopes
     - fixed constants assignments
     - adds (some) missing Scilab functions
-    - adds struct/tlist accessor recognization (foo('a'), foo(1)('a') etc.)
+    - adds struct/tlist accessor recognization (if they can be determined by grammar, not at runtime)
+    - adds member scopes
+    - fixes problems with equal signs inside of strings
     - includes spec for Unit-Tests (still incomplete)
 
   - #### 0.3.2
