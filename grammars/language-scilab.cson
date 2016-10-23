@@ -13,17 +13,21 @@
     'captures':
       '1':
         'comment': 'function keyword'
-        'name': 'storage.type.function.scilab'
+        'name': 'storage.type.function.begin.scilab'
       '2':
         'patterns':[
-          {  'include':  '#scilab_comment'      }
+          { 'include':  '#scilab_comment' }
 
-          {  'include':  '#invalid_parameter_signs' }
-          {  'include':  '#invalid_signs'           }
+          { 'include':  '#invalid_parameter_signs' }
+          { 'include':  '#invalid_signs'           }
+
+          { 'include': '#name_too_long' }
 
           {
             'comment': 'return values'
             'match': '[^/]{2,}\\s*\\='
+            'name':  'meta.function.parameters.scilab'
+
             'captures':
               '0':
                 'patterns':[
@@ -66,12 +70,22 @@
               '1':
                 'name': 'punctuation.section.parens.begin.scilab'
               '2':
-                'name': 'blubb'
                 'patterns':[
                   {
                     'comment': 'numbers only are clearly illegal'
                     'match': '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\(|,)\\d+'
                     'name': 'variable.parameter.input.invalid.illegal.scilab'
+                  }
+                  {
+                    'comment': 'Any parenthesis stuff except of one ) is also clearly illegal'
+                    'match': '(\\[)|(\\])|(\\()'
+                    'captures':
+                      '1':
+                        'name': 'punctuation.brackets.begin.invalid.illegal.scilab'
+                      '2':
+                        'name': 'punctuation.brackets.end.invalid.illegal.scilab'
+                      '3':
+                        'name': 'punctuation.parens.begin.invalid.illegal.scilab'
                   }
 
                   { 'include': '#invalid_parameter_struct-tlist' }
@@ -93,7 +107,7 @@
   {
     'comment': 'End of a function (a.k.a. "endfunction" tag'
     'match': '^\\s*endfunction'
-    'name': 'storage.section.function.end.scilab'
+    'name': 'storage.type.function.end.scilab'
   }
 
   { 'include': '#std_environment' }
@@ -364,6 +378,7 @@
                '|(?<![\\w%\\$\\?!#\'\"\\+\\-\\*\\\\])\\$'         # ($) is only a constant if nothing is written in front
       'name' : 'support.constant.scilab'
     }
+
   'constants':
     {
       'patterns':[
@@ -433,10 +448,11 @@
   'string_single':
     {
       'comment': 'single quoted strings'
-      'name': 'string.quoted.single.scilab'
 
       'begin': '(?<![\\w\\]\)])\''
       'end': '\'(?!\')'
+
+      'contentName': 'string.quoted.single.scilab'
 
       'beginCaptures':
         '0':
@@ -456,10 +472,11 @@
   'string_double':
     {
       'comment': 'double quoted strings'
-      'name': 'string.quoted.double.scilab'
 
       'begin': '"'
       'end': '"(?!")'
+
+      'contentName': 'string.quoted.double.scilab'
 
       'beginCaptures':
         '0':

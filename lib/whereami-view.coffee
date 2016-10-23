@@ -27,49 +27,73 @@ class SciViewWhereAmI
       funcEnd:     new RegExp('endfunction')
       funcInvalid: new RegExp('//')
 
-    @lineInfo   = undefined # array with [lineNumber, hasAnchorElem] used to determine if the contents of the line has changed
+    @lineInfo   = [0,false] # array with [lineNumber, hasAnchorElem] used to determine if the contents of the line has changed
     @totalLines = @editor.getLineCount()
 
-    @whereamiActive = atom.config.get('language-scilab.whereamiCompatible')
+    @updateWholeGutter = false # used to determine if the whole gutter should be redrawn. This is the case if the anchors have changed.
 
-    if @whereamiActive
-      @UpdateAnchors()
+    @whereamiActive      = atom.config.get('language-scilab.whereamiActive')
+    @updateAnchorsOnSave = atom.config.get('language-scilab.whereamiUpdateAnchorsOnSave')
 
     try
-      # subscribe to any change
-      @subscriptions.add @editor.onDidChange(@UpdateGutter)
+      # ------
+      # Subscribe to any change
+      @subscriptions.add @editor.onDidChange =>
+        # ---------------------------------------------------------
+        actTotalLines = @editor.getLineCount()
+
+        if !@updateAnchorsOnSave && (actTotalLines != @totalLines) # number of total lines has changed, so update anchors
+          # update anchors if necessary
+          @totalLines = actTotalLines
+
+          @UpdateAnchors()
+
+        @UpdateGutter()
+        # ---------------------------------------------------------
     catch
-      # Fallback: subscribe to initialization and editor changes
+      # ------
+      # Fallback: Subscribe to initialization and editor changes
       @subscriptions.add @editorView.onDidAttach(@UpdateGutter)
       @subscriptions.add @editor.onDidStopChanging(@UpdateGutter)
-      @subscriptions.add @editor.onDidSave(@UpdateOnSave)
 
+    @subscriptions.add @editor.onDidSave(@UpdatePane)
+
+    # ------
     # Subscribe to Scilab whereami flag-changes
-    @subscriptions.add atom.config.onDidChange 'language-scilab.whereamiCompatible', =>
-      @whereamiActive = atom.config.get('language-scilab.whereamiCompatible')
+    @subscriptions.add atom.config.onDidChange 'language-scilab.whereamiActive', =>
+      @whereamiActive = atom.config.get('language-scilab.whereamiActive')
 
       if @whereamiActive
-        @UpdateAnchors()
-        @UpdateGutter()
+        @UpdatePane()
       else
         @Undo()
 
-    # subscribe for cursor position changes
+    # ------
+    # Subscribe to changes for the update of anchors on save
+    @subscriptions.add atom.config.onDidChange 'language-scilab.whereamiUpdateAnchorsOnSave', =>
+      @updateAnchorsOnSave = atom.config.get('language-scilab.whereamiUpdateAnchorsOnSave')
+
+    # ------
+    # Subscribe if the user scrolls around
+    @subscriptions.add @editorView.onDidChangeScrollTop(@UpdateGutter)
+
+    # ------
+    # Subscribe for cursor position changes
     # Only check if the text changed and if this will affect somewhat the anchors
     @subscriptions.add @editor.onDidChangeCursorPosition(@CheckLine)
 
-    # subscribe if the user scrolls around
-    @subscriptions.add @editorView.onDidChangeScrollTop(@UpdateGutter)
-
+    # ------
     # Dispose the subscriptions when the editor is destroyed.
     @subscriptions.add @editor.onDidDestroy =>
       @subscriptions.dispose()
+
+    if @whereamiActive
+      @UpdatePane()
 
   destroy: () ->
     @subscriptions.dispose()
     @Undo()
     @gutter.destroy()
-
 
   # ---------------------------------------------------------
   # Calculates the amount of soft-wrapping
@@ -78,13 +102,17 @@ class SciViewWhereAmI
     width = Math.max(0, totalLines.toString().length - currentIndex.toString().length)
     Array(width + 1).join '&nbsp;'
 
+
   # ---------------------------------------------------------
   # Updates the gutter on save.
   #
   # If <code>\@editor.onDidChange</code> subscription does not worked,
   # this function is called on every save to update the anchors and the gutter.
   # ---------------------------------------------------------
-  UpdateOnSave: () =>
+  UpdatePane: () =>
+    if !@whereamiActive
+      return
+
     @UpdateAnchors()
     @UpdateGutter()
 
@@ -92,23 +120,17 @@ class SciViewWhereAmI
   # Used to check if the content of the current line will affect the displayed line numbers
   # ---------------------------------------------------------
   CheckLine: (event) =>
-    if @editor.isDestroyed()
+    if !@whereamiActive | @updateAnchorsOnSave| @isDirty | @editor.isDestroyed()
       return
 
     if event.textChanged
-      actTotalLines = @editor.getLineCount()
-      lineNum       = @editor.getCursorBufferPosition().row
+      lineNum = @editor.getCursorBufferPosition().row
+      line    = [lineNum, @LineHoldsAnchor( @editor.lineTextForBufferRow(lineNum) )]
 
-      line = [lineNum, @LineHoldsAnchor( @editor.lineTextForBufferRow(lineNum) )]
-
-      if (Math.abs(actTotalLines-@totalLines) ||                                # number of lines has changed
-          (line[0] == @lineInfo?[0])  || (line[1] != @lineInfo?[1])) # keyword in a line has changed
-
-        @totalLines = actTotalLines
-        @lineInfo   = line
-
+      if (line[0] == @lineInfo[0]) && (line[1] != @lineInfo?[1]) # only update if we have previous information about the line and the keyword  has changed
         @UpdateAnchors()
 
+      @lineInfo = line # update to state of actual line
 
   # ---------------------------------------------------------
   # checks if a line \c lineText holds anchors
@@ -137,7 +159,7 @@ class SciViewWhereAmI
   # This will change the global variable \@anchors to a new value.
     # ---------------------------------------------------------
   UpdateAnchors: () =>
-    if !@whereamiActive
+    if !@whereamiActive | @editor.isDestroyed()
       return
 
     searchRange =  [[0, 0], @editor.getEofBufferPosition()] # search for stuff from row zero to the last
@@ -158,6 +180,8 @@ class SciViewWhereAmI
 
         else if (result.matchText.match(@regExpressions.funcBegin))?
           funcStarts[funcStarts.length] = result.range.start # function begin
+
+    @updateWholeGutter = true
 
 
   # ---------------------------------------------------------
@@ -181,6 +205,9 @@ class SciViewWhereAmI
   # Update the line numbers on the editor
   # ---------------------------------------------------------
   UpdateGutter: () =>
+    if !@whereamiActive | @editor.isDestroyed()
+      return
+
     # If the gutter is updated asynchronously, we need to do the same thing
     # otherwise our changes will just get reverted back.
     if @editorView.isUpdatedSynchronously()
@@ -194,59 +221,54 @@ class SciViewWhereAmI
   # @todo: Implement own gutter
   #
   # @param[in]  lineNumberElement  \c Node representing the line number of the gutter
-  # @param[in]  offset             Offset which is added to the row number. Useful to comb with wrap signs in the gutter
   #
   # @returns  new offset
   # ---------------------------------------------------------
-  UpdateGutterLine: (lineNumberElement, offset) =>
-    if @editor.isDestroyed()
-      return offset
-
+  UpdateGutterLine: (lineNumberElement) =>
     # convert to number
     # The row is used to determine the new line number
-    row = lineNumberElement.getAttribute('data-screen-row') * 1
+    row = lineNumberElement.getAttribute('data-buffer-row') * 1
 
     if isNaN(row)
-      return offset
+      return
 
     if isFinite(lineNumberElement.innerText) # check finite of text. If not finite, then a soft wrap linebreak occured.
-      whereami = @LineNumberFromAnchor(row-offset)
+      whereami  = @LineNumberFromAnchor(row)
+      applyStyle = true
 
       # leave unchanged if not inside a function-region
       if whereami == -1
-        return offset
+        if @updateWholeGutter
+          whereami   = row
+          applyStyle = false
+        else
+          return
 
       whereami    += 1
-      whereamiText = @Spacer(@totalLines, whereami) + whereami
+      whereamiText = @Spacer(@editor.getLineCount(), whereami) + whereami
 
-      # Keep soft-wrapped lines indicator
-      if lineNumberElement.innerHTML.indexOf('â€¢') == -1
-        lineNumberElement.innerHTML = "<span style=\"font-weight:bolder\">#{whereamiText}</span><div class=\"icon-right\"></div>"
-    else
-      return offset + 1
+      if applyStyle
+        whereamiText = "<span style=\"font-weight:bolder;\">#{whereamiText}</span>"
 
-    return offset
+      lineNumberElement.innerHTML = "#{whereamiText}<div class=\"icon-right\"></div>"
+
 
   # ---------------------------------------------------------
   # Implementation for updating the whole gutter
   # ---------------------------------------------------------
   UpdateGutterImpl: () =>
-    if @editor.isDestroyed()
-      return
-
     lineNumberElements = @editorView.rootElement?.querySelectorAll('.line-number')
 
-    offset = 0
-
     for lineNumberElement in lineNumberElements
-      offset = @UpdateGutterLine(lineNumberElement, offset)
+      @UpdateGutterLine(lineNumberElement)
+
+    @updateWholeGutter = false
 
 
   # ---------------------------------------------------------
   # Undo changes to DOM
   # ---------------------------------------------------------
   Undo: () =>
-    UpdateGutter()
     totalLines = @editor.getLineCount()
     lineNumberElements = @editorView.rootElement?.querySelectorAll('.line-number')
 
@@ -255,5 +277,5 @@ class SciViewWhereAmI
       absolute = row + 1
       absoluteText = @Spacer(totalLines, absolute) + absolute
 
-      if lineNumberElement.innerHTML.indexOf('â€¢') == -1
+      if lineNumberElement.innerHTML.indexOf('•') == -1
         lineNumberElement.innerHTML = "#{absoluteText}<div class=\"icon-right\"></div>"
