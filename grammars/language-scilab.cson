@@ -7,85 +7,87 @@
 
   {
     'comment': 'Scilab function definition'
-    'begin': '[ \\t]*\\b(function)\\s+'
-    'end': '\\)(\\s*)'
+    'match': '\\s*(?<![[\\w%\\$\\?!#]])(function)\\s+(.*?)($)'
     'name': 'meta.function.scilab'
 
-    'beginCaptures':
+    'captures':
       '1':
         'comment': 'function keyword'
         'name': 'storage.type.function.scilab'
-
-    'endCaptures':
-      '1':
-       'comment': 'end variable declaration'
-       'name': 'storage.section.function.begin.scilab'
-
-    'patterns':[
-      {  'include':  '#line_comment'      }
-
-      {  'include':  '#invalid_parameter_signs' }
-      {  'include':  '#invalid_signs'           }
-
-      {
-        'comment': 'return values'
-        'match': '[^/]{2,}\\s*\\='
-        'captures':
-          '0':
-            'patterns':[
-              {
-                'comment': 'some brackets are illegal for defining return values'
-                'match': '[\\(\\)\\{\\}]'
-                'name':  'invalid.illegal.scilab'
-              }
-              {
-                'match': '\\['
-                'name': 'punctuation.section.brackets.begin.scilab'
-              }
-              {
-                'comment': 'numbers only are clearly illegal'
-                'match': '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\[|,)\\d+'
-                'name': 'variable.parameter.output.invalid.illegal.scilab'
-              }
-
-              { 'include': '#invalid_parameter_struct-tlist' }
-              { 'include': '#std_environment' }
-
-              { 'include': '#parameters_output'       }
-              { 'include': '#parameters_separator'    }
-
-              {
-                'match': '\\]'
-                'name': 'punctuation.section.brackets.end.scilab'
-              }
-            ]
-      }
-
-      {  'include':  '#function_name'  }
-
-      {
-        'comment': 'input values'
-        'begin': '\\('
-        'end': '(?=\\))'
-        'beginCaptures':
-          '0':
-            'name': 'punctuation.section.parens.begin.scilab'
-
+      '2':
         'patterns':[
+          {  'include':  '#line_comment'      }
+
+          {  'include':  '#invalid_parameter_signs' }
+          {  'include':  '#invalid_signs'           }
+
           {
-            'comment': 'numbers only are clearly illegal'
-            'match': '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\(|,)\\d+'
-            'name': 'variable.parameter.input.invalid.illegal.scilab'
+            'comment': 'return values'
+            'match': '[^/]{2,}\\s*\\='
+            'captures':
+              '0':
+                'patterns':[
+                  {
+                    'comment': 'some brackets are illegal for defining return values'
+                    'match': '[\\(\\)\\{\\}]'
+                    'name':  'invalid.illegal.scilab'
+                  }
+                  {
+                    'match': '\\['
+                    'name': 'punctuation.section.brackets.begin.scilab'
+                  }
+                  {
+                    'comment': 'numbers only are clearly illegal'
+                    'match': '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\[|,)\\d+'
+                    'name': 'variable.parameter.output.invalid.illegal.scilab'
+                  }
+
+                  { 'include': '#invalid_parameter_struct-tlist' }
+                  { 'include': '#std_environment' }
+
+                  { 'include': '#parameters_output'       }
+                  { 'include': '#parameters_separator'    }
+
+                  {
+                    'match': '\\]'
+                    'name': 'punctuation.section.brackets.end.scilab'
+                  }
+                ]
           }
 
-          { 'include': '#invalid_parameter_struct-tlist' }
-          { 'include': '#std_environment' }
+          {  'include':  '#function_name'  }
 
-          { 'include':  '#parameters_input'     }
-          { 'include':  '#parameters_separator' }
+          {
+            'comment': 'input values'
+            'match': '(\\()(.*)(\\))'
+            'name': 'meta.function.parameters.scilab'
+
+            'captures':
+              '1':
+                'name': 'punctuation.section.parens.begin.scilab'
+              '2':
+                'patterns':[
+                  {
+                    'comment': 'numbers only are clearly illegal'
+                    'match': '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\(|,)\\d+'
+                    'name': 'variable.parameter.input.invalid.illegal.scilab'
+                  }
+
+                  { 'include': '#invalid_parameter_struct-tlist' }
+                  { 'include': '#std_environment' }
+
+                  { 'include':  '#parameters_input'     }
+                  { 'include':  '#parameters_separator' }
+                ]
+              '3':
+                'name': 'punctuation.section.parens.end.scilab'
+
+          }
         ]
-      }
-    ]
+
+      '3':
+        'comment': 'end variable declaration'
+        'name': 'storage.section.function.begin.scilab'
   }
 
   {
