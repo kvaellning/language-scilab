@@ -3,7 +3,6 @@
 'fileTypes': ['sci', 'sce']
 
 'patterns': [
-
   {  'include':  '#line_comment'; }
 
   {
@@ -97,34 +96,61 @@
 
   {
     'comment': 'variable assignment'
-    'match':  '(\\w+)?\\s*' +
-              '(?<paren>' +
-                '(\\()'  +
-                  '(?:(?:[^\\(\\)]+|\\g<parens>)+?)' +
-                '(\\))'  +
-              ')?'  +
-              '(?:' +
-                '(?:(\\.)\\s)'  +
-                '|(\\.)'  +
-              ')?' +
-              '(?![\\=]{2,})(?=\\=)'                 #  ...and only allow if not more than 2 equal signs are present
+    'match':  '(?!\\s*//)'  + # leading slashes notate comments
+              '(?:'     +
+                '(?:\\['  + # option one: variables enclosed by brackets
+                '(?<chars>' +
+                  '(?:' +
+                    '(?!(?:[\\=]{2,})|(?:[\\+\\-\\*\\./\\\\<>\\~\\&\\|\\=]+\\=))' + # invalid signs. NOTE: SPECIAL CASE SHOULD BE CHANGED IF CONDITIONALS ARE TREATED AS OWN SCOPE
+                    '[^;\\=]'           + # any variable char
+                    '(?!\\s*[\\=]{2,})' + # more than one equal sign
+                  ')'     +
+                ')+'      + # ... as often as possible, but at least one time
+                '\\])'    + # closing bracket / end of option one
+                '|\\g<chars>+' + # option two, not enclosed
+              ')\\s*' +
+              '(?=\\=)'
 
-    #'name':  'variable.assignment.scilab'
     'captures':
-      # '0':
-      #   'patterns':[
-      #     { 'include': '#std_environment' }
-      #   ]
-      '1':
-        'name': 'variable.assignment.scilab'
-      '2':
-        'name': 'variable.assignment.begin.scilab'
-      '3':
-        'name': 'variable.assignment.end.scilab'
-      '4':
-        'name': 'punctuation.accessor.invalid.illegal.scilab'
-      '4':
-        'name': 'punctuation.accessor.scilab'
+      '0':
+        'patterns':[
+          {
+            'comment': 'illegal number on lhs [123 =]'
+            'match': '(?<=^|;)\\d+'
+            'name': 'variable.assignment.invalid.illegal.scilab'
+          }
+
+          { 'include': '#std_environment' }
+
+          {
+            'comment': 'illegal empty assignments [() = or ( = or ) = or (1) =]'
+            'match':  '(?<=^|;)'  +
+                      '(?:'  +
+                        '[\\s\\d]*' +
+                        '(?:' +
+                          '(?:\\(\\s*$)'    +
+                          '|(?:\\((?:\\s*|\\d+)\\))' +
+                          '|(?:\\))'  +
+                        ')' +
+                      ')'
+            'name': 'invalid.illegal.scilab'
+          }
+
+          {
+            'comment': 'exclude stuff in brackets'
+            'match': '\\(.*?\\)'
+            'captures':
+              '0':
+                'patterns': [
+                  { 'include': '#std_environment' }
+                ]
+          }
+
+          {
+            'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+            'name': 'variable.assignment.scilab'
+          }
+        ]
   }
 
   { 'include':  '#vector_colon'  }
@@ -158,7 +184,6 @@
         { 'include': '#statement_terminator' }
 
         { 'include':  '#struct_tlist' }
-        # { 'include':  '#parenthesis_accessor' }
         { 'include':  '#strings'  }
       ]
     }
@@ -230,16 +255,14 @@
       # ----------------------------------------------
       {
         'comment': 'struct element foo.foo'
-        'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  +
-                  '(?=' +
-                    '(?<self>'  +
-                      '\\(' +
-                      '(?:[^\\(\\);]+|\\g<self>)+?' +
-                      '\\)' +
-                      ')?'  +
-                    '(?:\\.[a-zA-Z_%\\$\\?!#])' +
-                  ')'
-        'name': 'variable.other.object.scilab'
+        'match': '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)(\\(.*?\\))?(?=\\.[a-zA-Z_%\\$\\?!#])'
+        'captures':
+          '1':
+            'name': 'variable.other.object.scilab'
+          '2':
+            'patterns':[
+              { 'include': '#std_environment' }
+            ]
       }
 
       {
@@ -257,46 +280,6 @@
           '3':
             'name': 'variable.other.object.scilab'
       }
-      # ----------------------------------------------
-      # parenthesis ()-accessor patterns
-      # ----------------------------------------------
-
-      {
-        'comment':  'Automation object function accessor foo(\'bar\', ...)'
-        'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  + # valid element character
-                 '(?='+
-                    '\\s*\\(\\s*' +
-                      '(?:' +
-                        '(?:\'.+?\')' +
-                        '|(?:".+?")'  +
-                      ')'   +
-                      '\\s*(?:,.+)?' +
-                      '\\)' +
-                      '(?!\\s*\\()'+
-                  ')'
-        'name': 'variable.other.object.automation.scilab'
-      }
-
-      {
-        'comment': 'scilab struct/tlist accessors foo(1)(a)(b), foo(a(1)(a)) etc. ...'
-        # Thanks to LukStorms from StackOverflow for the base pattern
-        # see: http://stackoverflow.com/questions/39540931/atom-language-definition-using-nested-regex-patterns/39544714#39544714
-        'match':  '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  +
-                  '(?='   +
-                    '\\s*'  +
-                    '(?<self>'  +
-                      '\\('   +
-                      '(?:'   +
-                        '(?:(?<chars>(?!//))[^\\(\\);])+' + # unfortunatly, (?!//) must examined after consumation of a single sign. This prevents matching based on parenthesis in the comments.
-                        '|\\g<self>'  + # without recursion, this thing will only match the innermost occurence of an extraction
-                      ')+?' +
-                      '\\)' +
-                    ')\\s*' +
-                    '(?:\\((?:\\g<chars>[^;])+?\\))'  + # ...and of course, foo('foo')(1) is a total valid extraction...
-                  ')'
-
-        'name': 'variable.other.object.scilab'
-      }
 
       {
         'comment': 'invalid stuff'
@@ -313,67 +296,6 @@
             'name': 'punctuation.accessor.invalid.illegal.scilab'
       }
     ]
-
-  'parenthesis_accessor':
-    {
-      'comment': 'describes a (nested) accessor using parenthesis'
-      'begin':  '(?:'  +
-                  #'(?:(?<=\\))\\s*)'                        + # closing parenthesis beforehand
-                  '(?:[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'  + # character beforehand
-                ')' +
-               '(\\()'
-      'end': '(?>(\\)))'#'\\s*([\\w%\\$\\?!#])?'
-
-      'name': 'banana'
-
-      'beginCaptures':
-        '1':
-          'name': 'punctuation.section.parens.begin.scilab'
-      'endCaptures':
-        '1':
-          'name': 'punctuation.section.parens.end.scilab'
-        '2':
-          'name': 'banana.invalid.illegal.scilab'
-
-      'patterns':[
-        { 'include': '#struct_tlist'}
-        { 'include': '#std_environment'  }
-      ]
-
-    }
-
-  'assignment_element_rhs':
-    {
-      'comment':  'assignment element on the right hand site'
-      'match': '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)' +  # variable name
-            '(\\s*\\((.*)\\))?'                         # optional brackets
-
-      'captures':
-        '1':
-          'name':  'variable.assignment.scilab'
-          'patterns':[
-              { 'include': '#struct_tlist' }
-              { 'include': '#constants'    }
-          ]
-        '2':
-          'name':  'variable.assignment.scilab'
-        '3':
-          'name': 'variable.parameter.input.scilab'
-          'patterns':[
-            {  'include':  '#parameters_separator' }
-            {
-              'comment': 'if struct/tlist extraction happens in the brackets (e.g. foo(bar)(foo) )'
-              'match': '\\s*\\)(\\s*)\\('
-              'name':  'variable.assignment.scilab'
-
-              'captures':
-                '1':
-                  'name': 'variable.invalid.illegal.scilab'
-            }
-
-            {  'include':  '#std_environment' }
-          ]
-    }
 
   # ------------------------------
   # operators
