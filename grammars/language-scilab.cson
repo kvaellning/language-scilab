@@ -7,7 +7,7 @@
 
   {
     'comment': 'Scilab function definition'
-    'match': '\\s*(?<![[\\w%\\$\\?!#]])(function)\\s+(.*?)($)'
+    'match': '\\s*(?<![[\\w%\\$\\?!#]])(function)\\s+(.*?)(?:(\\))|($))'
     'name': 'meta.function.scilab'
 
     'captures':
@@ -96,19 +96,19 @@
                   { 'include':  '#parameters_input'     }
                   { 'include':  '#parameters_separator' }
                 ]
-              '3':
-                'name': 'punctuation.section.parens.end.scilab'
           }
         ]
 
       '3':
+        'name': 'punctuation.section.parens.end.scilab'
+      '4':
         'comment': 'end variable declaration'
         'name': 'storage.section.function.begin.scilab'
   }
 
   {
     'comment': 'End of a function (a.k.a. "endfunction" tag'
-    'match': '^\\s*endfunction'
+    'match': '\\s*endfunction(?![a-zA-Z_%\\$\\?!#])'
     'name': 'storage.type.function.end.scilab'
   }
 
