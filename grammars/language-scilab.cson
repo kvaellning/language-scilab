@@ -3,7 +3,7 @@
 'fileTypes': ['sci', 'sce']
 
 'patterns': [
-  {  'include':  '#line_comment'; }
+  { 'include': '#scilab_comment' }
 
   {
     'comment': 'Scilab function definition'
@@ -16,7 +16,7 @@
         'name': 'storage.type.function.scilab'
       '2':
         'patterns':[
-          {  'include':  '#line_comment'      }
+          {  'include':  '#scilab_comment'      }
 
           {  'include':  '#invalid_parameter_signs' }
           {  'include':  '#invalid_signs'           }
@@ -59,10 +59,14 @@
 
           {
             'comment': 'input values'
-            'match': '(\\()(.*)(\\))'
+            'match': '(\\()(.*)'
             'name': 'meta.function.parameters.scilab'
 
             'captures':
+              '0':
+                'patterns':[
+                  { 'include': '#continuation_mark' }
+                ]
               '1':
                 'name': 'punctuation.section.parens.begin.scilab'
               '2':
@@ -81,7 +85,6 @@
                 ]
               '3':
                 'name': 'punctuation.section.parens.end.scilab'
-
           }
         ]
 
@@ -96,7 +99,7 @@
     'name': 'storage.section.function.end.scilab'
   }
 
-  { 'include': '#assignment'      }
+  { 'include': '#variable_assignment' }
   { 'include': '#vector_colon'    }
   { 'include': '#std_environment' }
 ]
@@ -230,7 +233,7 @@
           '2':
             'name': 'punctuation.accessor.scilab'
           '3':
-            'name': 'variable.other.object.scilab'
+            'name': 'variable.other.member.scilab'
       }
 
       # --------------------------------------------------------------
@@ -434,13 +437,15 @@
       'name': 'string.quoted.single.scilab'
 
       'begin': '(?<![\\w\\]\)])\''
+      'end': '\'(?!\')'
+
       'beginCaptures':
         '0':
           'name': 'punctuation.definition.string.begin.scilab'
-      'end': '\'(?!\')'
       'endCaptures':
         '0':
           'name': 'punctuation.definition.string.end.scilab'
+
       'patterns': [
         {
           'match': '\'\'|""'
@@ -455,13 +460,15 @@
       'name': 'string.quoted.double.scilab'
 
       'begin': '"'
+      'end': '"(?!")'
+
       'beginCaptures':
         '0':
           'name': 'punctuation.definition.string.begin.scilab'
-      'end': '"(?!")'
       'endCaptures':
         '0':
           'name': 'punctuation.definition.string.end.scilab'
+
       'patterns': [
         {
           'match': '\'\'|""'
@@ -558,16 +565,16 @@
   # ------------------------------
   # additional stuff which is present, but does not fit in another category
   # ------------------------------
-  'line_comment':
+  'scilab_comment':
     {
-      'match': '//.*\\Z'
+      'match': '//.*+'
       'name': 'comment.line.double-slash.scilab'
     }
 
   'continuation_mark':
     {
       'comment': 'continuation mark'
-      'match': '\\.\\.\\.\\s*$'
+      'match': '[\\.]{2,}'
       'name': 'punctuation.separator.continuation.scilab'
     }
 
