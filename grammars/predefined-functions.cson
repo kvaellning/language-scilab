@@ -160,7 +160,7 @@
   '_functions_u':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with u'
-      'match': '(?<!\\.)\\b(uint16|uint32|uint8|uicontrol|uicontextmenu|uigetdir|ui_observer|ulink|umf_ludel|umf_lufact|umf_luget|umf_luinfo|umf_lusolve|umfpack|unique|unix|unobs|unpack|unsetmenu|unzoom|user)\\b'
+      'match': '(?<!\\.)\\b(ui_observer|uint16|uint32|uint8|uiConcatTree|uicontrol|uicontextmenu|uiCreateNode|uiCreateTree|uiDeleteNode|uiDisplayTree|uiDumpTree|uiEqualsTree|uiFindNode|uiGetChildrenNode|uigetcolor|uigetdir|uigetfile|uigetfont|uiGetNodePosition|uiGetParentNode|uiInsertNode|uimenu|uiputfile|ulink|umf_ludel|umf_lufact|umf_luget|umf_luinfo|umf_lusolve|umfpack|unglue|union|unique|unix|unix_g|unix_s|unix_w|unix_x|unobs|unpack|unsetmenu|unzoom|usecanvas|user)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_v':
