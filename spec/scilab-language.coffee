@@ -3,7 +3,7 @@ describe "Scilab grammar", ->
 
   beforeEach ->
     waitsForPromise ->
-      atom.packages.activatePackage("language-scilab")
+      atom.packages.activatePackage("scilab-language")
 
     runs ->
       grammar = atom.grammars.grammarForScopeName("source.scilab")
@@ -11,7 +11,7 @@ describe "Scilab grammar", ->
   it "parses the grammar", ->
     expect(grammar).toBeDefined()
     expect(grammar.scopeName).toBe "source.scilab"
-    
+
   it "checks comments", ->
     tokens = grammar.tokenizeLines('// comment\n\n/// comment')
 

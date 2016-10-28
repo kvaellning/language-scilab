@@ -1,3 +1,6 @@
+- ## 0.4.4
+  - renamed to `scilab-language`
+
 - ## 0.4.3
   - adds new language keywords
   - fixes issues with strings statring with `'`

@@ -1,10 +1,10 @@
-# language-scilab package
+# scilab-language package
 
 This package adds the support of Scilab language in Atom, with syntax highlighting.
-This package is roughly based on [language-scilab](https://atom.io/packages/language-scilab) by Jeremy Heleine.
+This package is a fork of [language-scilab](https://atom.io/packages/language-scilab) by Jeremy Heleine.
 
 ## Changes in respect to the original package
-As for the current version (0.3.2) which is based on [language-scilab 0.1.0](https://github.com/JeremyHeleine/language-scilab/tree/f68888450e46ce23e1f8847b85cef49a31bf96fb) nearly everything in the code is altered. [language-scilab](https://atom.io/packages/language-scilab) was originally used as a sceletal implementation for this specific idiom. Since that time, the package has seen a lot of redesigns and specializations, e.g.:
+As for the current version (0.4.4) which is based on [language-scilab 0.1.0](https://github.com/JeremyHeleine/language-scilab/tree/f68888450e46ce23e1f8847b85cef49a31bf96fb) nearly everything in the code is altered. [language-scilab](https://atom.io/packages/language-scilab) was originally used as a sceletal implementation for this specific idiom. Since that time, the package has seen a lot of redesigns and specializations, e.g.:
 
   - including most of the Scilab built-in functions, as best as possible
   - added Scilab constants
