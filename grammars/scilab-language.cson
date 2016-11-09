@@ -7,7 +7,7 @@
 
   {
     'comment': 'Scilab function definition'
-    'match': '\\s*(?<![[\\w%\\$\\?!#]])(function)\\s+(.*?)(?:(\\))|($))'
+    'match': '\\s*(?<![\\w%\\$\\?!#])(function)(?:\\s+|(?=\\[|[/]{1,}))(.*?)(?:(\\))|($))'
     'name': 'meta.function.scilab'
 
     'captures':
@@ -25,7 +25,7 @@
 
           {
             'comment': 'return values'
-            'match': '[^/]{2,}\\s*\\='
+            'match': '(?:[a-zA-Z_%\\$\\?!#\\[\\],\\s][\\w%\\$\\?!#\\],\\s]*)\\s*\\='
             'name':  'meta.function.parameters.scilab'
 
             'captures':
