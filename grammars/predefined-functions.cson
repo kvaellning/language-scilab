@@ -112,7 +112,7 @@
   '_functions_m':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with m'
-      'match': '(?<!\\.)\\b(m6bandred|m6bmatch|m6busack|m6cent|m6chcm|m6clique|m6clique1|m6compc|m6compfc|m6concom|m6deumesh|m6dfs|m6dfs2|m6diam|m6dijkst|m6dmtree|m6edge2st|m6findiso|m6flomax|m6floqua|m6fordfulk|m6frang|m6hamil|m6hullcvex|m6inimet|m6johns|m6kilter|m6knapsk|m6loadg|m6lp2tad|m6lp2tau|m6mesh2b|m6meshmesh|m6metasync|m6ns2p|m6p2ns|m6pcchna|m6permuto|m6prevn2p|m6prevn2st|m6prfmatch|m6relax|m6saveg|m6sconcom|m6showg|m6showns|m6showp|m6ta2lpd|m6ta2lpu|m6tconex|m6transc|m6umtree|m6umtree1|m6visitor|m_circle|macglov|macr2lst|macrovar|mad|matfile_close|matfile_listvar|matfile_open|matfile_varreadnextmatfile_varwrite|markp2ss|mapsound|matrix|max|maxi|maxfiles|mclearerr|mclose|mdelete|meof|merror|messagebox|mfprintf|mfscanf|mget|mgetl|mgetstr|mesh|milk_drop|min|minreal|minss|mlist|mode|modulo|moment|mopen|move|movefile|mprintf|mput|mputl|mputstr|mscanf|msd|mseek|msprintf|msscanf|mtell|mtlb_mode|mtlb_sparse|mtlb_strcmp|mu2lin|mulf|mutation_ga_binary|mutation_ga_default|mvvacov)\\b'
+      'match': '(?<!\\.)\\b(m6bandred|m6bmatch|m6busack|m6cent|m6chcm|m6clique|m6clique1|m6compc|m6compfc|m6concom|m6deumesh|m6dfs|m6dfs2|m6diam|m6dijkst|m6dmtree|m6edge2st|m6findiso|m6flomax|m6floqua|m6fordfulk|m6frang|m6hamil|m6hullcvex|m6inimet|m6johns|m6kilter|m6knapsk|m6loadg|m6lp2tad|m6lp2tau|m6mesh2b|m6meshmesh|m6metasync|m6ns2p|m6p2ns|m6pcchna|m6permuto|m6prevn2p|m6prevn2st|m6prfmatch|m6relax|m6saveg|m6sconcom|m6showg|m6showns|m6showp|m6ta2lpd|m6ta2lpu|m6tconex|m6transc|m6umtree|m6umtree1|m6visitor|m_circle|macglov|macr2lst|macrovar|mad|matfile_close|matfile_listvar|matfile_open|matfile_varreadnextmatfile_varwrite|markp2ss|mapsound|matrix|max|maxi|maxfiles|mclearerr|mclose|mdelete|mean|meof|merror|messagebox|mfprintf|mfscanf|mget|mgetl|mgetstr|mesh|milk_drop|min|minreal|minss|mlist|mode|modulo|moment|mopen|move|movefile|mprintf|mput|mputl|mputstr|mscanf|msd|mseek|msprintf|msscanf|mtell|mtlb_mode|mtlb_sparse|mtlb_strcmp|mu2lin|mulf|mutation_ga_binary|mutation_ga_default|mvvacov)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_n':
@@ -154,7 +154,7 @@
   '_functions_t':
     {
       'comment': 'Scilab 5.4.1 pre-defined functions beginning with t'
-      'match': '(?<!\\.)\\b(tabul|tan|tand|tanh|tanhm|tanm|taucs_chdel|taucs_chfact|taucs_chget|taucs_chinfo|taucs_chsolve|temp_law_csatemp_law_default|temp_law_fsa|temp_law_huang|temp_law_vfsa|testmatrix|tf2des|tf2ss|thrownan|tic|timer|titlepage|tlist|toc|tohome|tokens|toolbar|tr_zer|trace|trans|trianfml|tril|trisolve|triu|trzeros|trfmod|type|typename|typeof)\\b'
+      'match': '(?<!\\.)\\b(tabul|tan|tand|tanh|tanhm|tanm|taucs_chdel|taucs_chfact|taucs_chget|taucs_chinfo|taucs_chsolve|temp_law_csatemp_law_default|temp_law_fsa|temp_law_huang|temp_law_vfsa|testmatrix|tf2des|tf2ss|thrownan|tic|timer|titlepage|tlist|toc|tohome|tokens|toolbar|tr_zer|trace|trans|trianfml|tril|trimmean|trisolve|triu|trzeros|trfmod|type|typename|typeof)\\b'
       'name': 'support.function.scilab'
     }
   '_functions_u':
