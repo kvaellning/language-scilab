@@ -1,151 +1,151 @@
-'scopeName': 'source.scilab'
-'name':      'Scilab'
-'fileTypes': ['sci', 'sce']
+scopeName: 'source.scilab'
+name:      'Scilab'
+fileTypes: ['sci', 'sce']
 
-'patterns': [
-  { 'include': '#scilab_comment' }
+patterns: [
+  { include: '#scilab_comment' }
 
   {
-    'comment': 'Scilab function definition'
-    'match': '\\s*(?<![\\w%\\$\\?!#])(function)(?:\\s+|(?=\\[|[/]{1,}))(.*?)(?:(\\))|($))'
-    'name': 'meta.function.scilab'
+    comment: 'Scilab function definition'
+    match: '\\s*(?<![\\w%\\$\\?!#])(function)(?:\\s+|(?=\\[|[/]{1,}))(.*?)(?:(\\))|($))'
+    name: 'meta.function.scilab'
 
-    'captures':
-      '1':
-        'comment': 'function keyword'
-        'name': 'storage.type.function.begin.scilab'
-      '2':
-        'patterns':[
-          { 'include':  '#scilab_comment' }
+    captures:
+      1:
+        comment: 'function keyword'
+        name: 'storage.type.function.begin.scilab'
+      2:
+        patterns: [
+          { include:  '#scilab_comment' }
 
-          { 'include':  '#invalid_parameter_signs' }
-          { 'include':  '#invalid_signs'           }
+          { include:  '#invalid_parameter_signs' }
+          { include:  '#invalid_signs'           }
 
-          { 'include': '#name_too_long' }
+          { include: '#name_too_long' }
 
           {
-            'comment': 'return values'
-            'match': '(?:[a-zA-Z_%\\$\\?!#\\[\\],\\s][\\w%\\$\\?!#\\],\\s]*)\\s*\\='
-            'name':  'meta.function.parameters.scilab'
+            comment: 'return values'
+            match: '(?:[a-zA-Z_%\\$\\?!#\\[\\],\\s][\\w%\\$\\?!#\\],\\s]*)\\s*\\='
+            name:  'meta.function.parameters.scilab'
 
-            'captures':
-              '0':
-                'patterns':[
+            captures:
+              0:
+                patterns: [
                   {
-                    'comment': 'some brackets are illegal for defining return values'
-                    'match': '[\\(\\)\\{\\}]'
-                    'name':  'invalid.illegal.scilab'
+                    comment: 'some brackets are illegal for defining return values'
+                    match: '[\\(\\)\\{\\}]'
+                    name:  'invalid.illegal.scilab'
                   }
                   {
-                    'match': '\\['
-                    'name': 'punctuation.section.brackets.begin.scilab'
+                    match: '\\['
+                    name: 'punctuation.section.brackets.begin.scilab'
                   }
                   {
-                    'comment': 'numbers only are clearly illegal'
-                    'match': '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\[|,)\\d+'
-                    'name': 'variable.parameter.output.invalid.illegal.scilab'
+                    comment: 'numbers only are clearly illegal'
+                    match: '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\[|,)\\d+'
+                    name: 'variable.parameter.output.invalid.illegal.scilab'
                   }
 
-                  { 'include': '#invalid_parameter_struct-tlist' }
-                  { 'include': '#std_environment' }
+                  { include: '#invalid_parameter_struct_tlist' }
+                  { include: '#std_environment' }
 
-                  { 'include': '#parameters_output'    }
-                  { 'include': '#parameters_separator' }
+                  { include: '#parameters_output'    }
+                  { include: '#parameters_separator' }
 
                   {
-                    'match': '\\]'
-                    'name': 'punctuation.section.brackets.end.scilab'
+                    match: '\\]'
+                    name: 'punctuation.section.brackets.end.scilab'
                   }
                 ]
           }
 
-          {  'include':  '#function_name'  }
+          {  include:  '#function_name'  }
 
           {
-            'comment': 'input values'
-            'match': '(\\()(.*)'
-            'name': 'meta.function.parameters.scilab'
+            comment: 'input values'
+            match: '(\\()(.*)'
+            name: 'meta.function.parameters.scilab'
 
-            'captures':
-              '1':
-                'name': 'punctuation.section.parens.begin.scilab'
-              '2':
-                'patterns':[
+            captures:
+              1:
+                name: 'punctuation.section.parens.begin.scilab'
+              2:
+                patterns: [
                   {
-                    'comment': 'numbers only are clearly illegal'
-                    'match': '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\(|,)\\d+'
-                    'name': 'variable.parameter.input.invalid.illegal.scilab'
+                    comment: 'numbers only are clearly illegal'
+                    match: '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\(|,)\\d+'
+                    name: 'variable.parameter.input.invalid.illegal.scilab'
                   }
                   {
-                    'comment': 'Any parenthesis stuff except of one ) is also clearly illegal'
-                    'match': '(\\[)|(\\])|(\\()'
-                    'captures':
-                      '1':
-                        'name': 'punctuation.brackets.begin.invalid.illegal.scilab'
-                      '2':
-                        'name': 'punctuation.brackets.end.invalid.illegal.scilab'
-                      '3':
-                        'name': 'punctuation.parens.begin.invalid.illegal.scilab'
+                    comment: 'Any parenthesis stuff except of one ) is also clearly illegal'
+                    match: '(\\[)|(\\])|(\\()'
+                    captures:
+                      1:
+                        name: 'punctuation.brackets.begin.invalid.illegal.scilab'
+                      2:
+                        name: 'punctuation.brackets.end.invalid.illegal.scilab'
+                      3:
+                        name: 'punctuation.parens.begin.invalid.illegal.scilab'
                   }
 
-                  { 'include': '#scilab_comment' }
+                  { include: '#scilab_comment' }
 
-                  { 'include': '#invalid_parameter_struct-tlist' }
-                  { 'include': '#std_environment' }
+                  { include: '#invalid_parameter_struct_tlist' }
+                  { include: '#std_environment' }
 
-                  { 'include':  '#parameters_input'     }
-                  { 'include':  '#parameters_separator' }
+                  { include:  '#parameters_input'     }
+                  { include:  '#parameters_separator' }
                 ]
           }
         ]
 
-      '3':
-        'name': 'punctuation.section.parens.end.scilab'
-      '4':
-        'comment': 'end variable declaration'
-        'name': 'storage.section.function.begin.scilab'
+      3:
+        name: 'punctuation.section.parens.end.scilab'
+      4:
+        comment: 'end variable declaration'
+        name: 'storage.section.function.begin.scilab'
   }
 
   {
-    'comment': 'End of a function (a.k.a. "endfunction" tag'
-    'match': '\\s*endfunction(?![a-zA-Z_%\\$\\?!#])'
-    'name': 'storage.type.function.end.scilab'
+    comment: 'End of a function (a.k.a. "endfunction" tag'
+    match: '\\s*endfunction(?![a-zA-Z_%\\$\\?!#])'
+    name: 'storage.type.function.end.scilab'
   }
 
-  { 'include': '#std_environment' }
+  { include: '#std_environment' }
 
-  { 'include': '#variable_assignment' }
-  { 'include': '#vector_colon'        }
+  { include: '#variable_assignment' }
+  { include: '#vector_colon'        }
 ]
 
 # ------------------------------
 # additional definitions
 # ------------------------------
-'repository':
-  'std_environment':
+repository:
+  std_environment:
     {
-      'comment': 'This includes all constants and data types which are used for scoping'
-      'patterns':[
-        { 'include': '#continuation_mark' }
-        { 'include': '#numbers'           }
+      comment: 'This includes all constants and data types which are used for scoping'
+      patterns: [
+        { include: '#continuation_mark' }
+        { include: '#numbers'           }
 
-        { 'include': '#name_too_long'         }
-        { 'include': '#invalid_signs'         }
-        { 'include': '#invalid_operators_all' }
+        { include: '#name_too_long'         }
+        { include: '#invalid_signs'         }
+        { include: '#invalid_operators_all' }
 
-        { 'include': '#operators' }
+        { include: '#operators' }
 
-        { 'include': '#constants_matrix_vector' }
+        { include: '#constants_matrix_vector' }
 
-        { 'include': '#constants'    }
-        { 'include': '#keywords'     }
+        { include: '#constants'    }
+        { include: '#keywords'     }
 
-        { 'include': 'source.scilab.predefined-functions#_scilab_functions'  }
+        { include: 'source.scilab.predefined-functions#_scilab_functions'  }
 
-        { 'include': '#statement_terminator' }
+        { include: '#statement_terminator' }
 
-        { 'include': '#strings'  }
-        { 'include': '#struct_tlist' }
+        { include: '#strings'  }
+        { include: '#struct_tlist' }
       ]
     }
   # ------------------------------
@@ -156,36 +156,36 @@
   #      They are just groupted here for easier copy & paste maintainance in futre.
   # ------------------------------
 
-  'function_name':
+  function_name:
     {
-      'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
-      'name': 'entity.name.function.scilab'
+      match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+      name: 'entity.name.function.scilab'
     }
 
-  'parameters_input':
+  parameters_input:
     {
-      'comment': 'input parameters of functions'
-      'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
-      'name': 'variable.parameter.input.scilab'
+      comment: 'input parameters of functions'
+      match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+      name: 'variable.parameter.input.scilab'
     }
 
-  'parameters_output':
+  parameters_output:
     {
-      'comment': 'output parameters of functions'
-      'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
-      'name': 'variable.parameter.output.scilab'
+      comment: 'output parameters of functions'
+      match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+      name: 'variable.parameter.output.scilab'
     }
 
-  'parameters_separator':
+  parameters_separator:
     {
-      'match': ','
-      'name': 'punctuation.separator.parameters.scilab'
+      match: ','
+      name: 'punctuation.separator.parameters.scilab'
     }
 
-  'vector_colon':
+  vector_colon:
     {
-      'comment': 'vector definition a:b & a:b:c'
-      'match': '\\b' +
+      comment: 'vector definition a:b & a:b:c'
+      match: '\\b' +
             '(?<signs>\\+|-)?'                  +  #  optional leading +/-
             '(?<element>[\\w\\$\\?!%\\.\'\"]+)' +  #  first vector element
             ':'  +
@@ -196,27 +196,27 @@
               '\\g<signs>?'   +  #  optional leading +/-
               '\\g<element>'  +  #  optional third element
             ')?'
-      'captures':
-        '0':
-          'name': 'variable.parameter.vector.scilab'
-          'patterns':[
+      captures:
+        0:
+          name: 'variable.parameter.vector.scilab'
+          patterns: [
             {
-              'comment': 'avoid matching as invalid operator'
-              'match': ':(?:\\+|-)'
+              comment: 'avoid matching as invalid operator'
+              match: ':(?:\\+|-)'
             }
 
-            {  'include':  '#std_environment' }
+            {  include:  '#std_environment' }
           ]
     }
 
-  'struct_tlist':
-    'patterns':[
+  struct_tlist:
+    patterns: [
       # ----------------------------------------------
       # dot (.)-accessor patterns
       # ----------------------------------------------
       {
-        'comment': 'struct element foo.foo'
-        'match':  '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)' + # characters at begin
+        comment: 'struct element foo.foo'
+        match:  '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)' + # characters at begin
                   '(?>\\(([^\\=;]+)\\))?'               + # all what is inside brackets
                   '(?=\\.[a-zA-Z_%\\$\\?!#])'             # with trailing dot and character
 
@@ -226,30 +226,30 @@
         # 3. Backtrack to the first available closing parenthesis
         # 4. Check against the dot
 
-        'captures':
-          '1':
-            'name': 'variable.other.object.scilab'
-          '2':
-            'patterns':[
-              { 'include': '#std_environment' }
+        captures:
+          1:
+            name: 'variable.other.object.scilab'
+          2:
+            patterns: [
+              { include: '#std_environment' }
             ]
       }
 
       {
-        'comment': 'struct sub-element foo.FOO'
-        'match':  '(?:' +
+        comment: 'struct sub-element foo.FOO'
+        match:  '(?:' +
                     '(?:(?<![\\w%\\$\\?!#\\)])(\\.))'  +  # invalid dot in front
                     '|(\\.)'  +
                   ')' +
                   '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
 
-        'captures':
-          '1':
-            'name': 'punctuation.accessor.invalid.illegal.scilab'
-          '2':
-            'name': 'punctuation.accessor.scilab'
-          '3':
-            'name': 'variable.other.member.scilab'
+        captures:
+          1:
+            name: 'punctuation.accessor.invalid.illegal.scilab'
+          2:
+            name: 'punctuation.accessor.scilab'
+          3:
+            name: 'variable.other.member.scilab'
       }
 
       # --------------------------------------------------------------
@@ -264,10 +264,10 @@
       # Feature needs re-evaluation.
 
       # {
-      #   'comment': 'scilab struct/tlist accessors foo(1)(a)(b), foo(a(1)(a)) etc. ...'
+      #   comment: 'scilab struct/tlist accessors foo(1)(a)(b), foo(a(1)(a)) etc. ...'
       #   # Thanks to LukStorms from StackOverflow for the base pattern
       #   # see: http://stackoverflow.com/questions/39540931/atom-language-definition-using-nested-regex-patterns/39544714#39544714
-      #   'match':  '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  +
+      #   match:  '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'  +
       #             '(?='   +
       #               '\\s*'  +
       #               '(?<self>'  +
@@ -281,265 +281,265 @@
       #               '(?:\\((?:\\g<chars>[^;])+?\\))'  + # ...and of course, foo('foo')(1) is a total valid extraction...
       #             ')'
       #
-      #   'name': 'variable.other.object.scilab'
+      #   name: 'variable.other.object.scilab'
       # }
 
       {
-        'comment': 'invalid stuff'
-        'match':  '([\\w%\\$\\?!#]+)(\\.)'  +  # (definition that some variable character is standing in front of a dot)
+        comment: 'invalid stuff'
+        match:  '([\\w%\\$\\?!#]+)(\\.)'  +  # (definition that some variable character is standing in front of a dot)
                   '(?:'                     +
                     '(?=\\d)|'              + # trailing dot and number afterwards (struct error)
                     '(?=\\s|\\Z)'           + # lonely trailing dot
                   ')'
 
-        'captures':
-          '1':
-            'name': 'variable.other.object.scilab'
-          '2':
-            'name': 'punctuation.accessor.invalid.illegal.scilab'
+        captures:
+          1:
+            name: 'variable.other.object.scilab'
+          2:
+            name: 'punctuation.accessor.invalid.illegal.scilab'
       }
     ]
 
   # ------------------------------
   # operators
   # ------------------------------
-  'operator_linear_system':
+  operator_linear_system:
     {
-      'comment': 'Operators used for linear system simulation'
-      'match': '/\\.' # feedback operator
-      'name': 'keyword.operator.CACSD.scilab'
+      comment: 'Operators used for linear system simulation'
+      match: '/\\.' # feedback operator
+      name: 'keyword.operator.CACSD.scilab'
     }
 
-  'operators_arithmetic':
+  operators_arithmetic:
     {
-      'comment': 'Arithmetic operators'
-      'match': '\\+|-|\\*|/|\\\\|\\^|\\*\\*'  +  # elementary operators
+      comment: 'Arithmetic operators'
+      match: '\\+|-|\\*|/|\\\\|\\^|\\*\\*'  +  # elementary operators
               '|\\.(\\^|(\\*|/|\\\\)\\.?)'       # vector / matrix / kronecker operators
-      'name': 'keyword.operator.arithmetic.scilab'
+      name: 'keyword.operator.arithmetic.scilab'
     }
 
-  'operators_logic':
+  operators_logic:
     {
-      'comment': 'keyword operators that evaluate to True or False'
-      'match': '&|\\||~'
-      'name': 'keyword.operator.logical.scilab'
+      comment: 'keyword operators that evaluate to True or False'
+      match: '&|\\||~'
+      name: 'keyword.operator.logical.scilab'
     }
 
-  'operators_comparison':
+  operators_comparison:
     {
-      'comment': 'comparison operators'
-      'match': '\\=\\=|>\\=|<\\=|~\\=|>|<|<>'
-      'name': 'keyword.operator.comparison.scilab'
+      comment: 'comparison operators'
+      match: '\\=\\=|>\\=|<\\=|~\\=|>|<|<>'
+      name: 'keyword.operator.comparison.scilab'
     }
 
-  'operators_assignment':
+  operators_assignment:
     {
-      'comment': 'assignment operators'
-      'match': '\\='
-      'name': 'keyword.operator.assignment.scilab'
+      comment: 'assignment operators'
+      match: '\\='
+      name: 'keyword.operator.assignment.scilab'
     }
 
-  'operators':
+  operators:
     {
-      'patterns': [
-        { 'include': '#operator_linear_system' }
-        { 'include': '#operators_arithmetic'   }
-        { 'include': '#operators_logic'        }
-        { 'include': '#operators_comparison'   }
-        { 'include': '#operators_assignment'   }
+      patterns: [
+        { include: '#operator_linear_system' }
+        { include: '#operators_arithmetic'   }
+        { include: '#operators_logic'        }
+        { include: '#operators_comparison'   }
+        { include: '#operators_assignment'   }
       ]
     }
 
   # ------------------------------
   # constants definition
   # ------------------------------
-  'numbers':
+  numbers:
     {
-      'comment': 'Scilab numbers'
-      'match': '(?:' +
+      comment: 'Scilab numbers'
+      match: '(?:' +
               '\\B(?:\\.[0-9]+)'            +  # numbers with leading dot (.) (interpreted as zero starting)
               '|\\b(?:[0-9]+\\.?[0-9]*)'    +  # "normal" numbers with optional dot (.) separator
             ')'  +
             '(?:(?:E|e)(?:\\+|-)?[0-9]+)?'  +  # optional exponential notation
             '([a-zA-Z_%\\$\\?!#])?'            # invalid trailing dot
-      'name': 'constant.numeric.scilab'
-      'captures':
-        '1':
-          'comment': 'invalid trailing dot-operator (.)'
-          'name': 'keyword.operator.invalid.illegal.scilab'
+      name: 'constant.numeric.scilab'
+      captures:
+        1:
+          comment: 'invalid trailing dot-operator (.)'
+          name: 'keyword.operator.invalid.illegal.scilab'
     }
 
-  'constants_scilab':
+  constants_scilab:
     {
-      'comment': 'Scilab built-in constants'
-      'match':  '(?<![\\w%\\$\\?!#\\.])'  +
+      comment: 'Scilab built-in constants'
+      match:  '(?<![\\w%\\$\\?!#\\.])'  +
                 '(?:' +
                   '%(?:pi|e|eps|i|inf|io|nan|t|T|f|F|s|z)' + # constants which yield values
                   '|SCI|SCIHOME|TMPDIR|varargin|varargout'         + # other variables
                   '|(?:\\[\\])'                            + # the empty matrix []
                 ')(?![\\w%\\$\\?!#\\.])'
-      'name': 'support.constant.scilab'
+      name: 'support.constant.scilab'
     }
 
-  'constants_matrix_vector':
+  constants_matrix_vector:
     {
-      'comment': 'matrix/vector access symbols : & $'
-      'match': '(?<![\\w%\\$\\?!#\'\"]):(?![\\w%\\$\\?!#\'\"])' + # (:) is only a constant if nothing is written in front or behind
+      comment: 'matrix/vector access symbols : & $'
+      match: '(?<![\\w%\\$\\?!#\'\"]):(?![\\w%\\$\\?!#\'\"])' + # (:) is only a constant if nothing is written in front or behind
                '|(?<![\\w%\\$\\?!#\'\"\\+\\-\\*\\\\])\\$'         # ($) is only a constant if nothing is written in front
-      'name' : 'support.constant.scilab'
+      name : 'support.constant.scilab'
     }
 
-  'constants':
+  constants:
     {
-      'patterns':[
-        { 'include': '#constants_scilab'              }
-        { 'include': '#constants_matrix_vector'       }
+      patterns: [
+        { include: '#constants_scilab'        }
+        { include: '#constants_matrix_vector' }
       ]
     }
 
   # ------------------------------
   # statement definitions
   # ------------------------------
-  'keywords_block_flow_alter':
+  keywords_block_flow_alter:
     {
-      'comment': 'keywords that alter flow from within a block'
-      'name': 'keyword.control.statement.scilab'
-      'match': '(?<!\\.)\\b(break|continue|return|end)\\b'
+      comment: 'keywords that alter flow from within a block'
+      name: 'keyword.control.statement.scilab'
+      match: '(?<!\\.)\\b(break|continue|return|end)\\b'
     }
 
-  'keywords_loop':
+  keywords_loop:
     {
-      'comment': 'keywords that delimit loops'
-      'name': 'keyword.control.repeat.scilab'
-      'match': '(?<!\\.)\\b(do|for|while)\\b'
+      comment: 'keywords that delimit loops'
+      name: 'keyword.control.repeat.scilab'
+      match: '(?<!\\.)\\b(do|for|while)\\b'
     }
 
-  'keywords_errors':
+  keywords_errors:
     {
-      'comment': 'keywords that delimit an error'
-      'name': 'keyword.control.exception.scilab'
-      'match': '(?<!\\.)\\b(try|catch)\\b'
+      comment: 'keywords that delimit an error'
+      name: 'keyword.control.exception.scilab'
+      match: '(?<!\\.)\\b(try|catch)\\b'
     }
 
-  'keywords_conditionals':
+  keywords_conditionals:
     {
-      'comment': 'keywords that delimit flow conditionals'
-      'name': 'keyword.control.conditional.scilab'
-      'match': '(?<!\\.)\\b(if|elseif|else|select|case)\\b'
+      comment: 'keywords that delimit flow conditionals'
+      name: 'keyword.control.conditional.scilab'
+      match: '(?<!\\.)\\b(if|elseif|else|select|case)\\b'
     }
 
-  'keywords_other':
+  keywords_other:
     {
-      'comment': 'keywords which does not fit in any other category'
-      'name': 'keyword.control.scilab'
-      'match': '(?<!\\.)\\b(clear|clearglobal|exit|pause|quit|then)\\b'
+      comment: 'keywords which does not fit in any other category'
+      name: 'keyword.control.scilab'
+      match: '(?<!\\.)\\b(clear|clearglobal|exit|pause|quit|then)\\b'
     }
 
-  'keywords_global':
+  keywords_global:
     {
-      'comment': 'global scope identifier'
-      'match': '(?<!\\.)\\b(global)\\b'
-      'name': 'storage.modifier.global.scilab'
+      comment: 'global scope identifier'
+      match: '(?<!\\.)\\b(global)\\b'
+      name: 'storage.modifier.global.scilab'
     }
 
-  'keywords':
-    'patterns':[
-      {  'include':  '#keywords_block_flow_alter' }
-      {  'include':  '#keywords_loop'             }
-      {  'include':  '#keywords_errors'           }
-      {  'include':  '#keywords_conditionals'     }
-      {  'include':  '#keywords_other'            }
-      {  'include':  '#keywords_global'           }
+  keywords:
+    patterns: [
+      {  include:  '#keywords_block_flow_alter' }
+      {  include:  '#keywords_loop'             }
+      {  include:  '#keywords_errors'           }
+      {  include:  '#keywords_conditionals'     }
+      {  include:  '#keywords_other'            }
+      {  include:  '#keywords_global'           }
     ]
 
   # ------------------------------
   # strings
   # ------------------------------
-  'string_single':
+  string_single:
     {
-      'comment': 'single quoted strings'
+      comment: 'single quoted strings'
 
-      'begin': '(?<![\\w\\]\\)\\.])\''
-      'end': '\'(?!\')'
+      begin: '(?<![\\w\\]\\)\\.])\''
+      end: '\'(?!\')'
 
-      'contentName': 'string.quoted.single.scilab'
+      contentName: 'string.quoted.single.scilab'
 
-      'beginCaptures':
-        '0':
-          'name': 'punctuation.definition.string.begin.scilab'
-      'endCaptures':
-        '0':
-          'name': 'punctuation.definition.string.end.scilab'
+      beginCaptures:
+        0:
+          name: 'punctuation.definition.string.begin.scilab'
+      endCaptures:
+        0:
+          name: 'punctuation.definition.string.end.scilab'
 
-      'patterns': [
+      patterns: [
         {
-          'match': '\'\'|""'
-          'name': 'constant.character.escape.scilab'
+          match: '\'\'|""'
+          name: 'constant.character.escape.scilab'
         }
       ]
     }
 
-  'string_double':
+  string_double:
     {
-      'comment': 'double quoted strings'
+      comment: 'double quoted strings'
 
-      'begin': '"'
-      'end': '"(?!")'
+      begin: '"'
+      end: '"(?!")'
 
-      'contentName': 'string.quoted.double.scilab'
+      contentName: 'string.quoted.double.scilab'
 
-      'beginCaptures':
-        '0':
-          'name': 'punctuation.definition.string.begin.scilab'
-      'endCaptures':
-        '0':
-          'name': 'punctuation.definition.string.end.scilab'
+      beginCaptures:
+        0:
+          name: 'punctuation.definition.string.begin.scilab'
+      endCaptures:
+        0:
+          name: 'punctuation.definition.string.end.scilab'
 
-      'patterns': [
+      patterns: [
         {
-          'match': '\'\'|""'
-          'name': 'constant.character.escape.scilab'
+          match: '\'\'|""'
+          name: 'constant.character.escape.scilab'
         }
       ]
     }
 
-  'strings':
+  strings:
     {
-      'patterns':[
-        { 'include': '#string_single' }
-        { 'include': '#string_double' }
+      patterns: [
+        { include: '#string_single' }
+        { include: '#string_double' }
       ]
     }
 
   # ------------------------------
   # all kinds of invalid stuff
   # ------------------------------
-  'name_too_long':
+  name_too_long:
     {
-      'comment': 'error if names are too long (>24 signs)'
-      'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]{24,}'
-      'name': 'variable.invalid.illegal.scilab'
+      comment: 'error if names are too long (>24 signs)'
+      match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]{24,}'
+      name: 'variable.invalid.illegal.scilab'
     }
 
-  'invalid_parameter_signs':
+  invalid_parameter_signs:
     {
-      'match': '[\\+\\-\\*/\\\\~\\&\\|\\<>\\.]+'
-      'name':  'invalid.illegal.scilab'
+      match: '[\\+\\-\\*/\\\\~\\&\\|\\<>\\.]+'
+      name:  'invalid.illegal.scilab'
     }
 
-  'invalid_operators':
+  invalid_operators:
     {
-      'comment': 'invalid operators'
-      'match':
+      comment: 'invalid operators'
+      match:
         '\\.[\\+\\-\\^]\\.'        +  # kronecker operators
         '|[^ \\t].*\\=.*\\?.*\\:.*'    # ?: operator
-      'name': 'keyword.operator.invalid.illegal.scilab'
+      name: 'keyword.operator.invalid.illegal.scilab'
     }
 
-  'invalid_operator_combinations':
+  invalid_operator_combinations:
     {
-      'comment': 'invalid operator combinations'
-      'match':
+      comment: 'invalid operator combinations'
+      match:
         '[&\\|><~\\+\\-\\\\:]{2,}'      +  # match invalid doubling
         '(?<![<>\\-]|&~)'               +  # exceptions
         '|(?:\\=|\\*){3,}'              +  # match from 3 occurences
@@ -555,38 +555,38 @@
         '|[&\\|\\+\\-\\*/\\.\\\\]\\={1,}|[<~]\\={2,}'   +  # trailing equal (=)
         '|[\\+\\-\\*/\\\\]{2,}(?<!\\*\\*)'              +  # operator mixing
         '|[!\\=\\?]{2,}(?<!\\=\\=)'                        # not available operator combinations
-      'name': 'keyword.operator.invalid.illegal.scilab'
+      name: 'keyword.operator.invalid.illegal.scilab'
     }
 
-  'invalid_operators_all':
+  invalid_operators_all:
     {
-      'patterns':[
-        {  'include':  '#invalid_operators'             }
-        {  'include':  '#invalid_operator_combinations' }
+      patterns: [
+        {  include:  '#invalid_operators'             }
+        {  include:  '#invalid_operator_combinations' }
       ]
     }
 
-  'invalid_signs':
+  invalid_signs:
     {
-      'match': '[^\\w!\\?\"\\$%\\&/\\(\\)\\=\\[\\]\\\\+\\-\\*\\^~\'#<>\\|\\s:;,\\.]'
-      'name': 'invalid.illegal.scilab'
+      match: '[^\\w!\\?\"\\$%\\&/\\(\\)\\=\\[\\]\\\\+\\-\\*\\^~\'#<>\\|\\s:;,\\.]'
+      name: 'invalid.illegal.scilab'
     }
 
-  'invalid_parameter_struct-tlist':
+  invalid_parameter_struct_tlist:
     {
-      'patterns':[
+      patterns: [
         # structs and tlists are invalid here
         {
-          'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\.[a-zA-Z_%\\$\\?!#])'
-          'name': 'variable.other.object.invalid.illegal.scilab'
+          match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\.[a-zA-Z_%\\$\\?!#])'
+          name: 'variable.other.object.invalid.illegal.scilab'
         }
         {
-          'match': '(\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
-          'captures':
-            '1':
-              'name': 'punctuation.accessor.invalid.illegal.scilab'
-            '2':
-              'name': 'variable.other.member.invalid.illegal.scilab'
+          match: '(\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
+          captures:
+            1:
+              name: 'punctuation.accessor.invalid.illegal.scilab'
+            2:
+              name: 'variable.other.member.invalid.illegal.scilab'
         }
       ]
     }
@@ -594,29 +594,29 @@
   # ------------------------------
   # additional stuff which is present, but does not fit in another category
   # ------------------------------
-  'scilab_comment':
+  scilab_comment:
     {
-      'match': '//.*+'
-      'name': 'comment.line.double-slash.scilab'
+      match: '//.*+'
+      name: 'comment.line.double-slash.scilab'
     }
 
-  'continuation_mark':
+  continuation_mark:
     {
-      'comment': 'continuation mark'
-      'match': '[\\.]{2,}'
-      'name': 'punctuation.separator.continuation.scilab'
+      comment: 'continuation mark'
+      match: '[\\.]{2,}'
+      name: 'punctuation.separator.continuation.scilab'
     }
 
-  'statement_terminator':
+  statement_terminator:
     {
-      'comment': 'indicates a terminated statement, even in line'
-      'match': ';'
-      'name': 'punctuation.terminator.scilab'
+      comment: 'indicates a terminated statement, even in line'
+      match: ';'
+      name: 'punctuation.terminator.scilab'
     }
 
-  'variable_assignment':
+  variable_assignment:
     {
-      'match':  '(?:' +
+      match:  '(?:' +
                   '(?:'   +
                     '(?<assign>'  +
                       '(?<charsSimple>[\\w%\\$\\?!#](?!\\s*//))+' + # case 1: "simple" assignment with no parenthesis
@@ -637,22 +637,22 @@
                 '(?!\\s*[\\=]{2,})' + # more than one equal sign
                 '(?=\\=)'
 
-      'name': 'meta.name.assignment.scilab'
+      name: 'meta.name.assignment.scilab'
 
-      'captures':
-        '0':
-          'patterns':[
+      captures:
+        0:
+          patterns: [
             {
-              'comment': 'illegal number on lhs [123 =]'
-              'match': '(?<=^|;)\\d+'
-              'name': 'variable.assignment.invalid.illegal.scilab'
+              comment: 'illegal number on lhs [123 =]'
+              match: '(?<=^|;)\\d+'
+              name: 'variable.assignment.invalid.illegal.scilab'
             }
 
-            { 'include': '#std_environment' }
+            { include: '#std_environment' }
 
             {
-              'comment': 'illegal empty assignments [() = or ( = or ) = or (1) =]'
-              'match':  '(?<=^|;)'  +
+              comment: 'illegal empty assignments [() = or ( = or ) = or (1) =]'
+              match:  '(?<=^|;)'  +
                         '(?:'  +
                           '[\\s\\d]*' +
                           '(?:' +
@@ -661,32 +661,32 @@
                             # '|(?:\\))'  + # too unspecific
                           ')' +
                         ')'
-              'name': 'invalid.illegal.scilab'
+              name: 'invalid.illegal.scilab'
             }
 
             {
-              'comment': 'exclude stuff in brackets'
-              'match': '\\(.*?\\)'
-              'captures':
-                '0':
-                  'patterns': [
-                    { 'include': '#std_environment' }
+              comment: 'exclude stuff in brackets'
+              match: '\\(.*?\\)'
+              captures:
+                0:
+                  patterns: [
+                    { include: '#std_environment' }
                   ]
             }
 
             {
-              'match': '(?<=\\.)[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
-              'name': 'variable.other.member.scilab'
+              match: '(?<=\\.)[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+              name: 'variable.other.member.scilab'
             }
 
             {
-              'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\s*(?:\\(["\'])|\\.)'
-              'name': 'variable.other.object.scilab'
+              match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\s*(?:\\(["\'])|\\.)'
+              name: 'variable.other.object.scilab'
             }
 
             {
-              'match': '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
-              'name': 'variable.assignment.scilab'
+              match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+              name: 'variable.assignment.scilab'
             }
           ]
     }
