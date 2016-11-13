@@ -11,6 +11,9 @@
     "type": "git",
     "url": "https://github.com/kvaellning/scilab-language.git"
   },
+  "bugs": {
+    "url": "https://github.com/kvaellning/scilab-language/issues"
+  },
   "license": "MIT",
   "readmeFilename": "README.md"
 }
