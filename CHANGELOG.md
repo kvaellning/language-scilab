@@ -1,3 +1,8 @@
+- ## 0.4.5
+  - fix missing configuration stuff for __whereami__
+  - fixed bug with line continuations
+  - code improvements
+
 - ## 0.4.4
   - renamed to `scilab-language`
 
