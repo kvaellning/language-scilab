@@ -1,13 +1,15 @@
 {
   "name": "scilab-language",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Scilab language support in Atom. This package is a fork of language-scilab of Jeremy Heleine.",
   "main": "./lib/scilab-language",
-  "engines": { "atom": ">=1.0.0 <2.0.0" },
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
   "dependencies": {},
-  "repository":{
-     "type": "git",
-     "url": "https://github.com/kvaellning/scilab-language.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kvaellning/scilab-language.git"
   },
   "license": "MIT",
   "readmeFilename": "README.md"
