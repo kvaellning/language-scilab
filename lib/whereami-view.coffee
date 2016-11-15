@@ -5,6 +5,9 @@ module.exports =
 class SciViewWhereAmI
 
   constructor: (@editor) ->
+    if @editor.getGrammar().scopeName.indexOf('source.scilab') != -1
+      return
+
     @subscriptions = new CompositeDisposable()
     @editorView    = atom.views.getView(@editor)
     @editorBuffer  = @editor.buffer

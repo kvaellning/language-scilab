@@ -1,3 +1,6 @@
+- ## 0.4.6
+  - fixes __whereami__ if language was changed after a file was loaded
+
 - ## 0.4.5
   - fix missing configuration stuff for __whereami__
   - fixed bug with line continuations
@@ -68,13 +71,13 @@
   - added constants such as %pi and empty matrix
   - added keywords, operators etc.
 
- - ## 0.2.2
-    - Snippets
-    - improved grammar
-    - improved auto-indent rules
-    - more pre-defined `Scilab 5.4.1` functions
+- ## 0.2.2
+  - Snippets
+  - improved grammar
+  - improved auto-indent rules
+  - more pre-defined `Scilab 5.4.1` functions
 
- - ## 0.2.1
-    - enhanced grammar original
-    - auto-indentation definitions
-    - comment declaration (useful for block comments)
+- ## 0.2.1
+  - enhanced grammar original
+  - auto-indentation definitions
+  - comment declaration (useful for block comments)

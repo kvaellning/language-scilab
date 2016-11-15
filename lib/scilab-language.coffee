@@ -16,14 +16,15 @@ module.exports =
       description: 'If checked, the anchors (``function``/``endfunction`` blocks) are only updated on save.<br>**Check if you experience performance issues.**'
       type: 'boolean'
       default: false
-      
+
   subscriptions: null
   whereamiView: null
 
   activate: (state) ->
     @subscriptions = new CompositeDisposable
+
     @subscriptions.add atom.workspace.observeTextEditors (editor) ->
-      if !(editor?) || (editor.getGrammar().scopeName != 'source.scilab')
+      if !(editor?)
         return
 
       if not editor.gutterWithName('whereami-scilab')
