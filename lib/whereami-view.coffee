@@ -34,6 +34,8 @@ class SciViewWhereAmI
     @lineInfo   = [0,false] # array with [lineNumber, hasAnchorElem] used to determine if the contents of the line has changed
     @totalLines = @editor.getLineCount()
 
+    @hasScopeInformation = false # it might be that the grammar is loaded after the anchors there determined. This is used to signal that state.
+
     @updateWholeGutter = false # used to determine if the whole gutter should be redrawn. This is the case if the anchors have changed.
 
     @whereamiActive      = atom.config.get('scilab-language.whereamiActive')
@@ -46,7 +48,7 @@ class SciViewWhereAmI
         # ---------------------------------------------------------
         actTotalLines = @editor.getLineCount()
 
-        if !@updateAnchorsOnSave && (actTotalLines != @totalLines) # number of total lines has changed, so update anchors
+        if !@hasScopeInformation || ( !@updateAnchorsOnSave && (actTotalLines != @totalLines) ) # number of total lines has changed, so update anchors
           # update anchors if necessary
           @totalLines = actTotalLines
 
@@ -79,7 +81,11 @@ class SciViewWhereAmI
 
     # ------
     # Subscribe if the user scrolls around
-    @subscriptions.add @editorView.onDidChangeScrollTop(@UpdateGutter)
+    @subscriptions.add @editorView.onDidChangeScrollTop =>
+      if !@hasScopeInformation
+        @UpdateAnchors()
+        
+      @UpdateGutter()
 
     # ------
     # Subscribe for cursor position changes
@@ -131,7 +137,7 @@ class SciViewWhereAmI
       lineNum = @editor.getCursorBufferPosition().row
       line    = [event.newBufferPosition.row, @LineHoldsAnchor(event.newBufferPosition)]
 
-      if (line[0] == @lineInfo[0]) && (line[1] != @lineInfo?[1]) # only update if we have previous information about the line and the keyword  has changed
+      if !@hasScopeInformation || (line[0] == @lineInfo[0]) && (line[1] != @lineInfo?[1]) # only update if we have previous information about the line and the keyword  has changed
         @UpdateAnchors()
 
       @lineInfo = line # update to state of actual line
@@ -177,6 +183,12 @@ class SciViewWhereAmI
         scopes = @editor.scopeDescriptorForBufferPosition(result.range.start)?.getScopesArray() # scope where the match is found
         return unless scopes?.length
 
+        if scopes.length == 1
+         @hasScopeInformation = false
+         return
+         
+        @hasScopeInformation = true
+          
         if (scopes?[scopes.length-1].indexOf('storage.type.function.end') != -1) && funcStarts[funcStarts.length-1]? # function end
           # The grammar provides the 'storage.type.function.end' for the "endfunction" keyword at the end of the scope array
           anchorRange       = result.range      # work around the issue that "new Range" returns a range from the Window...
@@ -212,7 +224,7 @@ class SciViewWhereAmI
   # Update the line numbers on the editor
   # ---------------------------------------------------------
   UpdateGutter: () =>
-    if !@whereamiActive | @editor.isDestroyed()
+    if !@whereamiActive | !@hasScopeInformation | @editor.isDestroyed()
       return
 
     # If the gutter is updated asynchronously, we need to do the same thing
