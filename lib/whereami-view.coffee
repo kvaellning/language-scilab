@@ -5,7 +5,7 @@ module.exports =
 class SciViewWhereAmI
 
   constructor: (@editor) ->
-    if @editor.getGrammar().scopeName.indexOf('source.scilab') != -1
+    if @editor.getGrammar().scopeName.indexOf('source.scilab') == -1
       return
 
     @subscriptions = new CompositeDisposable()
