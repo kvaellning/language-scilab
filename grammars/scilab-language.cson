@@ -140,7 +140,7 @@ repository:
         { include: '#constants'    }
         { include: '#keywords'     }
 
-        { include: 'source.scilab.predefined-functions#_scilab_functions'  }
+        { include: 'source.scilab.predefined-functions#functions'  }
 
         { include: '#statement_terminator' }
 

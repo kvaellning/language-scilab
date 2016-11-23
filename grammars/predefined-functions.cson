@@ -1,7 +1,7 @@
 'scopeName': 'source.scilab.predefined-functions'
 
 'repository':
-  '_scilab_functions':
+  'functions':
     {
       'patterns':[
         {  'include':  'source.scilab.predefined-functions#_functions_a'  }

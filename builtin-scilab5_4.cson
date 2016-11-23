@@ -1,5 +1,67 @@
 
 repository:
+  functions:
+    {
+      patterns: [
+        { include:  'primitives_percent'    }
+        { include:  'primitives_underscore' }
+        { include:  'primitives_a'  }
+        { include:  'primitives_b'  }
+        { include:  'primitives_c'  }
+        { include:  'primitives_d'  }
+        { include:  'primitives_e'  }
+        { include:  'primitives_f'  }
+        { include:  'primitives_g'  }
+        { include:  'primitives_h'  }
+        { include:  'primitives_i'  }
+        { include:  'primitives_j'  }
+        { include:  'primitives_k'  }
+        { include:  'primitives_l'  }
+        { include:  'primitives_m'  }
+        { include:  'primitives_n'  }
+        { include:  'primitives_o'  }
+        { include:  'primitives_p'  }
+        { include:  'primitives_q'  }
+        { include:  'primitives_r'  }
+        { include:  'primitives_s'  }
+        { include:  'primitives_t'  }
+        { include:  'primitives_u'  }
+        { include:  'primitives_v'  }
+        { include:  'primitives_w'  }
+        { include:  'primitives_x'  }
+        { include:  'primitives_z'  }
+
+        { include:  'macros_percent'  }
+        { include:  'macros_a'  }
+        { include:  'macros_b'  }
+        { include:  'macros_c'  }
+        { include:  'macros_d'  }
+        { include:  'macros_e'  }
+        { include:  'macros_f'  }
+        { include:  'macros_g'  }
+        { include:  'macros_h'  }
+        { include:  'macros_i'  }
+        { include:  'macros_j'  }
+        { include:  'macros_k'  }
+        { include:  'macros_l'  }
+        { include:  'macros_m'  }
+        { include:  'macros_n'  }
+        { include:  'macros_o'  }
+        { include:  'macros_p'  }
+        { include:  'macros_q'  }
+        { include:  'macros_r'  }
+        { include:  'macros_s'  }
+        { include:  'macros_t'  }
+        { include:  'macros_u'  }
+        { include:  'macros_v'  }
+        { include:  'macros_w'  }
+        { include:  'macros_x'  }
+        { include:  'macros_y'  }
+        { include:  'macros_z'  }
+
+        { include:  'colormaps' }
+      ]
+    }
   # -------------------------------------------------- #
   #  Scilab macros as stated in scilab_primitives.txt
   # -------------------------------------------------- #
@@ -236,7 +298,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
-    
+
   primitives_z:
     {
       comment: 'Scilab 5.4.1 pre-defined (primitive-)functions beginning with z'
@@ -294,6 +356,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_e:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with e'
@@ -302,6 +365,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_f:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with f'
@@ -310,6 +374,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_g:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with g'
@@ -318,6 +383,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_h:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with h'
@@ -326,6 +392,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_i:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with i'
@@ -334,6 +401,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_j:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with j'
@@ -342,6 +410,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_k:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with k'
@@ -350,6 +419,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_l:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with l'
@@ -358,6 +428,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_m:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with m'
@@ -366,6 +437,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_n:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with n'
@@ -374,6 +446,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_o:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with o'
@@ -391,6 +464,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_q:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with q'
@@ -399,6 +473,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_r:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with r'
@@ -407,6 +482,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_s:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with s'
@@ -415,6 +491,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_t:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with t'
@@ -423,6 +500,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_u:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with u'
@@ -431,6 +509,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_v:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with v'
@@ -448,6 +527,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_x:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with x'
@@ -456,6 +536,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_y:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with y'
@@ -464,6 +545,7 @@ repository:
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
+
   macros_z:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with z'
