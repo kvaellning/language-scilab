@@ -1,23 +1,26 @@
 '.source.scilab':
    'function with no return values':
-      'prefix': 'function-no-retVal'
-      'body': """
+      prefix: 'function-no-retVal'
+      description: 'Function with no return values'
+      body: """
          function ${1:FunctionName}($2)
             $3
          endfunction
       """
 
    'function with return value(s)':
-      'prefix': 'function-retVal'
-      'body': """
+      prefix: 'function-retVal'
+      description: 'Function with return values(s)'
+      body: """
          function ${1:retVal} = ${2:FunctionName}($3)
             $4
          endfunction
       """
 
    'if-then-else':
-      'prefix': 'if-else'
-      'body': """
+      prefix: 'if-else'
+      description: 'if-then-else condition'
+      body: """
          if ${1:condition} then
             $2
          else
@@ -26,32 +29,36 @@
       """
 
    'if-then':
-      'prefix': 'if-end'
-      'body': """
+      prefix: 'if-end'
+      description: 'if-then condition'
+      body: """
          if ${1:condition} then
             $2
          end
       """
 
    'for-loop':
-      'prefix': 'for'
-      'body': """
+      prefix: 'for'
+      description: 'for-loop'
+      body: """
          for $1
             $2
          end
       """
 
    'while-loop':
-      'prefix': 'while'
-      'body': """
+      prefix: 'while'
+      description: 'while-loop'
+      body: """
          while ${1:condition}
             $2
          end
       """
 
    'try-catch':
-      'prefix': 'try-catch'
-      'body': """
+      prefix: 'try-catch'
+      description: 'try-catch-block (to catch errors during script runtime)'
+      body: """
          try
             $1
          catch
@@ -60,8 +67,9 @@
       """
 
    'select':
-      'prefix': 'select'
-      'body': """
+      prefix: 'select'
+      description: 'select-list'
+      body: """
          select $1
             $2
          else
@@ -70,8 +78,9 @@
       """
 
    'case':
-      'prefix': 'case'
-      'body': """
+      prefix: 'case'
+      description: 'case of a select list'
+      body: """
          case ${1:condition} then
             $2
       """

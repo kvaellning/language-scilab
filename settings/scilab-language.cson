@@ -1,24 +1,24 @@
 '.source.scilab':
-  'editor':
-    'autoIndentOnPaste': true
-    'softTabs': true
-    'tabLength': 3
-    'showIndentGuide': true
-    'commentStart': '// '
-    'increaseIndentPattern': '^\\s*(function|if|else|elseif|then|select|case|try|catch|for|while)\\b(?!.*end).*$'
-    'decreaseIndentPattern': '^\\s*(case|catch|elseif|else|then|end|endfunction)\\b.*\\s*$'
+  editor:
+    autoIndentOnPaste: true
+    softTabs: true
+    tabLength: 3
+    showIndentGuide: true
+    commentStart: '// '
+    increaseIndentPattern: '^\\s*(function|if|else|elseif|then|select|case|try|catch|for|while)\\b(?!.*end).*$'
+    decreaseIndentPattern: '^\\s*(case|catch|elseif|else|then|end|endfunction)\\b.*\\s*$'
 
-  'autocomplete':
-    'symbols':
-      'function':
-        'selector': '.entity.name.function, .support.function'
-        'typePriority': 4
-      'constant':
+  autocomplete:
+    symbols:
+      function:
+        selector: '.entity.name.function, .support.function'
+        typePriority: 4
+      constant:
         'selector': '.support.constant'
-        'typePriority': 3
-      'variable':
+        typePriority: 3
+      variable:
         'selector': '.variable'
-        'typePriority': 2
+        typePriority: 2
       '': # the catch-all
         'selector': '.source'
-        'typePriority': 1
+        typePriority: 1
