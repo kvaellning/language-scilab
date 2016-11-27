@@ -3,19 +3,21 @@ SciViewWhereAmI       = require './whereami-view'
 
 module.exports =
   config:
-    title: 'whereami'
+    wheramiOptions:
+      title: 'Where am I?'
+      type: 'object'
+      properties:
+        active:
+          title: 'Show \"whereami\"- compatible line-numbering'
+          description: '\"Where am I?\" changes the line-numbering inside of functions.<br>Line-counting will start with *1* if a ``function``-keyword and a matching ``endfunction``-keyword is found. This line-numbering helps especially to debug **Scilab** error messages.<br>**Warning: This feature is in development. Deactivate if you experience performance issues.**'
+          type: 'boolean'
+          default: true
 
-    whereamiActive:
-      title: 'Show \"whereami\"- compatible line numbering'
-      description: 'If activated, this option will display the line numbers **Scilab**. Typically, this means that every ``function``-Tag will start a relative line numbering beginning at 1.<br>**Warning: This feature is in development. Deactivate if you experience performance issues.**'
-      type: 'boolean'
-      default: true
-
-    whereamiUpdateAnchorsOnSave:
-      title: 'Update anchors at save'
-      description: 'If checked, the anchors (``function``/``endfunction`` blocks) are only updated on save.<br>**Check if you experience performance issues.**'
-      type: 'boolean'
-      default: false
+        updateAnchorsOnSave:
+          title: 'Update anchors at save'
+          description: 'If checked, the anchors (``function``/``endfunction`` blocks) are only updated on save.<br>**Check if you experience performance issues.**'
+          type: 'boolean'
+          default: false
 
   subscriptions: null
   whereamiView: null

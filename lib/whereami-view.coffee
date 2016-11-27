@@ -38,8 +38,8 @@ class SciViewWhereAmI
 
     @updateWholeGutter = false # used to determine if the whole gutter should be redrawn. This is the case if the anchors have changed.
 
-    @whereamiActive      = atom.config.get('scilab-language.whereamiActive')
-    @updateAnchorsOnSave = atom.config.get('scilab-language.whereamiUpdateAnchorsOnSave')
+    @isActive            = atom.config.get('scilab-language.wheramiOptions.active')
+    @updateAnchorsOnSave = atom.config.get('scilab-language.wheramiOptions.updateAnchorsOnSave')
 
     try
       # ------
@@ -66,10 +66,10 @@ class SciViewWhereAmI
 
     # ------
     # Subscribe to Scilab whereami flag-changes
-    @subscriptions.add atom.config.onDidChange 'scilab-language.whereamiActive', =>
-      @whereamiActive = atom.config.get('scilab-language.whereamiActive')
+    @subscriptions.add atom.config.onDidChange 'scilab-language.wheramiOptions.active', =>
+      @isActive = atom.config.get('scilab-language.wheramiOptions.active')
 
-      if @whereamiActive
+      if @isActive
         @UpdatePane()
       else
         @Undo()
@@ -84,7 +84,7 @@ class SciViewWhereAmI
     @subscriptions.add @editorView.onDidChangeScrollTop =>
       if !@hasScopeInformation
         @UpdateAnchors()
-        
+
       @UpdateGutter()
 
     # ------
@@ -97,7 +97,7 @@ class SciViewWhereAmI
     @subscriptions.add @editor.onDidDestroy =>
       @subscriptions.dispose()
 
-    if @whereamiActive
+    if @isActive
       @UpdatePane()
 
   destroy: () ->
@@ -120,7 +120,7 @@ class SciViewWhereAmI
   # this function is called on every save to update the anchors and the gutter.
   # ---------------------------------------------------------
   UpdatePane: () =>
-    if !@whereamiActive
+    if !@isActive
       return
 
     @UpdateAnchors()
@@ -130,7 +130,7 @@ class SciViewWhereAmI
   # Used to check if the content of the current line will affect the displayed line numbers
   # ---------------------------------------------------------
   CheckLine: (event) =>
-    if !@whereamiActive | @updateAnchorsOnSave| @isDirty | @editor.isDestroyed()
+    if !@isActive | @updateAnchorsOnSave| @isDirty | @editor.isDestroyed()
       return
 
     if event.textChanged
@@ -169,7 +169,7 @@ class SciViewWhereAmI
   # This will change the global variable \@anchors to a new value.
     # ---------------------------------------------------------
   UpdateAnchors: () =>
-    if !@whereamiActive | @editor.isDestroyed()
+    if !@isActive | @editor.isDestroyed()
       return
 
     searchRange =  [[0, 0], @editor.getEofBufferPosition()] # search for stuff from row zero to the last
@@ -186,9 +186,9 @@ class SciViewWhereAmI
         if scopes.length == 1
          @hasScopeInformation = false
          return
-         
+
         @hasScopeInformation = true
-          
+
         if (scopes?[scopes.length-1].indexOf('storage.type.function.end') != -1) && funcStarts[funcStarts.length-1]? # function end
           # The grammar provides the 'storage.type.function.end' for the "endfunction" keyword at the end of the scope array
           anchorRange       = result.range      # work around the issue that "new Range" returns a range from the Window...
@@ -224,7 +224,7 @@ class SciViewWhereAmI
   # Update the line numbers on the editor
   # ---------------------------------------------------------
   UpdateGutter: () =>
-    if !@whereamiActive | !@hasScopeInformation | @editor.isDestroyed()
+    if !@isActive | !@hasScopeInformation | @editor.isDestroyed()
       return
 
     # If the gutter is updated asynchronously, we need to do the same thing
