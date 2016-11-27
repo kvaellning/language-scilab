@@ -1,5 +1,6 @@
 - ### 0.4.7
-  - pre-requisit for implementation of Scilab 5.4.1 available functions
+  - implementation of all Scilab 5.4.1 available functions
+    <br>(taken from the Scilab configuration)
   - Fix up stuff introduced in `0.4.6`
   - Fixes up a bug which occured in __whereami__ view if a big file was loaded <span style="font-size:8pt">(97b43437)</span>
 
