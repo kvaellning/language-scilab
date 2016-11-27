@@ -3,7 +3,7 @@ SciViewWhereAmI       = require './whereami-view'
 
 module.exports =
   config:
-    wheramiOptions:
+    whereami:
       title: 'Where am I?'
       type: 'object'
       properties:
