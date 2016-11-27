@@ -1,65 +1,66 @@
+'scopeName': 'source.scilab.builtins.5.4'
 
 repository:
   functions:
     {
       patterns: [
-        { include:  'primitives_percent'    }
-        { include:  'primitives_underscore' }
-        { include:  'primitives_a'  }
-        { include:  'primitives_b'  }
-        { include:  'primitives_c'  }
-        { include:  'primitives_d'  }
-        { include:  'primitives_e'  }
-        { include:  'primitives_f'  }
-        { include:  'primitives_g'  }
-        { include:  'primitives_h'  }
-        { include:  'primitives_i'  }
-        { include:  'primitives_j'  }
-        { include:  'primitives_k'  }
-        { include:  'primitives_l'  }
-        { include:  'primitives_m'  }
-        { include:  'primitives_n'  }
-        { include:  'primitives_o'  }
-        { include:  'primitives_p'  }
-        { include:  'primitives_q'  }
-        { include:  'primitives_r'  }
-        { include:  'primitives_s'  }
-        { include:  'primitives_t'  }
-        { include:  'primitives_u'  }
-        { include:  'primitives_v'  }
-        { include:  'primitives_w'  }
-        { include:  'primitives_x'  }
-        { include:  'primitives_z'  }
+        { include:  '#primitives_percent'    }
+        { include:  '#primitives_underscore' }
+        { include:  '#primitives_a'  }
+        { include:  '#primitives_b'  }
+        { include:  '#primitives_c'  }
+        { include:  '#primitives_d'  }
+        { include:  '#primitives_e'  }
+        { include:  '#primitives_f'  }
+        { include:  '#primitives_g'  }
+        { include:  '#primitives_h'  }
+        { include:  '#primitives_i'  }
+        { include:  '#primitives_j'  }
+        { include:  '#primitives_k'  }
+        { include:  '#primitives_l'  }
+        { include:  '#primitives_m'  }
+        { include:  '#primitives_n'  }
+        { include:  '#primitives_o'  }
+        { include:  '#primitives_p'  }
+        { include:  '#primitives_q'  }
+        { include:  '#primitives_r'  }
+        { include:  '#primitives_s'  }
+        { include:  '#primitives_t'  }
+        { include:  '#primitives_u'  }
+        { include:  '#primitives_v'  }
+        { include:  '#primitives_w'  }
+        { include:  '#primitives_x'  }
+        { include:  '#primitives_z'  }
 
-        { include:  'macros_percent'  }
-        { include:  'macros_a'  }
-        { include:  'macros_b'  }
-        { include:  'macros_c'  }
-        { include:  'macros_d'  }
-        { include:  'macros_e'  }
-        { include:  'macros_f'  }
-        { include:  'macros_g'  }
-        { include:  'macros_h'  }
-        { include:  'macros_i'  }
-        { include:  'macros_j'  }
-        { include:  'macros_k'  }
-        { include:  'macros_l'  }
-        { include:  'macros_m'  }
-        { include:  'macros_n'  }
-        { include:  'macros_o'  }
-        { include:  'macros_p'  }
-        { include:  'macros_q'  }
-        { include:  'macros_r'  }
-        { include:  'macros_s'  }
-        { include:  'macros_t'  }
-        { include:  'macros_u'  }
-        { include:  'macros_v'  }
-        { include:  'macros_w'  }
-        { include:  'macros_x'  }
-        { include:  'macros_y'  }
-        { include:  'macros_z'  }
+        { include:  '#macros_percent'  }
+        { include:  '#macros_a'  }
+        { include:  '#macros_b'  }
+        { include:  '#macros_c'  }
+        { include:  '#macros_d'  }
+        { include:  '#macros_e'  }
+        { include:  '#macros_f'  }
+        { include:  '#macros_g'  }
+        { include:  '#macros_h'  }
+        { include:  '#macros_i'  }
+        { include:  '#macros_j'  }
+        { include:  '#macros_k'  }
+        { include:  '#macros_l'  }
+        { include:  '#macros_m'  }
+        { include:  '#macros_n'  }
+        { include:  '#macros_o'  }
+        { include:  '#macros_p'  }
+        { include:  '#macros_q'  }
+        { include:  '#macros_r'  }
+        { include:  '#macros_s'  }
+        { include:  '#macros_t'  }
+        { include:  '#macros_u'  }
+        { include:  '#macros_v'  }
+        { include:  '#macros_w'  }
+        { include:  '#macros_x'  }
+        { include:  '#macros_y'  }
+        { include:  '#macros_z'  }
 
-        { include:  'colormaps' }
+        { include:  '#colormaps' }
       ]
     }
   # -------------------------------------------------- #
@@ -195,7 +196,7 @@ repository:
     {
       comment: 'Scilab 5.4.1 pre-defined (primitive-)functions beginning with m'
       match:  '(?<![\\w%\$\\?!#\\.])' + # standard begin
-                '(?:Matplot|Matplot1||macr2lst|macr2tree|matfile_close|matfile_listvar|matfile_open|matfile_varreadnext|matfile_varwrite|matrix|max|maxfiles|mclearerr|mclose|meof|merror|messagebox|mfprintf|mfscanf|mget|mgeti|mgetl|mgetstr|min|mlist|mode|model2blk|mopen|move|movefile|mprintf|mput|mputl|mputstr|mscanf|mseek|msprintf|msscanf|mtell|mtlb_mode|mtlb_sparse|mucomp|mulf)' +
+                '(?:Matplot|Matplot1|macr2lst|macr2tree|matfile_close|matfile_listvar|matfile_open|matfile_varreadnext|matfile_varwrite|matrix|max|maxfiles|mclearerr|mclose|meof|merror|messagebox|mfprintf|mfscanf|mget|mgeti|mgetl|mgetstr|min|mlist|mode|model2blk|mopen|move|movefile|mprintf|mput|mputl|mputstr|mscanf|mseek|msprintf|msscanf|mtell|mtlb_mode|mtlb_sparse|mucomp|mulf)' +
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
@@ -433,7 +434,7 @@ repository:
     {
       comment: 'Scilab 5.4.1 pre-defined (macro-)functions beginning with m'
       match:  '(?<![\\w%\$\\?!#\\.])' + # standard begin
-                '(?:m2sci_gui|m_circle|macglov|macrovar|mad|makecell|manedit|mapsound|markp2ss|matfile2sci|mdelete|mean|meanf|median|menubar|mese|mesh|meshgrid|mfft|mfile2sci|milk_drop|minreal|minss|mkdir|modulo|moment|mrfit|msd|mstr2sci|mtlb|mtlb_0|mtlb_a|mtlb_all|mtlb_any|mtlb_axes|mtlb_axis|mtlb_beta|mtlb_box|mtlb_choices|mtlb_close|mtlb_colordef|mtlb_cond|mtlb_conv|mtlb_cov|mtlb_cumprod|mtlb_cumsum|mtlb_dec2hex|mtlb_delete|mtlb_diag|mtlb_diff|mtlb_dir|mtlb_double|mtlb_e|mtlb_echo|mtlb_error|mtlb_eval|mtlb_exist|mtlb_eye|mtlb_false|mtlb_fft|mtlb_fftshift|mtlb_filter|mtlb_find|mtlb_findstr|mtlb_fliplr|mtlb_fopen|mtlb_format|mtlb_fprintf|mtlb_fread|mtlb_fscanf|mtlb_full|mtlb_fwrite|mtlb_get|mtlb_grid|mtlb_hold|mtlb_i|mtlb_ifft|mtlb_image|mtlb_imp|mtlb_int16|mtlb_int32|mtlb_int8|mtlb_is|mtlb_isa|mtlb_isfield|mtlb_isletter|mtlb_isspace|mtlb_l|mtlb_legendre|mtlb_linspace|mtlb_logic|mtlb_logical|mtlb_loglog|mtlb_lower|mtlb_max|mtlb_mean|mtlb_median|mtlb_mesh|mtlb_meshdom|mtlb_min|mtlb_more|mtlb_num2str|mtlb_ones|mtlb_pcolor|mtlb_plot|mtlb_prod|mtlb_qr|mtlb_qz|mtlb_rand|mtlb_randn|mtlb_rcond|mtlb_realmax|mtlb_realmin|mtlb_repmat|mtlb_s|mtlb_semilogx|mtlb_semilogy|mtlb_setstr|mtlb_size|mtlb_sort|mtlb_sortrows|mtlb_sprintf|mtlb_sscanf|mtlb_std|mtlb_strcmp|mtlb_strcmpi|mtlb_strfind|mtlb_strrep|mtlb_subplot|mtlb_sum|mtlb_t|mtlb_toeplitz|mtlb_tril|mtlb_triu|mtlb_true|mtlb_type|mtlb_uint16|mtlb_uint32|mtlb_uint8|mtlb_upper|mtlb_var|mtlb_zeros|mu2lin|mutation_ga_binary|mutation_ga_default|mvcorrel|mvvacov' +
+                '(?:m2sci_gui|m_circle|macglov|macrovar|mad|makecell|manedit|mapsound|markp2ss|matfile2sci|mdelete|mean|meanf|median|menubar|mese|mesh|meshgrid|mfft|mfile2sci|milk_drop|minreal|minss|mkdir|modulo|moment|mrfit|msd|mstr2sci|mtlb|mtlb_0|mtlb_a|mtlb_all|mtlb_any|mtlb_axes|mtlb_axis|mtlb_beta|mtlb_box|mtlb_choices|mtlb_close|mtlb_colordef|mtlb_cond|mtlb_conv|mtlb_cov|mtlb_cumprod|mtlb_cumsum|mtlb_dec2hex|mtlb_delete|mtlb_diag|mtlb_diff|mtlb_dir|mtlb_double|mtlb_e|mtlb_echo|mtlb_error|mtlb_eval|mtlb_exist|mtlb_eye|mtlb_false|mtlb_fft|mtlb_fftshift|mtlb_filter|mtlb_find|mtlb_findstr|mtlb_fliplr|mtlb_fopen|mtlb_format|mtlb_fprintf|mtlb_fread|mtlb_fscanf|mtlb_full|mtlb_fwrite|mtlb_get|mtlb_grid|mtlb_hold|mtlb_i|mtlb_ifft|mtlb_image|mtlb_imp|mtlb_int16|mtlb_int32|mtlb_int8|mtlb_is|mtlb_isa|mtlb_isfield|mtlb_isletter|mtlb_isspace|mtlb_l|mtlb_legendre|mtlb_linspace|mtlb_logic|mtlb_logical|mtlb_loglog|mtlb_lower|mtlb_max|mtlb_mean|mtlb_median|mtlb_mesh|mtlb_meshdom|mtlb_min|mtlb_more|mtlb_num2str|mtlb_ones|mtlb_pcolor|mtlb_plot|mtlb_prod|mtlb_qr|mtlb_qz|mtlb_rand|mtlb_randn|mtlb_rcond|mtlb_realmax|mtlb_realmin|mtlb_repmat|mtlb_s|mtlb_semilogx|mtlb_semilogy|mtlb_setstr|mtlb_size|mtlb_sort|mtlb_sortrows|mtlb_sprintf|mtlb_sscanf|mtlb_std|mtlb_strcmp|mtlb_strcmpi|mtlb_strfind|mtlb_strrep|mtlb_subplot|mtlb_sum|mtlb_t|mtlb_toeplitz|mtlb_tril|mtlb_triu|mtlb_true|mtlb_type|mtlb_uint16|mtlb_uint32|mtlb_uint8|mtlb_upper|mtlb_var|mtlb_zeros|mu2lin|mutation_ga_binary|mutation_ga_default|mvcorrel|mvvacov)' +
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
