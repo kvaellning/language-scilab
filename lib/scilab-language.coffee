@@ -13,12 +13,6 @@ module.exports =
           type: 'boolean'
           default: true
 
-        updateAnchorsOnSave:
-          title: 'Update anchors at save'
-          description: 'If checked, the anchors (``function``/``endfunction`` blocks) are only updated on save.<br>**Check if you experience performance issues.**'
-          type: 'boolean'
-          default: false
-
   subscriptions: null
   whereamiView: null
 
@@ -32,7 +26,7 @@ module.exports =
       if not editor.gutterWithName('whereami-scilab')
         @whereamiView = new SciViewWhereAmI(editor)
 
-      @whereamiView?.UpdateGutter()
+      @whereamiView?.updateGutter()
 
   deactivate: () ->
     @subscriptions?.dispose()
