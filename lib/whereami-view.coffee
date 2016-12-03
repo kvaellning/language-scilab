@@ -38,7 +38,7 @@ class SciViewWhereAmI
 
     @updateWholeGutter = false # used to determine if the whole gutter should be redrawn. This is the case if the anchors have changed.
 
-    @isActive = atom.config.get('scilab-language.whereami.active')
+    @isActive = atom.config.get('scilab-language.whereamiActive')
 
     try
       # ------
@@ -65,8 +65,8 @@ class SciViewWhereAmI
 
     # ------
     # Subscribe to Scilab whereami flag-changes
-    @subscriptions.add atom.config.onDidChange 'scilab-language.whereami.active', =>
-      @isActive = atom.config.get('scilab-language.whereami.active')
+    @subscriptions.add atom.config.onDidChange 'scilab-language.whereamiActive', =>
+      @isActive = atom.config.get('scilab-language.whereamiActive')
 
       if @isActive
         @updatePane()

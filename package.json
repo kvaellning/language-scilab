@@ -14,6 +14,24 @@
   "bugs": {
     "url": "https://github.com/kvaellning/scilab-language/issues"
   },
+  "configSchema": {
+    "whereamiActive": {
+      "title": "Show \"whereami\"- compatible line-numbering",
+      "description": "\"Where am I?\" changes the line-numbering inside of functions.<br>Line-counting will start with *1* if a ``function``-keyword and a matching ``endfunction``-keyword is found. This line-numbering helps especially to debug **Scilab** error messages.<br>**Warning: This feature is in development. Deactivate if you experience performance issues.**",
+      "type": "boolean",
+      "default": true,
+      "order": 1
+    },
+    "builtinsVersion": {
+      "title": "Use pre-defines of",
+      "type": "string",
+      "enum": [
+        "Scilab 5.4.1"
+      ],
+      "default": "Scilab 5.4.1",
+      "order": 2
+    }
+  },
   "license": "MIT",
   "readmeFilename": "README.md"
 }

@@ -140,7 +140,7 @@ repository:
         { include: '#constants'    }
         { include: '#keywords'     }
 
-        { include: 'source.scilab.builtins.5.4#functions'  }
+        { include: 'source.scilab.builtins#functions'  }
 
         { include: '#statement_terminator' }
 
@@ -217,8 +217,8 @@ repository:
       {
         comment: 'struct element foo.foo'
         match:  '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)' + # characters at begin
-                  '(?>\\(([^\\=;]+)\\))?'               + # all what is inside brackets
-                  '(?=\\.[a-zA-Z_%\\$\\?!#])'             # with trailing dot and character
+                  '(?>\\(([^\\=;]+)\\))?'             + # all what is inside brackets
+                  '(?=\\.[a-zA-Z_%\\$\\?!#])'           # with trailing dot and character
 
         # example for the second line (all inside of brackets):
         # 1. Consume every valid character until reaching of an opening parenthesis
