@@ -304,7 +304,7 @@ repository:
     {
       comment: 'Scilab 5.4.1 pre-defined (primitive-)functions beginning with z'
       match:  '(?<![\\w%\$\\?!#\\.])' + # standard begin
-                '(?:zeros|znaupdz|zneupd|zoom_rect)' +
+                '(?:zeros|znaupd|zneupd|zoom_rect)' +
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }

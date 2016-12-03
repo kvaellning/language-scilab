@@ -26,7 +26,8 @@
       "title": "Use pre-defines of",
       "type": "string",
       "enum": [
-        "Scilab 5.4.1"
+        "Scilab 5.4.1",
+        "Scilab 5.5.2"
       ],
       "default": "Scilab 5.4.1",
       "order": 2
