@@ -1,6 +1,9 @@
+### 0.6.1
+  Fix a bug which caused broken scopes for constructs like ``execstr( FunctionA("if exists(val) then foo(1) = 1; end") );``
+  
 ### 0.6.0
   Includes Pre-defined functions for Scilab 5.4.1 and 5.5.2 (can be switched via Preferences)
-  
+
 ### 0.5.0:
 - delete invisible chars in "m" and "u" built-ins, which avoided highlighting of built-in functions such as `mean` or `uicontrol`
 - deleted option to only update anchors on save<br>

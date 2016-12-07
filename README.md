@@ -10,7 +10,7 @@ This package is based on [language-scilab 0.1.0](https://github.com/JeremyHelein
 Though based, nearly everything in the code is altered.
 
 ### Features
-  - *Scilab* (5.4.1) built-in functions as defined in the *Scilab* installation
+  - *Scilab* (5.4.1 / 5.5.2) built-in functions as defined in the *Scilab* installation
   - added *Scilab* constants
   - Markup of errors, as far as they can be reflected by the grammar Definition
   - Snippets for often used *Scilab* blocks
@@ -26,11 +26,8 @@ Though based, nearly everything in the code is altered.
 
 ### Planned features
   - matrix scope
+  - Integrate Scilab-Online help
   - If necessary, an [autocomplete-plus]() provider.
     From my experience with another language, this will be a separate package.
   - If necessary, linter support
-  - Revisit (and if necessary rewrite) grammar-regexp
-  - Dynamic Support of the *Scilab* language:
-    - <strike>5.4.1</strike> (available)
-    - 5.5.2
-    - 6.x.x (distant future)
+  - Revisit (and if necessary rewrite) grammar-regex

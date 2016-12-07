@@ -134,6 +134,7 @@ repository:
         { include: '#invalid_operators_all' }
 
         { include: '#operators' }
+        { include: '#parenthesis_block' }
 
         { include: '#constants_matrix_vector' }
 
@@ -146,6 +147,7 @@ repository:
 
         { include: '#strings'  }
         { include: '#struct_tlist' }
+
       ]
     }
   # ------------------------------
@@ -338,18 +340,7 @@ repository:
       match: '\\='
       name: 'keyword.operator.assignment.scilab'
     }
-  
-  operators_parenthesis:
-    {
-      match: '\\((.*)\\)'
-      
-      captures:
-        1:
-          patterns: [
-            { include: '#std_environment' }
-          ]
-    }
-    
+
   operators:
     {
       patterns: [
@@ -358,7 +349,6 @@ repository:
         { include: '#operators_logic'        }
         { include: '#operators_comparison'   }
         { include: '#operators_assignment'   }
-        { include: '#operators_parenthesis'  }
       ]
     }
 
@@ -701,4 +691,25 @@ repository:
               name: 'variable.assignment.scilab'
             }
           ]
+    }
+
+  parenthesis_block:
+    {
+      comment: 'Denotes all blocks within parenthesis. Is broken by e.g. comments'
+      begin: '\\('
+      end:   '(\\))' #'|(?=\\s*[/]{2,})'
+
+      contentName: 'meta.parens'
+
+      beginCaptures:
+        0:
+          name: 'punctuation.section.parens.begin.scilab'
+      endCaptures:
+        1:
+          name: 'punctuation.sections.parens.end.scilab'
+
+      patterns: [
+        { include: '#scilab_comment'  }
+        { include: '#std_environment' }
+      ]
     }

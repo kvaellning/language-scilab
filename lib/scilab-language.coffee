@@ -33,6 +33,7 @@ module.exports =
       editor.gutterWithName('whereami-scilab')?.view?.destroy()
 
   # ---------------------------------------------------------------
+  # Change the used built-in functions
   setUsedBuiltins: () ->
     atom.grammars.removeGrammarForScopeName('source.scilab.builtins')
 
