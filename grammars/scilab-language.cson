@@ -25,7 +25,7 @@ patterns: [
 
           {
             comment: 'return values'
-            match: '(?:[a-zA-Z_%\\$\\?!#\\[\\],\\s][\\w%\\$\\?!#\\],\\s]*)\\s*\\='
+            match: '[^\\=]+\\='
             name:  'meta.function.parameters.scilab'
 
             captures:
@@ -56,6 +56,8 @@ patterns: [
                     match: '\\]'
                     name: 'punctuation.section.brackets.end.scilab'
                   }
+
+                  { include: '#operators_assignment' }
                 ]
           }
 
@@ -697,16 +699,16 @@ repository:
     {
       comment: 'Denotes all blocks within parenthesis. Is broken by e.g. comments'
       begin: '\\('
-      end:   '(\\))' #'|(?=\\s*[/]{2,})'
+      end:   '(\\))'
 
-      contentName: 'meta.parens'
+      contentName: 'meta.parens.scilab'
 
       beginCaptures:
         0:
           name: 'punctuation.section.parens.begin.scilab'
       endCaptures:
         1:
-          name: 'punctuation.sections.parens.end.scilab'
+          name: 'punctuation.section.parens.end.scilab'
 
       patterns: [
         { include: '#scilab_comment'  }
