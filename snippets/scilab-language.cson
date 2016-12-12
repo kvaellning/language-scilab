@@ -17,6 +17,13 @@
       endfunction
     """
 
+  'disp':
+    prefix: 'disp'
+    description: 'Display a variable and its name to the console'
+    body: """
+      disp($1, '$1');
+    """
+    
   'if-then-else':
     prefix: 'if-else'
     description: 'if-then-else condition'
