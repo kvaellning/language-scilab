@@ -128,6 +128,7 @@ repository:
     {
       comment: 'This includes all constants and data types which are used for scoping'
       patterns: [
+        
         { include: '#continuation_mark' }
         { include: '#numbers'           }
 
@@ -218,18 +219,19 @@ repository:
       # ----------------------------------------------
       # dot (.)-accessor patterns
       # ----------------------------------------------
+      
       {
-        comment: 'struct element foo.foo'
+        comment: 'foo(...).foo'
         match:  '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)' + # characters at begin
-                  '(?>\\(([^\\=;]+)\\))?'             + # all what is inside brackets
+                  '(?>\\(([^\\=;]+)\\))*'             + # all what is inside brackets
                   '(?=\\.[a-zA-Z_%\\$\\?!#])'           # with trailing dot and character
-
+        
         # example for the second line (all inside of brackets):
         # 1. Consume every valid character until reaching of an opening parenthesis
         # 2. Avoid backtracking and match the rest of the line (or break if = or ; is reached)
         # 3. Backtrack to the first available closing parenthesis
         # 4. Check against the dot
-
+        
         captures:
           1:
             name: 'variable.other.object.scilab'
@@ -699,19 +701,35 @@ repository:
     {
       comment: 'Denotes all blocks within parenthesis. Is broken by e.g. comments'
       begin: '\\('
-      end:   '(\\))'
-
+      end:   '\\)'
+      
       contentName: 'meta.parens.scilab'
 
       beginCaptures:
         0:
           name: 'punctuation.section.parens.begin.scilab'
       endCaptures:
-        1:
+        0:
           name: 'punctuation.section.parens.end.scilab'
 
       patterns: [
         { include: '#scilab_comment'  }
+        
+        {
+          comment: 'foo(...).foo - special way with allowed backtracking for the parenthesis_block'
+          match:  '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)' + # characters at begin
+                    '(?:\\(([^\\=;]+)\\))*'             + # all what is inside brackets
+                    '(?=\\.[a-zA-Z_%\\$\\?!#])'           # with trailing dot and character
+          
+          captures:
+            1:
+              name: 'variable.other.object.scilab'
+            2:
+              patterns: [
+                { include: '#std_environment' }
+              ]
+        }
+        
         { include: '#std_environment' }
       ]
     }
