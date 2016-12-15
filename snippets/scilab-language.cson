@@ -4,7 +4,7 @@
     description: 'Function with no return values'
     body: """
       function ${1:FunctionName}($2)
-        $3
+         $3
       endfunction
     """
 
@@ -13,7 +13,7 @@
     description: 'Function with return values(s)'
     body: """
       function ${1:retVal} = ${2:FunctionName}($3)
-        $4
+         $4
       endfunction
     """
 
@@ -29,9 +29,9 @@
     description: 'if-then-else condition'
     body: """
       if ${1:condition} then
-        $2
+         $2
       else
-        $3
+         $3
       end
     """
 
@@ -40,7 +40,7 @@
     description: 'if-then condition'
     body: """
       if ${1:condition} then
-        $2
+         $2
       end
     """
 
@@ -49,7 +49,7 @@
     description: 'for-loop'
     body: """
       for $1
-        $2
+         $2
       end
     """
 
@@ -58,7 +58,7 @@
     description: 'while-loop'
     body: """
       while ${1:condition}
-        $2
+         $2
       end
     """
 
@@ -67,9 +67,9 @@
     description: 'try-catch-block (to catch errors during script runtime)'
     body: """
       try
-        $1
+         $1
       catch
-        $2
+         $2
       end
     """
 
@@ -78,9 +78,9 @@
     description: 'select-list'
     body: """
       select $1
-        $2
+         $2
       else
-        ${3:; // default value}
+         ${3:; // default value}
       end
     """
 
@@ -89,5 +89,5 @@
     description: 'case of a select list'
     body: """
       case ${1:condition} then
-        $2
+         $2
     """

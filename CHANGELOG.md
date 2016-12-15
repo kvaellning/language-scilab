@@ -1,3 +1,7 @@
+### 0.6.3
+  - fix struct/tlist resolvement introduced with __0.6.1__
+  - fix snippet indent
+
 ### 0.6.2
   - re-activated spec
   - simplified return value regexp
