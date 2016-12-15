@@ -1,6 +1,7 @@
 ### 0.6.3
   - fix struct/tlist resolvement introduced with __0.6.1__
   - fix snippet indent
+  - throw out ``global`` from the list of builtin functions (because it doesn't feel like a function)
 
 ### 0.6.2
   - re-activated spec

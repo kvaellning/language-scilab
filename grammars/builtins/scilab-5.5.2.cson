@@ -124,7 +124,7 @@ repository:
     {
       comment: 'Scilab 5.5.2 pre-defined (primitive-)functions beginning with g'
       match:  '(?<![\\w%\$\\?!#\\.])' + # standard begin
-                '(?:gamma|gammaln|geom3d|get|getURL|get_absolute_file_path|get_fftw_wisdom|getblocklabel|getcallbackobject|getdate|getdebuginfo|getdefaultlanguage|getdrives|getdynlibext|getenv|getfield|gethistory|gethistoryfile|getinstalledlookandfeels|getio|getlanguage|getlongpathname|getlookandfeel|getmd5|getmemory|getmodules|getos|getpid|getrelativefilename|getscicosvars|getscilabmode|getshortpathname|gettext|getvariablesonstack|getversion|glist|global|glue|grand|graphicfunction|grayplot|grep|gsort|gstacksize)' +
+                '(?:gamma|gammaln|geom3d|get|getURL|get_absolute_file_path|get_fftw_wisdom|getblocklabel|getcallbackobject|getdate|getdebuginfo|getdefaultlanguage|getdrives|getdynlibext|getenv|getfield|gethistory|gethistoryfile|getinstalledlookandfeels|getio|getlanguage|getlongpathname|getlookandfeel|getmd5|getmemory|getmodules|getos|getpid|getrelativefilename|getscicosvars|getscilabmode|getshortpathname|gettext|getvariablesonstack|getversion|glist|glue|grand|graphicfunction|grayplot|grep|gsort|gstacksize)' +
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
