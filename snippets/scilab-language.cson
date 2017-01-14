@@ -23,8 +23,8 @@
     body: """
       disp($1, '$1');
     """
-    
-  'if-then-else':
+
+  'if ... then ... else':
     prefix: 'if-else'
     description: 'if-then-else condition'
     body: """
@@ -35,7 +35,7 @@
       end
     """
 
-  'if-then':
+  'if ... then':
     prefix: 'if-end'
     description: 'if-then condition'
     body: """
@@ -62,7 +62,7 @@
       end
     """
 
-  'try-catch':
+  'try ... catch':
     prefix: 'try-catch'
     description: 'try-catch-block (to catch errors during script runtime)'
     body: """
