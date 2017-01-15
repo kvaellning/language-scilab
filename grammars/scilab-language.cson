@@ -114,8 +114,10 @@ patterns: [
     name: 'storage.type.function.end.scilab'
   }
 
+  { include: '#std_environment' }
+
   { include: '#variable_assignment' }
-  { include: '#std_environment'     }
+  { include: '#function_call'       }
 
   { include: '#vector_colon'  }
 ]
@@ -149,7 +151,6 @@ repository:
         { include: '#statement_terminator' }
 
         { include: '#strings'  }
-        { include: '#function_call' }
         { include: '#struct_tlist' }
 
       ]
