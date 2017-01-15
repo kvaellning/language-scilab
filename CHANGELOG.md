@@ -6,6 +6,10 @@
       - ``Foo(2).a``
       - ``Foo(1:2)`` <br>etc. ...
 
+  - deleted code to determine struct/tlist base-variable<br>
+    This was done to avoid the ever going on problems with the parenthesis and so on.
+    Now, only the members are specifically marked.
+
 ### 0.6.3
   - fix struct/tlist resolvement introduced with __0.6.1__
   - fix snippet indent
