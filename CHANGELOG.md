@@ -1,3 +1,11 @@
+### 0.6.4
+  - adds a pattern for determining function-like accessors<br>
+    Since basically everything done with parenthesis is something like a function call, this is a nice pattern which might come handy in future use.<br>
+    This will grab stuff like
+      - ``Foo(something)``
+      - ``Foo(2).a``
+      - ``Foo(1:2)`` <br>etc. ...
+
 ### 0.6.3
   - fix struct/tlist resolvement introduced with __0.6.1__
   - fix snippet indent

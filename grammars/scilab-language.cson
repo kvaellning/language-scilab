@@ -149,6 +149,7 @@ repository:
         { include: '#statement_terminator' }
 
         { include: '#strings'  }
+        { include: '#function_access' }
         { include: '#struct_tlist' }
 
       ]
@@ -248,6 +249,7 @@ repository:
                     '|(\\.)'  +
                   ')' +
                   '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
+                  #'++(?!\\.)'  # if active, only the last member is recognized
 
         captures:
           1:
@@ -695,6 +697,27 @@ repository:
               name: 'variable.assignment.scilab'
             }
           ]
+    }
+
+  function_access:
+    {
+      comment: 'Function accessor parenthesis'
+      begin:  '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)(\\()'
+      end:    '(\\))'
+
+      name: 'meta.function-call.scilab'
+
+      beginCaptures:
+        2:
+          name: 'punctuation.section.parens.begin.scilab'
+
+      endCaptures:
+        1:
+          name: 'punctuation.section.parens.end.scilab'
+
+      patterns: [
+        { include: '#std_environment' }
+      ]
     }
 
   parenthesis_block:
