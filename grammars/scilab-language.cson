@@ -149,7 +149,7 @@ repository:
         { include: '#statement_terminator' }
 
         { include: '#strings'  }
-        { include: '#function_access' }
+        { include: '#function_call' }
         { include: '#struct_tlist' }
 
       ]
@@ -608,7 +608,7 @@ repository:
                     ')'     +
                     '|(?:(?<=\\.)\\g<charsSimple>+)'     + # member of a struct/tlist (using dot (.) separator)
                   ')' +
-                ')'   +
+                ')++'   +
                 '\\s*' +
                 '(?!\\s*[\\=]{2,})' + # more than one equal sign
                 '(?=\\=)'
@@ -667,7 +667,7 @@ repository:
           ]
     }
 
-  function_access:
+  function_call:
     {
       comment: 'Function accessor parenthesis'
       begin:  '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)(\\()'
