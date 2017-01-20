@@ -218,32 +218,6 @@ repository:
 
   struct_tlist:
     patterns: [
-      # ----------------------------------------------
-      # dot (.)-accessor patterns
-      # ----------------------------------------------
-
-      # NOTE: Since 0.7.0: Ignore until there is a more robust way
-      # {
-      #   comment: 'foo(...).foo'
-      #   match:  '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)' + # characters at begin
-      #             '(?>\\(([^\\=;]+)\\))*'             + # all what is inside brackets
-      #             '(?=\\.[a-zA-Z_%\\$\\?!#])'           # with trailing dot and character
-      #
-      #   # example for the second line (all inside of brackets):
-      #   # 1. Consume every valid character until reaching of an opening parenthesis
-      #   # 2. Avoid backtracking and match the rest of the line (or break if = or ; is reached)
-      #   # 3. Backtrack to the first available closing parenthesis
-      #   # 4. Check against the dot
-      #
-      #   captures:
-      #     1:
-      #       name: 'variable.other.object.scilab'
-      #     2:
-      #       patterns: [
-      #         { include: '#std_environment' }
-      #       ]
-      # }
-
       {
         comment: 'struct sub-element foo.FOO'
         match:  '(?:' +
@@ -600,7 +574,7 @@ repository:
                       '(?<charsSimple>[\\w%\\$\\?!#](?!\\s*//))+' + # case 1: "simple" assignment with no parenthesis
                       '(?:'                                       + # case 2: assignment with parenthesis
                         '\\(\\s*["\']?'                 + # beginning parenthesis
-                          '.+?'                         + # again anything
+                          '.+'                          + # again anything
                         '["\']?\\s*\\)'                 + # ending parenthesis
                       ')?' +
                     ')' +

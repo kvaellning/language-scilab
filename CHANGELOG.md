@@ -1,3 +1,6 @@
+### 0.6.5
+  - fix assignment if function calls are inside of it
+
 ### 0.6.4
   - adds a pattern for determining function-like accessors<br>
     Since basically everything done with parenthesis is something like a function call, this is a nice pattern which might come handy in future use.<br>
