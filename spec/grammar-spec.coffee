@@ -697,3 +697,23 @@ describe "Scilab grammar", ->
     expect(tokens[0][22].scopes).toEqual ['source.scilab', 'storage.type.function.end.scilab']
 
     expect(tokens[0][23]).not.toBeDefined()
+
+  it "checks error for code after continuation marks", ->
+    tokens = grammar.tokenizeLines('foo ... bar // baz')
+
+    expect(tokens[0][0].value).toBe 'foo '
+    expect(tokens[0][0].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][1].value).toBe '...'
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'punctuation.separator.continuation.scilab']
+
+    expect(tokens[0][2].value).toBe ' bar'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'invalid.illegal.scilab']
+
+    expect(tokens[0][3].value).toBe ' '
+    expect(tokens[0][3].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][4].value).toBe '// baz'
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'comment.line.double-slash.scilab']
+
+    expect(tokens[0][5]).not.toBeDefined()

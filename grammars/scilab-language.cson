@@ -639,8 +639,13 @@ repository:
   continuation_mark:
     {
       comment: 'continuation mark'
-      match: '[\\.]{2,}'
-      name: 'punctuation.separator.continuation.scilab'
+      match:   '(\\.{2,})(.*?)\\s*(?=(?:(?://)|$))'
+
+      captures:
+        1:
+          name: 'punctuation.separator.continuation.scilab'
+        2:
+          name:  'invalid.illegal.scilab'
     }
 
   statement_terminator:
