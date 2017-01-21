@@ -49,7 +49,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.begin.scilab']
 
     expect(tokens[0][4].value).toBe ')'
-    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.section.parens.end.scilab']
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.end.scilab']
 
     expect(tokens[0][5]).not.toBeDefined()
 
@@ -73,7 +73,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.input.scilab']
 
     expect(tokens[0][5].value).toBe ')'
-    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.section.parens.end.scilab']
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.end.scilab']
 
     expect(tokens[0][6]).not.toBeDefined()
 
@@ -97,13 +97,13 @@ describe "Scilab grammar", ->
     expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.input.scilab']
 
     expect(tokens[0][5].value).toBe ','
-    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.separator.parameters.scilab']
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.separator.parameter.scilab']
 
     expect(tokens[0][6].value).toBe 'baz'
     expect(tokens[0][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.input.scilab']
 
     expect(tokens[0][7].value).toBe ')'
-    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.section.parens.end.scilab']
+    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.end.scilab']
 
     expect(tokens[0][8]).not.toBeDefined()
 
@@ -121,7 +121,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
 
     expect(tokens[0][3].value).toBe '='
-    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'keyword.operator.assignment.scilab']
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'keyword.operator.assignment.scilab']
 
     expect(tokens[0][4].value).toBe 'Foo'
     expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
@@ -133,20 +133,20 @@ describe "Scilab grammar", ->
     expect(tokens[0][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.input.scilab']
 
     expect(tokens[0][7].value).toBe ','
-    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.separator.parameters.scilab']
+    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.separator.parameter.scilab']
 
     expect(tokens[0][8].value).toBe 'baz'
     expect(tokens[0][8].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.input.scilab']
 
     expect(tokens[0][9].value).toBe ')'
-    expect(tokens[0][9].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.section.parens.end.scilab']
+    expect(tokens[0][9].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.end.scilab']
 
     expect(tokens[0][10]).not.toBeDefined()
 
-  it 'checks \"function [retVal,retVal]=Foo(foobar,baz)\"', ->
+  it 'checks \"function [retVal,retVal] = Foo(foobar,baz)\"', ->
     tokens = grammar.tokenizeLines('function [retVal,retVal] = Foo(foobar,baz)')
 
-    # function [retVal,retVal]=Foo(bar,baz)
+    # function [retVal,retVal]=Foo(foobar,baz)
     expect(tokens[0][0].value).toBe 'function'
     expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
 
@@ -160,7 +160,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
 
     expect(tokens[0][4].value).toBe ','
-    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.separator.parameters.scilab']
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.separator.parameter.scilab']
 
     expect(tokens[0][5].value).toBe 'retVal'
     expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
@@ -169,10 +169,10 @@ describe "Scilab grammar", ->
     expect(tokens[0][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.brackets.end.scilab']
 
     expect(tokens[0][7].value).toBe ' '
-    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab']
+    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab']
 
     expect(tokens[0][8].value).toBe '='
-    expect(tokens[0][8].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'keyword.operator.assignment.scilab']
+    expect(tokens[0][8].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'keyword.operator.assignment.scilab']
 
     expect(tokens[0][9].value).toBe ' '
     expect(tokens[0][9].scopes).toEqual ['source.scilab', 'meta.function.scilab']
@@ -187,26 +187,241 @@ describe "Scilab grammar", ->
     expect(tokens[0][12].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.input.scilab']
 
     expect(tokens[0][13].value).toBe ','
-    expect(tokens[0][13].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.separator.parameters.scilab']
+    expect(tokens[0][13].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.separator.parameter.scilab']
 
     expect(tokens[0][14].value).toBe 'baz'
     expect(tokens[0][14].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.input.scilab']
 
     expect(tokens[0][15].value).toBe ')'
-    expect(tokens[0][15].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.section.parens.end.scilab']
+    expect(tokens[0][15].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.end.scilab']
 
     expect(tokens[0][16]).not.toBeDefined()
 
-  it 'checks some invalid \"function\" declarations', ->
-    tokens = grammar.tokenizeLines('functionFoo()\n'              +
-                                   'function [retVal=Foo()\n'     +
-                                   'function ret.=Foo()\n'        +
-                                   'function ret. =Foo()\n'       +
-                                   'function ret.Val=Foo()\n'     +
-                                   'function 123=Foo()\n'       +
-                                   'function Foo(123)'            +
-                                   'function Foo)'                +
-                                   'function Foo(')
+  it 'checks \"function Foo\"', ->
+    tokens = grammar.tokenizeLines('function Foo')
+
+    expect(tokens[0][0].value).toBe 'function'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
+
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[0][2].value).toBe 'Foo'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
+
+    expect(tokens[0][3]).not.toBeDefined()
+
+  it 'checks \"function foo = Foo\"', ->
+    tokens = grammar.tokenizeLines('function foo = Foo')
+
+    expect(tokens[0][0].value).toBe 'function'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
+
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[0][2].value).toBe 'foo'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
+
+    expect(tokens[0][3].value).toBe ' '
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[0][4].value).toBe '='
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'keyword.operator.assignment.scilab']
+
+    expect(tokens[0][5].value).toBe ' '
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[0][6].value).toBe 'Foo'
+    expect(tokens[0][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
+
+    expect(tokens[0][7]).not.toBeDefined()
+
+  it 'checks \"function Foo // bar\"', ->
+    tokens = grammar.tokenizeLines('function Foo // bar')
+
+    expect(tokens[0][0].value).toBe 'function'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
+
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[0][2].value).toBe 'Foo'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
+
+    expect(tokens[0][3].value).toBe ' '
+    expect(tokens[0][3].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][4].value).toBe '// bar'
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'comment.line.double-slash.scilab']
+
+    expect(tokens[0][5]).not.toBeDefined()
+
+
+  it 'checks \"function [ret, ...\nval] = Foo // bar\" (with a lot of additional stuff)', ->
+    tokens = grammar.tokenizeLines('function [ret, ... foo // bar\n' +
+                                   '          val] ... foo // bar\n' +
+                                   '          = ... foo // bar\n'  +
+                                   '          Foo ... foo // bar\n' +
+                                   '          (in, ... foo // bar\n' +
+                                   '          val) ... // bar')
+
+    expect(tokens[0][0].value).toBe 'function'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
+
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[0][2].value).toBe '['
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.brackets.begin.scilab']
+
+    expect(tokens[0][3].value).toBe 'ret'
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
+
+    expect(tokens[0][4].value).toBe ','
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.separator.parameter.scilab']
+
+    expect(tokens[0][5].value).toBe ' '
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab']
+
+    expect(tokens[0][6].value).toBe '...'
+    expect(tokens[0][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.separator.continuation.scilab']
+
+    expect(tokens[0][7].value).toBe ' foo'
+    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'invalid.illegal.scilab']
+
+    expect(tokens[0][8].value).toBe ' '
+    expect(tokens[0][8].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab']
+
+    expect(tokens[0][9].value).toBe '// bar'
+    expect(tokens[0][9].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'comment.line.double-slash.scilab']
+
+    expect(tokens[0][10]).not.toBeDefined()
+
+    expect(tokens[1][0].value).toBe '          '
+    expect(tokens[1][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab']
+
+    expect(tokens[1][1].value).toBe 'val'
+    expect(tokens[1][1].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
+
+    expect(tokens[1][2].value).toBe ']'
+    expect(tokens[1][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.brackets.end.scilab']
+
+    expect(tokens[1][3].value).toBe ' '
+    expect(tokens[1][3].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[1][4].value).toBe '...'
+    expect(tokens[1][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.separator.continuation.scilab']
+
+    expect(tokens[1][5].value).toBe ' foo'
+    expect(tokens[1][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'invalid.illegal.scilab']
+
+    expect(tokens[1][6].value).toBe ' '
+    expect(tokens[1][6].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[1][7].value).toBe '// bar'
+    expect(tokens[1][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'comment.line.double-slash.scilab']
+
+    expect(tokens[1][8]).not.toBeDefined()
+
+    expect(tokens[2][0].value).toBe '          '
+    expect(tokens[2][0].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[2][1].value).toBe '='
+    expect(tokens[2][1].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'keyword.operator.assignment.scilab']
+
+    expect(tokens[2][2].value).toBe ' '
+    expect(tokens[2][2].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[2][3].value).toBe '...'
+    expect(tokens[2][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.separator.continuation.scilab']
+
+    expect(tokens[2][4].value).toBe ' foo'
+    expect(tokens[2][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'invalid.illegal.scilab']
+
+    expect(tokens[2][5].value).toBe ' '
+    expect(tokens[2][5].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[2][6].value).toBe '// bar'
+    expect(tokens[2][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'comment.line.double-slash.scilab']
+
+    expect(tokens[2][7]).not.toBeDefined()
+
+    expect(tokens[3][0].value).toBe '          '
+    expect(tokens[3][0].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[3][1].value).toBe 'Foo'
+    expect(tokens[3][1].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
+
+    expect(tokens[3][2].value).toBe ' '
+    expect(tokens[3][2].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[3][3].value).toBe '...'
+    expect(tokens[3][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.separator.continuation.scilab']
+
+    expect(tokens[3][4].value).toBe ' foo'
+    expect(tokens[3][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'invalid.illegal.scilab']
+
+    expect(tokens[3][5].value).toBe ' '
+    expect(tokens[3][5].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[3][6].value).toBe '// bar'
+    expect(tokens[3][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'comment.line.double-slash.scilab']
+
+    expect(tokens[3][7]).not.toBeDefined()
+
+    expect(tokens[4][0].value).toBe '          '
+    expect(tokens[4][0].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[4][1].value).toBe '('
+    expect(tokens[4][1].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.begin.scilab']
+
+    expect(tokens[4][2].value).toBe 'in'
+    expect(tokens[4][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.input.scilab']
+
+    expect(tokens[4][3].value).toBe ','
+    expect(tokens[4][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.separator.parameter.scilab']
+
+    expect(tokens[4][4].value).toBe ' '
+    expect(tokens[4][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab']
+
+    expect(tokens[4][5].value).toBe '...'
+    expect(tokens[4][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.separator.continuation.scilab']
+
+    expect(tokens[4][6].value).toBe ' foo'
+    expect(tokens[4][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'invalid.illegal.scilab']
+
+    expect(tokens[4][7].value).toBe ' '
+    expect(tokens[4][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab']
+
+    expect(tokens[4][8].value).toBe '// bar'
+    expect(tokens[4][8].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'comment.line.double-slash.scilab']
+
+    expect(tokens[4][9]).not.toBeDefined()
+
+    expect(tokens[5][0].value).toBe '          '
+    expect(tokens[5][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab']
+
+    expect(tokens[5][1].value).toBe 'val'
+    expect(tokens[5][1].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.input.scilab']
+
+    expect(tokens[5][2].value).toBe ')'
+    expect(tokens[5][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.end.scilab']
+
+    expect(tokens[5][3].value).toBe ' '
+    expect(tokens[5][3].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[5][4].value).toBe '...'
+    expect(tokens[5][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.separator.continuation.invalid.illegal.scilab']
+
+    expect(tokens[5][5].value).toBe ' '
+    expect(tokens[5][5].scopes).toEqual ['source.scilab']
+
+    expect(tokens[5][6].value).toBe '// bar'
+    expect(tokens[5][6].scopes).toEqual ['source.scilab', 'comment.line.double-slash.scilab']
+
+  it 'checks invalid declaration \"functionFoo()\"', ->
+    tokens = grammar.tokenizeLines('functionFoo()')
 
     # functionFoo()
     expect(tokens[0][0].value).toBe 'functionFoo'
@@ -220,142 +435,169 @@ describe "Scilab grammar", ->
 
     expect(tokens[0][3]).not.toBeDefined()
 
+  it 'checks invalid declaration \"function [retVal=Foo()\"', ->
+    tokens = grammar.tokenizeLines('function [retVal=Foo()')
+
     # function [retVal=Foo()
-    expect(tokens[1][0].value).toBe 'function'
-    expect(tokens[1][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
+    expect(tokens[0][0].value).toBe 'function'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
 
-    expect(tokens[1][1].value).toBe ' '
-    expect(tokens[1][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
 
-    expect(tokens[1][2].value).toBe '['
-    expect(tokens[1][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.brackets.begin.scilab']
+    expect(tokens[0][2].value).toBe '['
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.brackets.begin.scilab']
 
-    expect(tokens[1][3].value).toBe 'retVal'
-    expect(tokens[1][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
+    expect(tokens[0][3].value).toBe 'retVal'
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
 
-    expect(tokens[1][4].value).toBe '='
-    expect(tokens[1][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'keyword.operator.assignment.scilab']
+    expect(tokens[0][4].value).toBe '='
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'keyword.operator.invalid.illegal.scilab']
 
-    expect(tokens[1][5].value).toBe 'Foo'
-    expect(tokens[1][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
+    expect(tokens[0][5].value).toBe 'Foo'
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
 
-    expect(tokens[1][6].value).toBe '('
-    expect(tokens[1][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.begin.scilab']
+    expect(tokens[0][6].value).toBe '('
+    expect(tokens[0][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.invalid.illegal.scilab']
 
-    expect(tokens[1][7].value).toBe ')'
-    expect(tokens[1][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.section.parens.end.scilab']
+    expect(tokens[0][7].value).toBe ')'
+    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.invalid.illegal.scilab']
 
-    expect(tokens[1][8]).not.toBeDefined()
+    expect(tokens[0][8]).not.toBeDefined()
+
+  it 'checks invalid declaration \"function ret.=Foo()\"', ->
+    tokens = grammar.tokenizeLines('function ret.=Foo()')
 
     # function ret.=Foo()
-    expect(tokens[2][0].value).toBe 'function'
-    expect(tokens[2][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
+    expect(tokens[0][0].value).toBe 'function'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
 
-    expect(tokens[2][1].value).toBe ' '
-    expect(tokens[2][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
 
-    expect(tokens[2][2].value).toBe 'ret'
-    expect(tokens[2][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
+    expect(tokens[0][2].value).toBe 'ret'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
 
-    expect(tokens[2][3].value).toBe '.='
-    expect(tokens[2][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'keyword.operator.invalid.illegal.scilab']
+    expect(tokens[0][3].value).toBe '.'
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.accessor.invalid.illegal.scilab']
 
-    expect(tokens[2][4].value).toBe 'Foo'
-    expect(tokens[2][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
+    expect(tokens[0][4].value).toBe '='
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'keyword.operator.assignment.scilab']
 
-    expect(tokens[2][5].value).toBe '('
-    expect(tokens[2][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.begin.scilab']
+    expect(tokens[0][5].value).toBe 'Foo'
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
 
-    expect(tokens[2][6].value).toBe ')'
-    expect(tokens[2][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.section.parens.end.scilab']
+    expect(tokens[0][6].value).toBe '('
+    expect(tokens[0][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.begin.scilab']
 
-    expect(tokens[2][7]).not.toBeDefined()
+    expect(tokens[0][7].value).toBe ')'
+    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.end.scilab']
+
+    expect(tokens[0][8]).not.toBeDefined()
+
+  it 'checks invalid declaration \"function ret. =Foo()\"', ->
+    tokens = grammar.tokenizeLines('function ret. =Foo()')
 
     # function ret. =Foo()
-    expect(tokens[3][0].value).toBe 'function'
-    expect(tokens[3][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
+    expect(tokens[0][0].value).toBe 'function'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
 
-    expect(tokens[3][1].value).toBe ' '
-    expect(tokens[3][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
 
-    expect(tokens[3][2].value).toBe 'ret'
-    expect(tokens[3][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab']
+    expect(tokens[0][2].value).toBe 'ret'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
 
-    expect(tokens[3][3].value).toBe '.'
-    expect(tokens[3][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.accessor.invalid.illegal.scilab']
+    expect(tokens[0][3].value).toBe '.'
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.accessor.invalid.illegal.scilab']
 
-    expect(tokens[3][4].value).toBe ' '
-    expect(tokens[3][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab']
+    expect(tokens[0][4].value).toBe ' '
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab']
 
-    expect(tokens[3][5].value).toBe '='
-    expect(tokens[3][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'keyword.operator.assignment.scilab']
+    expect(tokens[0][5].value).toBe '='
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'keyword.operator.assignment.scilab']
 
-    expect(tokens[3][6].value).toBe 'Foo'
-    expect(tokens[3][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
+    expect(tokens[0][6].value).toBe 'Foo'
+    expect(tokens[0][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
 
-    expect(tokens[3][7].value).toBe '('
-    expect(tokens[3][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.begin.scilab']
+    expect(tokens[0][7].value).toBe '('
+    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.begin.scilab']
 
-    expect(tokens[3][8].value).toBe ')'
-    expect(tokens[3][8].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.section.parens.end.scilab']
+    expect(tokens[0][8].value).toBe ')'
+    expect(tokens[0][8].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.end.scilab']
 
-    expect(tokens[3][9]).not.toBeDefined()
+    expect(tokens[0][9]).not.toBeDefined()
+
+  it 'checks invalid declaration \"function ret.Val=Foo()\"', ->
+    tokens = grammar.tokenizeLines('function ret.Val=Foo()')
 
     # function ret.Val=Foo()
-    expect(tokens[4][0].value).toBe 'function'
-    expect(tokens[4][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
+    expect(tokens[0][0].value).toBe 'function'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
 
-    expect(tokens[4][1].value).toBe ' '
-    expect(tokens[4][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
 
-    expect(tokens[4][2].value).toBe 'ret'
-    expect(tokens[4][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.other.object.invalid.illegal.scilab']
+    expect(tokens[0][2].value).toBe 'ret'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
 
-    expect(tokens[4][3].value).toBe '.'
-    expect(tokens[4][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.accessor.invalid.illegal.scilab']
+    expect(tokens[0][3].value).toBe '.'
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.accessor.invalid.illegal.scilab']
 
-    expect(tokens[4][4].value).toBe 'Val'
-    expect(tokens[4][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.other.member.invalid.illegal.scilab']
+    expect(tokens[0][4].value).toBe 'Val'
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.scilab']
 
-    expect(tokens[4][5].value).toBe '='
-    expect(tokens[4][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'keyword.operator.assignment.scilab']
+    expect(tokens[0][5].value).toBe '='
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'keyword.operator.assignment.scilab']
 
-    expect(tokens[4][6].value).toBe 'Foo'
-    expect(tokens[4][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
+    expect(tokens[0][6].value).toBe 'Foo'
+    expect(tokens[0][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
 
-    expect(tokens[4][7].value).toBe '('
-    expect(tokens[4][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.begin.scilab']
+    expect(tokens[0][7].value).toBe '('
+    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.begin.scilab']
 
-    expect(tokens[4][8].value).toBe ')'
-    expect(tokens[4][8].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.section.parens.end.scilab']
+    expect(tokens[0][8].value).toBe ')'
+    expect(tokens[0][8].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.end.scilab']
 
-    expect(tokens[4][9]).not.toBeDefined()
+    expect(tokens[0][9]).not.toBeDefined()
+
+  it 'checks invalid declaration \"function 123=Foo()\"', ->
+    tokens = grammar.tokenizeLines('function 123=Foo()')
 
     # function 123=Foo()
-    expect(tokens[5][0].value).toBe 'function'
-    expect(tokens[5][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
+    expect(tokens[0][0].value).toBe 'function'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
 
-    expect(tokens[5][1].value).toBe ' '
-    expect(tokens[5][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
 
-    expect(tokens[5][2].value).toBe '123'
-    expect(tokens[5][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.invalid.illegal.scilab']
+    expect(tokens[0][2].value).toBe '123'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'variable.parameter.output.invalid.illegal.scilab']
 
-    expect(tokens[5][3].value).toBe '='
-    expect(tokens[5][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'keyword.operator.assignment.scilab']
+    expect(tokens[0][3].value).toBe '='
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'keyword.operator.assignment.scilab']
 
-    expect(tokens[5][4].value).toBe 'Foo'
-    expect(tokens[5][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
+    expect(tokens[0][4].value).toBe 'Foo'
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
 
-    expect(tokens[5][5].value).toBe '('
-    expect(tokens[5][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.begin.scilab']
+    expect(tokens[0][5].value).toBe '('
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.begin.scilab']
 
-    expect(tokens[5][6].value).toBe ')'
-    expect(tokens[5][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'punctuation.section.parens.end.scilab']
+    expect(tokens[0][6].value).toBe ')'
+    expect(tokens[0][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.section.parens.end.scilab']
 
-    expect(tokens[5][7]).not.toBeDefined()
+    expect(tokens[0][7]).not.toBeDefined()
 
-  it 'checks assignments', ->
+  # it 'checks invalid declaration \"functionFoo(123)\"', ->
+  #   tokens = grammar.tokenizeLines('function Foo(123)')
+  #
+  # it 'checks invalid declaration \"function Foo)\"', ->
+  #   tokens = grammar.tokenizeLines('function Foo)')
+  #
+  # it 'checks invalid declaration \"function Foo(\"', ->
+  #   tokens = grammar.tokenizeLines('function Foo(')
+  #
+   it 'checks assignments', ->
     tokens = grammar.tokenizeLines('foo =struct(); //foobar() = 1;')
 
     # foo = struct(); //foobar = 1;

@@ -1,6 +1,7 @@
 ### 0.6.5
   - fix assignment if function calls are inside of it
   - mark error for code after continuation marks
+  - support of multiline function definitions
 
 ### 0.6.4
   - adds a pattern for determining function-like accessors<br>

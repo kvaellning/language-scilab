@@ -7,7 +7,7 @@ patterns: [
 
   {
     comment: 'Scilab function definition (one line)'
-    match:  '(?:(?:^\\s*)|(?:[^;]+\\s*))' + # all in front
+    match:  '(?:(?:^|;)\\s*)' + # all in front
             '(function)'                  + # function-tag
             '(?!'   + # but there is nowhere
               '.*?'  +
@@ -17,7 +17,11 @@ patterns: [
               ')'   +
               '(?:\\s*//)?'  + # but only in front of comments
             ')\\s+' +
-            '((?:.(?!//))++)' # all remaining stuff without comments
+            '(' +
+              '(?:'  +
+                '[^;](?!//)'  +  # all remaining stuff without comments
+              ')++' +
+            ')'
 
     name: 'meta.function.scilab'
 
@@ -35,14 +39,15 @@ patterns: [
   {
     comment: 'Scilab function definition (multiple lines)'
     begin:  '(?:' +
-              '(?:(?:^\\s*)|(?:[^;]+\\s*))'  + # any valid stuff before
+              '(?:(?:^|;)\\s*)'  + # any valid stuff before
               '(function)\\s+'               + # function keyword
-            ')'   +
-            '(?:' +
-              '(?=\\[[^\\]]+\\.\\.)' +
-              '|(?=.*?[^/]{2,})'  +
+            ')'     +
+            '(?!;)' +
+            '(?:'   +
+              '(?=\\[[^\\];]+\\.\\.)' +
+              '|(?=[^;]*?[^/]{2,})'  +
             ')'
-    end: '(?<=\\))(?:\\s*([\\.]{2,}))?'
+    end: '(?<=\\)|;)(?:\\s*([\\.]{2,}))?'
 
     name: 'meta.function.scilab'
 
@@ -50,6 +55,11 @@ patterns: [
       1:
         comment: 'function keyword'
         name: 'storage.type.function.begin.scilab'
+
+    endCaptures:
+      1:
+        comment: 'invalid line continuation after function'
+        name:    'punctuation.separator.continuation.invalid.illegal.scilab'
 
     patterns: [
       { include: '#scilab_comment'  }
@@ -64,6 +74,7 @@ patterns: [
     name: 'storage.type.function.end.scilab'
   }
 
+  { include: '#operators_assignment'   }
   { include: '#std_environment' }
 
   { include: '#variable_assignment' }
@@ -112,34 +123,78 @@ repository:
     {
       patterns: [
 
-        { include:  '#invalid_parameter_signs' }
-        { include:  '#invalid_signs'           }
-
+        { include: '#invalid_signs' }
         { include: '#name_too_long' }
+
+        # ----------------
+        # stuff between return values and equal sign
+        # ----------------
+        {
+          match: '(?<=\\]).*(?=\\=)'
+
+          captures:
+            0:
+              patterns: [
+                {
+                  match: '[^\\s]+'
+                  name:  'invalid.illegal.scilab'
+                }
+          ]
+        }
+
+        {
+          begin: '(?<=\\])'
+          end:   '(?=\\=)'
+
+          patterns: [
+            { include: '#scilab_comment'    }
+            { include: '#continuation_mark' }
+
+            {
+              match: '[^\\s]+'
+              name:  'invalid.illegal.scilab'
+            }
+          ]
+        }
 
         # ----------------
         # return values
         # ----------------
         {
           comment: 'return value (one line)'
-          match:   '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\s*\\=)'
-
-          name: 'meta.function.parameters.scilab'
+          match:   '([^\\[\\]]+?)\\s*(?=\\=)'
 
           captures:
-            0:
+            1:
+              name: 'meta.function.parameters.scilab'
               patterns: [
                 { include: '#function_returnContent'  }
               ]
         }
 
         {
+          comment: 'return value (multiple lines) - introduced to have the possibility to "look ahead"'
+          begin:   '\\s*([^\\[\\]\\=\\(\\\\)]+)(?=[\\.]{2,})'
+          end:     '(?=\\=)'
+
+          name: 'meta.function.parameters.scilab'
+
+          beginCaptures:
+            1:
+              name: 'meta.function.parameters.scilab'
+              patterns: [
+                { include: '#parameters_retval_multiline'  }
+              ]
+
+          patterns: [
+            { include: '#parameters_retval_multiline'  }
+          ]
+        }
+
+        {
           comment: 'return values (multiple values)'
           begin:   '\\['
-          end:     '\\]'  +
-                   '(?=\\s*(?:' +
-                      '(?:\\=)|(?:\\.{2,}\\s*(?://)?)' +
-                   '))'
+          end:     '\\]'
 
           name:  'meta.function.parameters.scilab'
 
@@ -156,18 +211,40 @@ repository:
           ]
         }
 
-        # {
-        #   match:  '.*?(?!\\.\\.\\s*(?://)?)(?=\\=)'
-        #   name:   'test'
-        # }
-
         # ----------------
         # assignment operator (=)
-        { include: '#operators_assignment' }
+        {
+          match:   '(\\=)(?!.*\\.{2,})'
+          captures:
+            1:
+              name: 'keyword.operator.assignment.scilab'
+        }
+
+        {
+          begin:  '(\\=)'
+          end:    '(?=\\()'
+
+          beginCaptures:
+            1:
+              name: 'keyword.operator.assignment.scilab'
+
+          patterns: [
+            { include: '#scilab_comment'    }
+            { include: '#continuation_mark' }
+
+            {
+              match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+              name: 'entity.name.function.scilab'
+            }
+          ]
+        }
 
         # ----------------
         # function name
-        { include: '#function_name' }
+        {
+          match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+          name: 'entity.name.function.scilab'
+        }
 
         # ----------------
         # input values
@@ -188,6 +265,11 @@ repository:
 
           patterns: [
             {
+              comment: 'invalid dot-accessor (.)'
+              match:   '(?<!\\.)\\.(?!\\.)'
+              name:    'punctuation.accessor.invalid.illegal.scilab'
+            }
+            {
               comment: 'numbers only are clearly illegal'
               match: '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\(|,)\\d+'
               name: 'variable.parameter.input.invalid.illegal.scilab'
@@ -207,52 +289,58 @@ repository:
 
             { include: '#scilab_comment' }
 
-            { include: '#invalid_parameter_struct_tlist' }
             { include: '#std_environment' }
 
             { include:  '#parameters_input'     }
-            { include:  '#parameters_separator' }
+            { include:  '#parameter_separator' }
           ]
         } # input parameters
       ]
     } # function body
 
+  # ------------------------------
+  # all kinds of parameters and variables used for/in funcrion declarations
+  #
+  # Note:  They all share the same matching pattern, because for Scilab naming in
+  #      regards of function / variables follow the same rules.
+  #      They are just groupted here for easier copy & paste maintainance in futre.
+  # ------------------------------
   function_returnContent:
     {
       patterns: [
         { include: '#scilab_comment' }
 
         {
+          comment: 'invalid dot-accessor (.)'
+          match:   '(?<!\\.)\\.(?!\\.)'
+          name:    'punctuation.accessor.invalid.illegal.scilab'
+        }
+        {
           comment: 'some brackets are illegal for defining return values'
-          match: '[\\(\\)\\{\\}]'
-          name:  'invalid.illegal.scilab'
+          match:   '[\\(\\)\\{\\}]'
+          name:    'punctuation.invalid.illegal.scilab'
         }
         {
           comment: 'numbers only are clearly illegal'
-          match: '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\[|,)\\d+'
-          name: 'variable.parameter.output.invalid.illegal.scilab'
+          match:   '(?<![\\w%\\$\\?!#\\.])(?<=^|\\s|\\[|,)\\d+'
+          name:    'variable.parameter.output.invalid.illegal.scilab'
+        }
+        {
+          comment: 'operators are all illegal'
+          match:   '[\\+\\-\\*\\\\/\\^\\=\\<\\>\\~]'
+          name:    'keyword.operator.invalid.illegal.scilab'
         }
 
-        { include: '#invalid_parameter_struct_tlist' }
         { include: '#std_environment' }
 
-        { include: '#parameters_output'    }
-        { include: '#parameters_separator' }
+        {
+          comment: 'output parameters of functions'
+          match:   '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+          name:    'variable.parameter.output.scilab'
+        }
+
+        { include: '#parameter_separator' }
       ]
-    }
-
-  # ------------------------------
-  # all kinds of parameters and variables
-  #
-  # Note:  They all share the same matching pattern, because for Scilab naming in
-  #      regards of function / variables follow the same rules.
-  #      They are just groupted here for easier copy & paste maintainance in futre.
-  # ------------------------------
-
-  function_name:
-    {
-      match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
-      name: 'entity.name.function.scilab'
     }
 
   parameters_input:
@@ -262,17 +350,25 @@ repository:
       name: 'variable.parameter.input.scilab'
     }
 
-  parameters_output:
+  parameters_retval_multiline:
     {
-      comment: 'output parameters of functions'
-      match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
-      name: 'variable.parameter.output.scilab'
+      comment: 'special treatment for single retval over multiple lines'
+      patterns: [
+        {
+          match: '^\\s*([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)(?=\\s*,)'
+          captures:
+            1:
+              name: 'variable.parameter.output.invalid.illegal.scilab'
+        }
+
+        { include: '#function_returnContent'  }
+      ]
     }
 
-  parameters_separator:
+  parameter_separator:
     {
       match: ','
-      name: 'punctuation.separator.parameters.scilab'
+      name: 'punctuation.separator.parameter.scilab'
     }
 
   vector_colon:
@@ -382,7 +478,6 @@ repository:
         { include: '#operators_arithmetic'   }
         { include: '#operators_logic'        }
         { include: '#operators_comparison'   }
-        { include: '#operators_assignment'   }
       ]
     }
 
@@ -557,12 +652,6 @@ repository:
       name: 'variable.invalid.illegal.scilab'
     }
 
-  invalid_parameter_signs:
-    {
-      match: '[\\+\\-\\*/\\\\~\\&\\|\\<>\\.]+'
-      name:  'invalid.illegal.scilab'
-    }
-
   invalid_operators:
     {
       comment: 'invalid operators'
@@ -608,25 +697,6 @@ repository:
       name: 'invalid.illegal.scilab'
     }
 
-  invalid_parameter_struct_tlist:
-    {
-      patterns: [
-        # structs and tlists are invalid here
-        {
-          match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\.[a-zA-Z_%\\$\\?!#])'
-          name: 'variable.other.object.invalid.illegal.scilab'
-        }
-        {
-          match: '(\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
-          captures:
-            1:
-              name: 'punctuation.accessor.invalid.illegal.scilab'
-            2:
-              name: 'variable.other.member.invalid.illegal.scilab'
-        }
-      ]
-    }
-
   # ------------------------------
   # additional stuff which is present, but does not fit in another category
   # ------------------------------
@@ -663,7 +733,7 @@ repository:
                       '(?<charsSimple>[\\w%\\$\\?!#](?!\\s*//))+' + # case 1: "simple" assignment with no parenthesis
                       '(?:'                                       + # case 2: assignment with parenthesis
                         '\\(\\s*["\']?'                 + # beginning parenthesis
-                          '.+'                          + # again anything
+                          '.+?'                          + # again anything
                         '["\']?\\s*\\)'                 + # ending parenthesis
                       ')?' +
                     ')' +
