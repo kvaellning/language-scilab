@@ -324,16 +324,14 @@ repository:
 
       {
         comment: 'invalid stuff'
-        match:  '([\\w%\\$\\?!#]+)(\\.)'  +  # (definition that some variable character is standing in front of a dot)
+        match:  '(?<=[\\w%\\$\\?!#])(\\.)'  +  # (definition that some variable character is standing in front of a dot)
                   '(?:'                     +
                     '(?=\\d)|'              + # trailing dot and number afterwards (struct error)
                     '(?=\\s|\\Z)'           + # lonely trailing dot
                   ')'
 
         captures:
-          # 1:
-          #   name: 'variable.other.object.scilab'
-          2:
+          1:
             name: 'punctuation.accessor.invalid.illegal.scilab'
       }
     ]
