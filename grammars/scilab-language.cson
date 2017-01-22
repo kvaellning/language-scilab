@@ -75,10 +75,11 @@ patterns: [
   }
 
   { include: '#operators_assignment'   }
-  { include: '#std_environment' }
 
   { include: '#variable_assignment' }
   { include: '#function_call'       }
+
+  { include: '#std_environment'   }
 
   { include: '#vector_colon'  }
 ]
@@ -406,16 +407,22 @@ repository:
                     '(?:(?<![\\w%\\$\\?!#\\)])(\\.))'  +  # invalid dot in front
                     '|(\\.)'  +
                   ')' +
-                  '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'
-                  #'++(?!\\.)'  # if active, only the last member is recognized
+                  '(?=[a-zA-Z_%\\$\\?!#])'
 
         captures:
           1:
             name: 'punctuation.accessor.invalid.illegal.scilab'
           2:
             name: 'punctuation.accessor.scilab'
-          3:
-            name: 'variable.other.member.scilab'
+      }
+
+      {
+        comment: 'struct/tlist member'
+        match:   '(?<=\\.)[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+                #  '++(?!\\.)'  # if active, only the last member is recognized
+
+        name: 'variable.other.member.scilab'
+
       }
 
       {
@@ -727,78 +734,149 @@ repository:
 
   variable_assignment:
     {
-      match:  '(?:' +
-                  '(?:'   +
-                    '(?<assign>'  +
-                      '(?<charsSimple>[\\w%\\$\\?!#](?!\\s*//))+' + # case 1: "simple" assignment with no parenthesis
-                      '(?:'                                       + # case 2: assignment with parenthesis
-                        '\\(\\s*["\']?'                 + # beginning parenthesis
-                          '.+?'                          + # again anything
-                        '["\']?\\s*\\)'                 + # ending parenthesis
-                      ')?' +
+      patterns: [
+
+        {
+          match:  '('  +
+                    '[a-zA-Z_%\\$\\?!#](?!\\s*//)'    + # variable begin
+                    '(?:[\\w%\\$\\?!#](?!\\s*//))*'   + # as much letters as possible (to complete the variable)
+                    '(?:\\((?:.(?!\\s*//))*\\))?'     + # and all stuff in brackets would be also nice
+                  ')++' +
+                  '\\s*' +
+                  '(?![\\=]{2,})' + # more than one equal sign
+                  '(?=\\=)'
+
+          captures:
+            1:
+              name: 'meta.name.assignment.scilab'
+
+              patterns: [
+                { include: '#assignment_retvalContent' }
+              ]
+        }
+        {
+          comment: 'assignment of multiple variables (one line)'
+          match:   '(\\[)?([^\\]/]+)(\\])(?=\\s*\\=)'
+
+          name: 'meta.name.assignment.scilab'
+
+          captures:
+            1:
+              name: 'punctuation.section.brackets.begin.scilab'
+            2:
+              patterns: [
+                { include: '#assignment_retvalContent'  }
+              ]
+            3:
+              name: 'punctuation.section.brackets.end.scilab'
+        }
+
+        # NOTE:
+        # Assignment of one/multiple values over multiple lines is not included.
+        # This is the case since there is no way to distinguish matrix-definitons and return values first hand.
+        # (since the language parser of Atom will extend until EOF if no match was found)
+
+      ]
+    }
+
+  assignment_retvalContent:
+    {
+      patterns: [
+        { include: '#scilab_comment'  }
+        { include: '#name_too_long'   }
+
+        # ------------------
+        # using parenthesis
+        # ------------------
+        {
+          comment:  'parenthesis without dot accessor behind'
+          match:    '(?<!\\.)\\s*' +
+                    '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'  +
+                    '(' +
+                      '(?<parenthesis>\\(' +
+                        '(?:' +
+                          '(?:[^()]+)'  +
+                          '|(?:\\g<parenthesis>+)' +
+                        ')*?' +
+                      '\\))'  +
                     ')' +
-                    '|(?:'  +
-                     '\\[[^;\\=]*?\\]' + # grab the stuff in squared brackets
-                    ')'     +
-                    '|(?:(?<=\\.)\\g<charsSimple>+)'     + # member of a struct/tlist (using dot (.) separator)
-                  ')' +
-                ')++'   +
-                '\\s*' +
-                '(?!\\s*[\\=]{2,})' + # more than one equal sign
-                '(?=\\=)'
+                    '(?!\\s*(?:\\.|\\)))'
 
-      name: 'meta.name.assignment.scilab'
+          captures:
+            1:
+              patterns: [
+                { include: '#std_environment' }
 
-      captures:
-        0:
-          patterns: [
-            {
-              match: '(?:[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)++(?!\\s*\\.)'
-              name: 'variable.assignment.scilab'
-            }
+                {
+                  match: '.*'
+                  name: 'variable.assignment.scilab'
+                }
+              ]
+            2:
+              patterns: [
+                { include: '#std_environment' }
+              ]
+        }
+        {
+          comment:  'parenthesis without dot accessor behind'
+          match:    '(?<!\\.)\\s*' +
+                    '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'  +
+                    '(' +
+                      '(?<parenthesis>\\(' +
+                        '(?:' +
+                          '(?:[^()]+)'  +
+                          '|(?:\\g<parenthesis>+)' +
+                        ')*?' +
+                      '\\))'  +
+                    ')' +
+                    '(?=\\s*(?:\\.|\\)))'
 
-            {
-              comment: 'illegal number on lhs [123 =]'
-              match: '(?<=^|;)\\d+'
-              name: 'variable.assignment.invalid.illegal.scilab'
-            }
+          captures:
+            2:
+              patterns: [
+                { include: '#std_environment' }
+              ]
+        }
 
-            { include: '#std_environment' }
+        {
+          comment: 'matches the rest without dots or opening parenthesis'
+          match:   '(?<!\\.)(?:[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)++(?!\\s*(?:\\.|\\())'
+          name:    'variable.assignment.scilab'
+        }
 
-            {
-              comment: 'illegal empty assignments [() = or ( = or ) = or (1) =]'
-              match:  '(?<=^|;)'  +
-                        '(?:'  +
-                          '[\\s\\d]*' +
-                          '(?:' +
-                            '(?:\\(\\s*$)'    +
-                            '|(?:\\((?:\\s*|\\d+)\\))' +
-                            # '|(?:\\))'  + # too unspecific
-                          ')' +
-                        ')'
-              name: 'invalid.illegal.scilab'
-            }
+        { include: '#parameter_separator' }
 
-            {
-              comment: 'exclude stuff in brackets'
-              match: '\\(.*?\\)'
-              captures:
-                0:
-                  patterns: [
-                    { include: '#std_environment' }
-                  ]
-            }
+        {
+          comment: 'illegal number on lhs [123 =]'
+          match: '(?<=^|;)\\d+'
+          name: 'variable.assignment.invalid.illegal.scilab'
+        }
+        {
+            match: ';'
+            name:  'punctuation.terminator.invalid.illegal'
+        }
 
-            {
-              match: '(?<=\\.)[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
-              name: 'variable.other.member.scilab'
-            }
+        { include: '#std_environment' }
 
-            # {
-            #   match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*(?=\\s*(?:\\(["\'])|\\.)'
-            #   name: 'variable.other.object.scilab'
-            # }
-          ]
+        {
+          comment: 'illegal empty assignments [() = or ( = or ) = or (1) =]'
+          match:  '(?<=^|;)'  +
+                    '(?:'  +
+                      '[\\s\\d]*' +
+                      '(?:' +
+                        '(?:\\(\\s*$)'    +
+                        '|(?:\\((?:\\s*|\\d+)\\))' +
+                        # '|(?:\\))'  + # too unspecific
+                      ')' +
+                    ')'
+          name: 'invalid.illegal.scilab'
+        }
+
+        {
+          match: '(?<=\\.)[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+          name: 'variable.other.member.scilab'
+        }
+      ]
     }
 
   function_call:
@@ -810,6 +888,10 @@ repository:
       name: 'meta.function-call.scilab'
 
       beginCaptures:
+        1:
+          patterns: [
+            { include: '#std_environment' }
+          ]
         2:
           name: 'punctuation.section.parens.begin.scilab'
 
@@ -828,7 +910,7 @@ repository:
       begin: '\\('
       end:   '\\)'
 
-      contentName: 'meta.parens.scilab'
+      name: 'meta.parens.scilab'
 
       beginCaptures:
         0:
