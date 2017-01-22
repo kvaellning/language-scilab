@@ -1,4 +1,5 @@
 # scilab-language package
+[![Build Status](https://travis-ci.org/kvaellning/scilab-language.svg?branch=master)](https://travis-ci.org/kvaellning/scilab-language)
 
 This package adds the support of [Scilab](http://www.scilab.org/) language in Atom, with syntax highlighting.
 This package is a fork of [language-scilab](https://atom.io/packages/language-scilab) by Jeremy Heleine.
@@ -25,7 +26,6 @@ Though based, nearly everything in the code is altered.
     Originally, this feature was planned, but due the high amount of recursion, this feature is set on hold.
 
 ### Planned features
-  - matrix scope
   - Integrate Scilab-Online help
   - If necessary, an [autocomplete-plus]() provider.
     From my experience with another language, this will be a separate package.
