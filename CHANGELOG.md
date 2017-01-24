@@ -4,6 +4,7 @@
     - function declarations in between ``] =``
     - function-call patterns
     - parenthesis pattern
+  - avoid matching of function-call pattern if a leading dot is present
 
 ### 0.7.0
   - mark error for code after continuation marks

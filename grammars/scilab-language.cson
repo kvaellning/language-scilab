@@ -882,7 +882,7 @@ repository:
   function_call:
     {
       comment: 'Function accessor parenthesis'
-      begin:  '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)(\\()'
+      begin:  '(?<!\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)(\\()'
       end:    '(\\))'
 
       name: 'meta.function-call.scilab'
