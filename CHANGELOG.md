@@ -1,3 +1,10 @@
+### 0.7.1
+  - Travis CI build test
+  - fixes comment problems in:
+    - function declarations in between ``] =``
+    - function-call patterns
+    - parenthesis pattern
+
 ### 0.7.0
   - mark error for code after continuation marks
   - support of multiline function definitions

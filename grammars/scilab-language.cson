@@ -62,8 +62,7 @@ patterns: [
         name:    'punctuation.separator.continuation.invalid.illegal.scilab'
 
     patterns: [
-      { include: '#scilab_comment'  }
-
+      { include: '#scilab_comment'        }
       { include: '#function_declaration'  }
     ]
   }
@@ -124,14 +123,15 @@ repository:
     {
       patterns: [
 
-        { include: '#invalid_signs' }
-        { include: '#name_too_long' }
+        { include: '#scilab_comment'  }
+        { include: '#invalid_signs'   }
+        { include: '#name_too_long'   }
 
         # ----------------
         # stuff between return values and equal sign
         # ----------------
         {
-          match: '(?<=\\]).*(?=\\=)'
+          match: '(?<=\\])(?:.(?!//))*(?=\\=)'
 
           captures:
             0:
@@ -900,6 +900,7 @@ repository:
           name: 'punctuation.section.parens.end.scilab'
 
       patterns: [
+        { include: '#scilab_comment'  }
         { include: '#std_environment' }
       ]
     }
@@ -920,6 +921,7 @@ repository:
           name: 'punctuation.section.parens.end.scilab'
 
       patterns: [
+        { include: '#scilab_comment'  }
         { include: '#std_environment' }
       ]
     }
