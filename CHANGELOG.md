@@ -1,3 +1,8 @@
+### 0.7.2
+  - fix problems for return values and trailing equals<br>
+    For function ``[retval]=Foo()``, ``Foo`` was not recognized as part of the function
+
+
 ### 0.7.1
   - Travis CI build test
   - fixes comment problems in:

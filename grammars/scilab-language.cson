@@ -131,7 +131,7 @@ repository:
         # stuff between return values and equal sign
         # ----------------
         {
-          match: '(?<=\\])(?:.(?!//))*(?=\\=)'
+          match: '(?<=\\])(?!\\=)(?:.(?!//))*(?=\\=)'
 
           captures:
             0:
@@ -144,7 +144,7 @@ repository:
         }
 
         {
-          begin: '(?<=\\])'
+          begin: '(?<=\\])(?!\\=)'
           end:   '(?=\\=)'
 
           patterns: [
