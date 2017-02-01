@@ -1,7 +1,10 @@
+### 0.7.3
+  - fix a problem which rendered the editor unresponsible if a certain assignment pattern is used<br>
+    Using a distinct assignment pattern has led to high computation load on the Regex-Engine of the grammar, which rendered the editor unusable. This problem was introduced in release __0.7.0__
+
 ### 0.7.2
   - fix problems for return values and trailing equals<br>
     For function ``[retval]=Foo()``, ``Foo`` was not recognized as part of the function
-
 
 ### 0.7.1
   - Travis CI build test
@@ -15,6 +18,8 @@
   - mark error for code after continuation marks
   - support of multiline function definitions
   - support assignments based on recursion
+
+<hr>
 
 ### 0.6.4
   - adds a pattern for determining function-like accessors<br>
@@ -44,11 +49,15 @@
 ### 0.6.0
   Includes Pre-defined functions for Scilab 5.4.1 and 5.5.2 (can be switched via Preferences)
 
+<hr>
+
 ### 0.5.0:
 - delete invisible chars in "m" and "u" built-ins, which avoided highlighting of built-in functions such as `mean` or `uicontrol`
 - deleted option to only update anchors on save<br>
   After lot of usage on different PCs, I have encountered no performance issues, so this option will be deleted.<br>
   If you need it, please create an issue and I will re-activate it.
+
+<hr>
 
 ### 0.4.7
 - implementation of all Scilab 5.4.1 available functions
@@ -96,6 +105,8 @@ renamed to `scilab-language`
 - added _whereami_ support<br>
   __Note: This feature is actually treated as experimental and may have slow performance and/or some strange line-numbering issues__
 
+<hr>
+
 ### 0.3.3
 - fixed problems related to `=-` and `=+`
 - fixed indentation for scopes
@@ -128,6 +139,8 @@ renamed to `scilab-language`
 - added Scilab grammar (might be not all)
 - added constants such as %pi and empty matrix
 - added keywords, operators etc.
+
+<hr>
 
 ### 0.2.2
 - Snippets

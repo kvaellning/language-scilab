@@ -756,7 +756,7 @@ repository:
         }
         {
           comment: 'assignment of multiple variables (one line)'
-          match:   '(\\[)?([^\\]/]+)(\\])(?=\\s*\\=)'
+          match:   '(\\[)([^\\]/]+)(\\])(?=\\s*\\=)'
 
           name: 'meta.name.assignment.scilab'
 

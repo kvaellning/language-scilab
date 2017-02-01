@@ -989,3 +989,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][4].scopes).toEqual ['source.scilab', 'comment.line.double-slash.scilab']
 
     expect(tokens[0][5]).not.toBeDefined()
+
+  # check if this renders the regex engine unresponsive
+  it "checks if tokenizing an assignment pattern takes unusual long (0.7.3 bug)", ->
+    tokens = grammar.tokenizeLines('if or(foobarbazfoobarbazfoobarbazfoobarbaz) foo [bar] =')
