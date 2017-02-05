@@ -792,6 +792,9 @@ repository:
         { include: '#scilab_comment'  }
         { include: '#name_too_long'   }
 
+        { include: 'source.scilab.builtins#functions' }
+        { include: '#constants'                       }
+
         # ------------------
         # using parenthesis
         # ------------------

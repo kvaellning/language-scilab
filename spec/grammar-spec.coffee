@@ -1077,3 +1077,36 @@ describe "Scilab grammar", ->
 
     expect(tokens[0][26]).not.toBeDefined()
 
+  it "checks assignment to a predefined function", ->
+    tokens = grammar.tokenizeLines('bar=1;')
+
+    expect(tokens[0][0].value).toBe 'bar'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'support.function.scilab']
+
+    expect(tokens[0][1].value).toBe '='
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'keyword.operator.assignment.scilab']
+
+    expect(tokens[0][2].value).toBe '1'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'constant.numeric.scilab']
+
+    expect(tokens[0][3].value).toBe ';'
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'punctuation.terminator.scilab']
+
+    expect(tokens[0][4]).not.toBeDefined()
+
+  it "checks assignment to a predefined variable", ->
+    tokens = grammar.tokenizeLines('SCI=1;')
+
+    expect(tokens[0][0].value).toBe 'SCI'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'support.constant.scilab']
+
+    expect(tokens[0][1].value).toBe '='
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'keyword.operator.assignment.scilab']
+
+    expect(tokens[0][2].value).toBe '1'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'constant.numeric.scilab']
+
+    expect(tokens[0][3].value).toBe ';'
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'punctuation.terminator.scilab']
+
+    expect(tokens[0][4]).not.toBeDefined()

@@ -1,5 +1,7 @@
 ### 0.7.4
   - fix problems with multiple assignments in one line
+  - predefined functions and constants are now displayed for assignments
+
 ### 0.7.3
   - fix a problem which rendered the editor unresponsible if a certain assignment pattern is used<br>
     Using a distinct assignment pattern has led to high computation load on the Regex-Engine of the grammar, which rendered the editor unusable. This problem was introduced in release __0.7.0__
