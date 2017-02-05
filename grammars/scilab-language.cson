@@ -118,6 +118,16 @@ repository:
     }
 
   # ------------------------------
+  builtins:
+    {
+      comment: 'builtin functions & constants'
+      patterns: [
+        { include: 'source.scilab.builtins#functions' }
+        { include: '#constants'                       }
+      ]
+    }
+
+  # ------------------------------
   # all things which are available in the function declaration
   function_declaration:
     {
@@ -792,9 +802,8 @@ repository:
         { include: '#scilab_comment'  }
         { include: '#name_too_long'   }
 
-        { include: 'source.scilab.builtins#functions' }
-        { include: '#constants'                       }
-
+        { include: '#builtins' }
+        
         # ------------------
         # using parenthesis
         # ------------------
