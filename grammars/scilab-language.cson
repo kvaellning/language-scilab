@@ -740,8 +740,15 @@ repository:
           match:  '('  +
                     '[a-zA-Z_%\\$\\?!#](?!\\s*//)'    + # variable begin
                     '(?:[\\w%\\$\\?!#](?!\\s*//))*'   + # as much letters as possible (to complete the variable)
-                    '(?:\\((?:.(?!\\s*//))*\\))?'     + # and all stuff in brackets would be also nice
-                  ')++' +
+                    '(?:' +
+                      '(?<parenthesis>\\('                +  # and all stuff in brackets would be also nice
+                        '(?:' +
+                          '(?:[^()](?!\\s*//))'     +
+                          '|(?:\\g<parenthesis>+)'  +
+                        ')*?'   +
+                      '\\))++'  +
+                    ')?' +
+                  ')'    +
                   '\\s*' +
                   '(?![\\=]{2,})' + # more than one equal sign
                   '(?=\\=)'

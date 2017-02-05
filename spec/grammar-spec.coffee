@@ -993,3 +993,87 @@ describe "Scilab grammar", ->
   # check if this renders the regex engine unresponsive
   it "checks if tokenizing an assignment pattern takes unusual long (0.7.3 bug)", ->
     tokens = grammar.tokenizeLines('if or(foobarbazfoobarbazfoobarbazfoobarbaz) foo [bar] =')
+
+  it "checks if multiple assignments in one line with parenthesis fail", ->
+    tokens = grammar.tokenizeLines('foo(\'foo\') = 1; foo(foo(1).foo) = 1;')
+
+    expect(tokens[0][0].value).toBe 'foo'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'variable.assignment.scilab']
+
+    expect(tokens[0][1].value).toBe '('
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab', 'punctuation.section.parens.begin.scilab']
+
+    expect(tokens[0][2].value).toBe '\''
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab', 'punctuation.definition.string.begin.scilab']
+
+    expect(tokens[0][3].value).toBe 'foo'
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab', 'string.quoted.single.scilab']
+
+    expect(tokens[0][4].value).toBe '\''
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab', 'punctuation.definition.string.end.scilab']
+
+    expect(tokens[0][5].value).toBe ')'
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab', 'punctuation.section.parens.end.scilab']
+
+    expect(tokens[0][6].value).toBe ' '
+    expect(tokens[0][6].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][7].value).toBe '='
+    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'keyword.operator.assignment.scilab']
+
+    expect(tokens[0][8].value).toBe ' '
+    expect(tokens[0][8].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][9].value).toBe '1'
+    expect(tokens[0][9].scopes).toEqual ['source.scilab', 'constant.numeric.scilab']
+
+    expect(tokens[0][10].value).toBe ';'
+    expect(tokens[0][10].scopes).toEqual ['source.scilab', 'punctuation.terminator.scilab']
+
+    expect(tokens[0][11].value).toBe ' '
+    expect(tokens[0][11].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][12].value).toBe 'foo'
+    expect(tokens[0][12].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'variable.assignment.scilab']
+
+    expect(tokens[0][13].value).toBe '('
+    expect(tokens[0][13].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab', 'punctuation.section.parens.begin.scilab']
+
+    expect(tokens[0][14].value).toBe 'foo'
+    expect(tokens[0][14].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab']
+
+    expect(tokens[0][15].value).toBe '('
+    expect(tokens[0][15].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab', 'meta.parens.scilab', 'punctuation.section.parens.begin.scilab']
+
+    expect(tokens[0][16].value).toBe '1'
+    expect(tokens[0][16].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab', 'meta.parens.scilab', 'constant.numeric.scilab']
+
+    expect(tokens[0][17].value).toBe ')'
+    expect(tokens[0][17].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab', 'meta.parens.scilab', 'punctuation.section.parens.end.scilab']
+
+    expect(tokens[0][18].value).toBe '.'
+    expect(tokens[0][18].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab', 'punctuation.accessor.scilab']
+
+    expect(tokens[0][19].value).toBe 'foo'
+    expect(tokens[0][19].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab', 'variable.other.member.scilab']
+
+    expect(tokens[0][20].value).toBe ')'
+    expect(tokens[0][20].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'meta.parens.scilab', 'punctuation.section.parens.end.scilab']
+
+    expect(tokens[0][21].value).toBe ' '
+    expect(tokens[0][21].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][22].value).toBe '='
+    expect(tokens[0][22].scopes).toEqual ['source.scilab', 'keyword.operator.assignment.scilab']
+
+    expect(tokens[0][23].value).toBe ' '
+    expect(tokens[0][23].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][24].value).toBe '1'
+    expect(tokens[0][24].scopes).toEqual ['source.scilab', 'constant.numeric.scilab']
+
+    expect(tokens[0][25].value).toBe ';'
+    expect(tokens[0][25].scopes).toEqual ['source.scilab', 'punctuation.terminator.scilab']
+
+    expect(tokens[0][26]).not.toBeDefined()
+
