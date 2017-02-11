@@ -432,7 +432,6 @@ repository:
                 #  '++(?!\\.)'  # if active, only the last member is recognized
 
         name: 'variable.other.member.scilab'
-
       }
 
       {
@@ -745,11 +744,13 @@ repository:
   variable_assignment:
     {
       patterns: [
-
         {
           match:  '('  +
-                    '[a-zA-Z_%\\$\\?!#](?!\\s*//)'    + # variable begin
-                    '(?:[\\w%\\$\\?!#](?!\\s*//))*'   + # as much letters as possible (to complete the variable)
+                    '(?:(?<=[\\w%\\$\\?!#\\)])\\.\\s*)?'  +  # recognize a valid leading dot
+                    '(?<variable>'  +
+                      '[a-zA-Z_%\\$\\?!#](?!\\s*//)'    + # variable begin
+                      '(?:[\\w%\\$\\?!#](?!\\s*//))*'   + # as much letters as possible (to complete the variable)
+                    ')'   +
                     '(?:' +
                       '(?<parenthesis>\\('                +  # and all stuff in brackets would be also nice
                         '(?:' +
@@ -768,6 +769,12 @@ repository:
               name: 'meta.name.assignment.scilab'
 
               patterns: [
+                {
+                  comment: 'catch the dot-accessor before it will be marked invalid'
+                  match:    '\\.'
+                  name:     'punctuation.accessor.scilab'
+                }
+                { include: '#struct_tlist'             }
                 { include: '#assignment_retvalContent' }
               ]
         }
@@ -803,7 +810,7 @@ repository:
         { include: '#name_too_long'   }
 
         { include: '#builtins' }
-        
+
         # ------------------
         # using parenthesis
         # ------------------

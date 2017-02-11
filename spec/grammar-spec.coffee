@@ -665,6 +665,25 @@ describe "Scilab grammar", ->
     expect(tokens[0][10].value).toBe '1'
     expect(tokens[0][10].scopes).toEqual ['source.scilab', 'constant.numeric.scilab']
 
+  it 'checks assignment \"foo.disp=1\"', ->
+    tokens = grammar.tokenizeLines('foo.disp=1')
+
+    expect(tokens[0][0].value).toBe 'foo'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][1].value).toBe '.'
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'punctuation.accessor.scilab']
+
+    expect(tokens[0][2].value).toBe 'disp'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'variable.other.member.scilab']
+
+    expect(tokens[0][3].value).toBe '='
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'keyword.operator.assignment.scilab']
+
+    expect(tokens[0][4].value).toBe '1'
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'constant.numeric.scilab']
+
+
   it "checks structs or tlists (simple access)", ->
     tokens = grammar.tokenizeLines('foo.bar\nfoo2.bar2\nfoo.bar.baz\n' + # valid
                                    'foo.123\nfoo. ')
