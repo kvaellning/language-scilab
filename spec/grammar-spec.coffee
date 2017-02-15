@@ -1129,3 +1129,36 @@ describe "Scilab grammar", ->
     expect(tokens[0][3].scopes).toEqual ['source.scilab', 'punctuation.terminator.scilab']
 
     expect(tokens[0][4]).not.toBeDefined()
+
+  it "checks invalid closing parenthesis ())", ->
+    tokens = grammar.tokenizeLines('())')
+
+    expect(tokens[0][0].value).toBe '('
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.parens.scilab', 'punctuation.section.parens.begin.scilab']
+
+    expect(tokens[0][1].value).toBe ')'
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.parens.scilab', 'punctuation.section.parens.end.scilab']
+
+    expect(tokens[0][2].value).toBe ')'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'punctuation.parens.invalid.illegal.scilab']
+
+    expect(tokens[0][3]).not.toBeDefined()
+
+  it "checks invalid closing parenthesis ())", ->
+    tokens = grammar.tokenizeLines('foo(\n))')
+
+    expect(tokens[0][0].value).toBe 'foo'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function-call.scilab']
+
+    expect(tokens[0][1].value).toBe '('
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.function-call.scilab', 'punctuation.section.parens.begin.scilab']
+
+    expect(tokens[0][2]).not.toBeDefined()
+
+    expect(tokens[1][0].value).toBe ')'
+    expect(tokens[1][0].scopes).toEqual ['source.scilab', 'meta.function-call.scilab', 'punctuation.section.parens.end.scilab']
+
+    expect(tokens[1][1].value).toBe ')'
+    expect(tokens[1][1].scopes).toEqual ['source.scilab', 'punctuation.parens.invalid.illegal.scilab']
+
+    expect(tokens[1][2]).not.toBeDefined()

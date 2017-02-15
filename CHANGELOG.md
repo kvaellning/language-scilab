@@ -1,5 +1,6 @@
 ### 0.7.5
   - fix a minor issue that assigning a member with the same name as a builtin function/constant will be displayed as built-in
+  - add invalid closing parenthesis detection
 
 ### 0.7.4
   - fix problems with multiple assignments in one line

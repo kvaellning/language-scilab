@@ -114,6 +114,11 @@ repository:
         { include: '#strings'  }
         { include: '#struct_tlist' }
 
+        {
+          comment: 'unmatched closing parenthesis'
+          match:   '\\)'
+          name:    'punctuation.parens.invalid.illegal.scilab'
+        }
       ]
     }
 
