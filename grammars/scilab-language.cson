@@ -676,9 +676,7 @@ repository:
   invalid_operators:
     {
       comment: 'invalid operators'
-      match:
-        '\\.[\\+\\-\\^]\\.'        +  # kronecker operators
-        '|[^ \\t].*\\=.*\\?.*\\:.*'    # ?: operator
+      match:  '\\.[\\+\\-\\^]\\.' # kronecker operators
       name: 'keyword.operator.invalid.illegal.scilab'
     }
 
