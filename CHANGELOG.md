@@ -4,6 +4,8 @@
   - Throw out:
     - "function-call" pattern (since it costs time and is not helpful)
     - "parentheses"   pattern (same as "function-call"-pattern)
+  - fix problem with ``!!`` (which is a valid variable name in Scilab).<br>
+    *NOTE:* Reqork pattern ``invalid_operator_combinations`` to avoid further issues.
 
 <hr>
 

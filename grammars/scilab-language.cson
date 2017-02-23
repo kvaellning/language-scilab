@@ -702,6 +702,7 @@ repository:
 
   invalid_operator_combinations:
     {
+      # NOTE: Rework!
       comment: 'invalid operator combinations'
       match:
         '[&\\|><~\\+\\-\\\\:]{2,}'      +  # match invalid doubling
@@ -717,8 +718,7 @@ repository:
           '(?!\\s*(?:$|(?://.*)))'              + # not followed by a comment or line-break (Scilab states that more than one dot is used as expression continuation over lines)
         ')'       +
         '|[&\\|\\+\\-\\*/\\.\\\\]\\={1,}|[<~]\\={2,}'   +  # trailing equal (=)
-        '|[\\+\\-\\*/\\\\]{2,}(?<!\\*\\*)'              +  # operator mixing
-        '|[!\\=\\?]{2,}(?<!\\=\\=)'                        # not available operator combinations
+        '|[\\+\\-\\*/\\\\]{2,}(?<!\\*\\*)'                 # operator mixing
       name: 'keyword.operator.invalid.illegal.scilab'
     }
 
