@@ -39,10 +39,12 @@ module.exports =
 
     builtinsPath = undefined
 
-    switch atom.config.get('scilab-language.builtinsVersion')
+    switch atom.config.get('scilab-language.languageVersion')
       when 'Scilab 5.4.1'
         builtinsPath = path.resolve(__dirname, '../grammars/builtins', 'scilab-5.4.1.cson')
       when 'Scilab 5.5.2'
         builtinsPath = path.resolve(__dirname, '../grammars/builtins', 'scilab-5.5.2.cson')
+      when 'Scilab 6.0.0'
+        builtinsPath = path.resolve(__dirname, '../grammars/builtins', 'scilab-6.0.0.cson')
 
     atom.grammars.loadGrammarSync( builtinsPath ) if builtinsPath?

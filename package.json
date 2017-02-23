@@ -27,14 +27,15 @@
       "default": true,
       "order": 1
     },
-    "builtinsVersion": {
-      "title": "Use pre-defines of",
+    "languageVersion": {
+      "title": "Use language version",
       "type": "string",
       "enum": [
         "Scilab 5.4.1",
-        "Scilab 5.5.2"
+        "Scilab 5.5.2",
+        "Scilab 6.0.0"
       ],
-      "default": "Scilab 5.5.2",
+      "default": "Scilab 6.0.0",
       "order": 2
     }
   },
