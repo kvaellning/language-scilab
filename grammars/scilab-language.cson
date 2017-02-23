@@ -13,7 +13,7 @@ patterns: [
               '.*?'  +
               '(?:' +
                 '(?:\\.\\.)'  +   # continuation marks (will be handled by other pattern)
-                '|(?:\\))'    +   # or a closing parenthesis (will be handled by other pattern)
+                '|(?:\\))'    +   # or a closing parentheses (will be handled by other pattern)
               ')'   +
               '(?:\\s*//)?'  + # but only in front of comments
             ')\\s+' +
@@ -73,10 +73,8 @@ patterns: [
     name: 'storage.type.function.end.scilab'
   }
 
-  { include: '#operators_assignment'   }
-
-  { include: '#variable_assignment' }
-  { include: '#function_call'       }
+  { include: '#operators_assignment'  }
+  { include: '#variable_assignment'   }
 
   { include: '#std_environment'   }
 
@@ -99,8 +97,11 @@ repository:
         { include: '#invalid_signs'         }
         { include: '#invalid_operators_all' }
 
-        { include: '#operators' }
-        { include: '#parenthesis_block' }
+        { include: '#operators'   }
+        { include: '#parentheses' }
+        #{ include: '#parentheses_block' }
+
+        { include: '#simple_function_call'  }
 
         { include: '#constants_matrix_vector' }
 
@@ -114,11 +115,11 @@ repository:
         { include: '#strings'  }
         { include: '#struct_tlist' }
 
-        {
-          comment: 'unmatched closing parenthesis'
-          match:   '\\)'
-          name:    'punctuation.parens.invalid.illegal.scilab'
-        }
+        # {
+        #   comment: 'unmatched closing parentheses'
+        #   match:   '\\)'
+        #   name:    'punctuation.parens.invalid.illegal.scilab'
+        # }
       ]
     }
 
@@ -182,7 +183,7 @@ repository:
 
           captures:
             1:
-              name: 'meta.function.parameters.scilab'
+              name: 'meta.function.parameters.return.scilab'
               patterns: [
                 { include: '#function_returnContent'  }
               ]
@@ -193,11 +194,10 @@ repository:
           begin:   '\\s*([^\\[\\]\\=\\(\\\\)]+)(?=[\\.]{2,})'
           end:     '(?=\\=)'
 
-          name: 'meta.function.parameters.scilab'
+          name: 'meta.function.parameters.return.scilab'
 
           beginCaptures:
             1:
-              name: 'meta.function.parameters.scilab'
               patterns: [
                 { include: '#parameters_retval_multiline'  }
               ]
@@ -212,7 +212,7 @@ repository:
           begin:   '\\['
           end:     '\\]'
 
-          name:  'meta.function.parameters.scilab'
+          name:  'meta.function.parameters.return.scilab'
 
           beginCaptures:
             0:
@@ -274,10 +274,10 @@ repository:
 
           beginCaptures:
             0:
-              name: 'punctuation.section.parens.begin.scilab'
+              name: 'punctuation.definition.parameters.begin.scilab'
           endCaptures:
             0:
-              name: 'punctuation.section.parens.end.scilab'
+              name: 'punctuation.definition.parameters.end.scilab'
 
           patterns: [
             {
@@ -291,7 +291,7 @@ repository:
               name: 'variable.parameter.input.invalid.illegal.scilab'
             }
             {
-              comment: 'Any parenthesis stuff except of one ) is also clearly illegal'
+              comment: 'Any parentheses stuff except of one ) is also clearly illegal'
               match: '(\\[)|(\\])|(\\()'
 
               captures:
@@ -333,8 +333,13 @@ repository:
         }
         {
           comment: 'some brackets are illegal for defining return values'
-          match:   '[\\(\\)\\{\\}]'
-          name:    'punctuation.invalid.illegal.scilab'
+          match:   '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)?\\s*([\\(\\)\\{\\}])'
+
+          captures:
+            1:
+              name: 'variable.parameter.output.invalid.illegal.scilab'
+            2:
+              name: 'punctuation.invalid.illegal.scilab'
         }
         {
           comment: 'numbers only are clearly illegal'
@@ -502,6 +507,21 @@ repository:
       ]
     }
 
+  parentheses:
+    {
+      patterns: [
+        {
+          comment: 'denotes extraction or function call'
+          match: '\\(|\\)'
+          name:  'punctuation.brace.round.scilab'
+        }
+        {
+          comment: 'denotes cell arrays'
+          match:   '\\{|\\}'
+          name:    'punctuation.brace.cell.scilab'
+        }
+      ]
+    }
   # ------------------------------
   # constants definition
   # ------------------------------
@@ -755,10 +775,10 @@ repository:
                       '(?:[\\w%\\$\\?!#](?!\\s*//))*'   + # as much letters as possible (to complete the variable)
                     ')'   +
                     '(?:' +
-                      '(?<parenthesis>\\('                +  # and all stuff in brackets would be also nice
+                      '(?<parentheses>\\('                +  # and all stuff in brackets would be also nice
                         '(?:' +
                           '(?:[^()](?!\\s*//))'     +
-                          '|(?:\\g<parenthesis>+)'  +
+                          '|(?:\\g<parentheses>+)'  +
                         ')*?'   +
                       '\\))++'  +
                     ')?' +
@@ -815,17 +835,17 @@ repository:
         { include: '#builtins' }
 
         # ------------------
-        # using parenthesis
+        # using parentheses
         # ------------------
         {
-          comment:  'parenthesis without dot accessor behind'
+          comment:  'parentheses without dot accessor behind'
           match:    '(?<!\\.)\\s*' +
                     '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'  +
                     '(' +
-                      '(?<parenthesis>\\(' +
+                      '(?<parentheses>\\(' +
                         '(?:' +
                           '(?:[^()]+)'  +
-                          '|(?:\\g<parenthesis>+)' +
+                          '|(?:\\g<parentheses>+)' +
                         ')*?' +
                       '\\))'  +
                     ')' +
@@ -847,14 +867,14 @@ repository:
               ]
         }
         {
-          comment:  'parenthesis without dot accessor behind'
+          comment:  'parentheses without dot accessor behind'
           match:    '(?<!\\.)\\s*' +
                     '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'  +
                     '(' +
-                      '(?<parenthesis>\\(' +
+                      '(?<parentheses>\\(' +
                         '(?:' +
                           '(?:[^()]+)'  +
-                          '|(?:\\g<parenthesis>+)' +
+                          '|(?:\\g<parentheses>+)' +
                         ')*?' +
                       '\\))'  +
                     ')' +
@@ -868,7 +888,7 @@ repository:
         }
 
         {
-          comment: 'matches the rest without dots or opening parenthesis'
+          comment: 'matches the rest without dots or opening parentheses'
           match:   '(?<!\\.)(?:[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)++(?!\\s*(?:\\.|\\())'
           name:    'variable.assignment.scilab'
         }
@@ -908,49 +928,21 @@ repository:
       ]
     }
 
-  function_call:
+  simple_function_call:
     {
-      comment: 'Function accessor parenthesis'
-      begin:  '(?<!\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)(\\()'
-      end:    '(\\))'
+      comment: 'the only case where one can determine that this is a function call'
+      match:  '(?<!\\.)([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)\\s*(\\()\\s*(\\))'
 
       name: 'meta.function-call.scilab'
 
-      beginCaptures:
+      captures:
         1:
           patterns: [
             { include: '#std_environment' }
           ]
         2:
-          name: 'punctuation.section.parens.begin.scilab'
+          name: 'punctuation.definition.arguments.begin.scilab'
+        3:
+          name: 'punctuation.definition.arguments.end.scilab'
 
-      endCaptures:
-        1:
-          name: 'punctuation.section.parens.end.scilab'
-
-      patterns: [
-        { include: '#scilab_comment'  }
-        { include: '#std_environment' }
-      ]
-    }
-
-  parenthesis_block:
-    {
-      comment: 'Denotes all blocks within parenthesis. Is broken by e.g. comments'
-      begin: '\\('
-      end:   '\\)'
-
-      name: 'meta.parens.scilab'
-
-      beginCaptures:
-        0:
-          name: 'punctuation.section.parens.begin.scilab'
-      endCaptures:
-        0:
-          name: 'punctuation.section.parens.end.scilab'
-
-      patterns: [
-        { include: '#scilab_comment'  }
-        { include: '#std_environment' }
-      ]
     }

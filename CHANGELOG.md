@@ -1,3 +1,9 @@
+### 0.8.0
+  - add curly braces (``{}``) to the allowed symbols
+  - Throw out:
+    - "function-call" pattern (since it costs time and is not helpful)
+    - "parentheses"   pattern (same as "function-call"-pattern)
+
 ### 0.7.5
   - fix a minor issue that assigning a member with the same name as a builtin function/constant will be displayed as built-in
   - add invalid closing parenthesis detection
