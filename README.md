@@ -11,8 +11,8 @@ This package is a fork of [language-scilab 0.1.0](https://github.com/JeremyHelei
 Though based, nearly everything in the code is altered.
 
 ### Features
-  - *Scilab* (5.4.1 / 5.5.2) built-in functions as defined in the *Scilab* installation
-  - added *Scilab* constants
+  - *Scilab* (5.4.1 / 5.5.2 / 6.0.0) built-in functions as defined in the *Scilab* installation
+  - *Scilab* constants
   - Markup of errors, as far as they can be reflected by the grammar Definition
   - Snippets for often used *Scilab* blocks
   - Proper definition of indentation depths

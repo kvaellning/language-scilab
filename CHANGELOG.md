@@ -10,7 +10,7 @@
 <hr>
 
 ### 0.7.5
-  - fix a minor issue that assigning a member with the same name as a builtin function/constant will be displayed as built-in
+  - fix a minor issue that assigning a member with the same name as a built-in function/constant will be displayed as built-in
   - add invalid closing parenthesis detection
 
 ### 0.7.4
@@ -55,7 +55,7 @@
 ### 0.6.3
   - fix struct/tlist resolvement introduced with __0.6.1__
   - fix snippet indent
-  - throw out ``global`` from the list of builtin functions (because it doesn't feel like a function)
+  - throw out ``global`` from the list of built-in functions (because it doesn't feel like a function)
 
 ### 0.6.2
   - re-activated spec
