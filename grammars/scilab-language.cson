@@ -93,7 +93,7 @@ repository:
         { include: '#continuation_mark' }
         { include: '#numbers'           }
 
-        { include: '#name_too_long'         }
+        { include: 'source.scilab.version-specific#name_too_long'         }
         { include: '#invalid_signs'         }
         { include: '#invalid_operators_all' }
 
@@ -141,7 +141,7 @@ repository:
 
         { include: '#scilab_comment'  }
         { include: '#invalid_signs'   }
-        { include: '#name_too_long'   }
+        { include: 'source.scilab.version-specific#name_too_long'   }
 
         # ----------------
         # stuff between return values and equal sign
@@ -686,13 +686,6 @@ repository:
   # ------------------------------
   # all kinds of invalid stuff
   # ------------------------------
-  name_too_long:
-    {
-      comment: 'error if names are too long (>24 signs)'
-      match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]{24,}'
-      name: 'variable.invalid.illegal.scilab'
-    }
-
   invalid_operators:
     {
       comment: 'invalid operators'
@@ -854,8 +847,8 @@ repository:
   assignment_retvalContent:
     {
       patterns: [
-        { include: 'source.scilab#scilab_comment'  }
-        { include: 'source.scilab#name_too_long'   }
+        { include: 'scilab_comment'  }
+        { include: 'source.scilab.version-specific#name_too_long'   }
 
         { include: '#builtins' }
 

@@ -8,6 +8,13 @@ repository:
       name:   'keyword.operator.invalid.illegal.scilab'
     }
 
+  name_too_long:
+    {
+      comment: 'error if names are too long (>24 signs)'
+      match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]{24,}'
+      name: 'variable.invalid.illegal.scilab'
+    }
+
   functions:
     {
       patterns: [

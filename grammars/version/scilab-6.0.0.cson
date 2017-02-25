@@ -6,6 +6,12 @@ repository:
       match: ''
     }
 
+  name_too_long:
+    {
+      comment: '24 character limit fixed in Scilab 6'
+      match:   ''
+    }
+
   functions:
     {
       patterns: [

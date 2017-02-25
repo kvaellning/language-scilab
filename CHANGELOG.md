@@ -1,3 +1,6 @@
+### 0.8.2
+  - exclude 24 character restriction from Scilab 6
+
 ### 0.8.1
   - changed an assignment pattern which lead to catastrophic backtrcking in the Regex-Engine
   - fix online version change
