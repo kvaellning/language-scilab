@@ -108,7 +108,7 @@ repository:
         { include: '#constants'    }
         { include: '#keywords'     }
 
-        { include: 'source.scilab.builtins#functions'  }
+        { include: 'source.scilab.version-specific#functions'  }
 
         { include: '#statement_terminator' }
 
@@ -128,7 +128,7 @@ repository:
     {
       comment: 'builtin functions & constants'
       patterns: [
-        { include: 'source.scilab.builtins#functions' }
+        { include: 'source.scilab.version-specific#functions' }
         { include: '#constants'                       }
       ]
     }

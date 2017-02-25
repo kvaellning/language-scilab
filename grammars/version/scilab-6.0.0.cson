@@ -1,6 +1,11 @@
-'scopeName': 'source.scilab.builtins'
+scopeName: 'source.scilab.version-specific'
 
 repository:
+  invalid_operator_combinations:
+    {
+      match: ''
+    }
+
   functions:
     {
       patterns: [

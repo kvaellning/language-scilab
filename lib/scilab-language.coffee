@@ -35,16 +35,16 @@ module.exports =
   # ---------------------------------------------------------------
   # Change the used built-in functions
   setUsedBuiltins: () ->
-    atom.grammars.removeGrammarForScopeName('source.scilab.builtins')
+    atom.grammars.removeGrammarForScopeName('source.scilab.version-specific')
 
-    builtinsPath = undefined
+    versionFilePath = undefined
 
     switch atom.config.get('scilab-language.languageVersion')
       when 'Scilab 5.4.1'
-        builtinsPath = path.resolve(__dirname, '../grammars/builtins', 'scilab-5.4.1.cson')
+        versionFilePath = path.resolve(__dirname, '../grammars/version', 'scilab-5.4.1.cson')
       when 'Scilab 5.5.2'
-        builtinsPath = path.resolve(__dirname, '../grammars/builtins', 'scilab-5.5.2.cson')
+        versionFilePath = path.resolve(__dirname, '../grammars/version', 'scilab-5.5.2.cson')
       when 'Scilab 6.0.0'
-        builtinsPath = path.resolve(__dirname, '../grammars/builtins', 'scilab-6.0.0.cson')
+        versionFilePath = path.resolve(__dirname, '../grammars/version', 'scilab-6.0.0.cson')
 
-    atom.grammars.loadGrammarSync( builtinsPath ) if builtinsPath?
+    atom.grammars.loadGrammarSync( versionFilePath ) if versionFilePath?
