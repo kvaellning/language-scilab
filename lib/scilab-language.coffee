@@ -22,7 +22,7 @@ module.exports =
 
     # ------
     # subscribe to grammar change events
-    @subscriptions.add atom.config.onDidChange 'scilab-language.builtinsVersion', =>
+    @subscriptions.add atom.config.onDidChange 'scilab-language.languageVersion', =>
       @setUsedBuiltins()
 
     @setUsedBuiltins()
