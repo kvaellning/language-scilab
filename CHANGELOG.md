@@ -1,14 +1,13 @@
 ### 0.8.1
   - changed an assignment pattern which lead to catastrophic backtrcking in the Regex-Engine
-  
+
 ### 0.8.0
   - support Scilab 6.0.0 predefined functions
   - add curly braces (``{}``) to the allowed symbols
   - Throw out:
     - "function-call" pattern (since it costs time and is not helpful)
     - "parentheses"   pattern (same as "function-call"-pattern)
-  - fix problem with ``!!`` (which is a valid variable name in Scilab).<br>
-    *NOTE:* Reqork pattern ``invalid_operator_combinations`` to avoid further issues.
+  - fix problem with ``!!`` (which is a valid variable name in Scilab).
 
 <hr>
 
