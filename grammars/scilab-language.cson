@@ -768,54 +768,59 @@ repository:
     {
       patterns: [
         {
-          match:  '('  +
-                    '(?:(?<=[\\w%\\$\\?!#\\)])\\.\\s*)?'  +  # recognize a valid leading dot
-                    '(?<variable>'  +
+          match:  '(?:'  +
+                    '((?:(?<=[\\w%\\$\\?!#\\)])\\.\\s*)?'  +  # recognize a valid leading dot
+                    '(?:'  +
                       '[a-zA-Z_%\\$\\?!#](?!\\s*//)'    + # variable begin
                       '(?:[\\w%\\$\\?!#](?!\\s*//))*'   + # as much letters as possible (to complete the variable)
-                    ')'   +
-                    '(?:' +
-                      '(?<parentheses>\\('                +  # and all stuff in brackets would be also nice
+                    '))'   +
+                    '(' +
+                      '(?<parenthesis>\\('                +  # and all stuff in brackets would be also nice
                         '(?:' +
-                          '(?:[^()](?!\\s*//))'     +
-                          '|(?:\\g<parentheses>+)'  +
+                          '(?:[^()]\\s*(?!//))++'    +
+                          '|(?:\\g<parenthesis>+?)'  +
                         ')*?'   +
                       '\\))++'  +
                     ')?' +
                   ')'    +
                   '\\s*' +
-                  '(?![\\=]{2,})' + # more than one equal sign
+                  '(?!\\={2,})' + # more than one equal sign
                   '(?=\\=)'
 
           captures:
             1:
               name: 'meta.name.assignment.scilab'
-
               patterns: [
                 {
                   comment: 'catch the dot-accessor before it will be marked invalid'
                   match:    '\\.'
                   name:     'punctuation.accessor.scilab'
                 }
-                { include: '#struct_tlist'             }
-                { include: '#assignment_retvalContent' }
+
+                { include: '#struct_tlist'  }
+                { include: '#assignment_retvalContent'  }
+              ]
+            2:
+              name: 'meta.name.assignment.scilab'
+              patterns: [
+                { include: '#std_environment'  }
               ]
         }
         {
-          comment: 'assignment of multiple variables (one line)'
-          match:   '(\\[)([^\\]/]+)(\\])(?=\\s*\\=)'
+         comment: 'assignment of multiple variables (one line)'
+         match:   '(\\[)([^\\]/]+)(\\])(?!\\s*\\={2,})(?=\\s*\\=)'
 
-          name: 'meta.name.assignment.scilab'
+         name: 'meta.name.assignment.scilab'
 
-          captures:
-            1:
-              name: 'punctuation.section.brackets.begin.scilab'
-            2:
-              patterns: [
-                { include: '#assignment_retvalContent'  }
-              ]
-            3:
-              name: 'punctuation.section.brackets.end.scilab'
+         captures:
+           1:
+             name: 'punctuation.section.brackets.begin.scilab'
+           2:
+             patterns: [
+               { include: '#assignment_retvalContent'  }
+             ]
+           3:
+             name: 'punctuation.section.brackets.end.scilab'
         }
 
         # NOTE:
@@ -829,25 +834,24 @@ repository:
   assignment_retvalContent:
     {
       patterns: [
-        { include: '#scilab_comment'  }
-        { include: '#name_too_long'   }
+        { include: 'source.scilab#scilab_comment'  }
+        { include: 'source.scilab#name_too_long'   }
 
         { include: '#builtins' }
 
         # ------------------
-        # using parentheses
+        # using parenthesis
         # ------------------
         {
-          comment:  'parentheses without dot accessor behind'
-          match:    '(?<!\\.)\\s*' +
-                    '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'  +
+          comment:  'parenthesis without dot accessor behind'
+          match:    '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'  +
                     '(' +
-                      '(?<parentheses>\\(' +
+                      '(?<parenthesis>\\(' +
                         '(?:' +
                           '(?:[^()]+)'  +
-                          '|(?:\\g<parentheses>+)' +
+                          '|(?:\\g<parenthesis>+)' +
                         ')*?' +
-                      '\\))'  +
+                      '\\))++' +
                     ')' +
                     '(?!\\s*(?:\\.|\\)))'
 
@@ -857,7 +861,7 @@ repository:
                 { include: '#std_environment' }
 
                 {
-                  match: '.*'
+                  match: '.+'
                   name: 'variable.assignment.scilab'
                 }
               ]
@@ -867,28 +871,27 @@ repository:
               ]
         }
         {
-          comment:  'parentheses without dot accessor behind'
-          match:    '(?<!\\.)\\s*' +
-                    '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'  +
+          comment:  'parenthesis with dot accessor behind'
+          match:   '([a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)'  +
                     '(' +
-                      '(?<parentheses>\\(' +
+                      '(?<parenthesis>\\(' +
                         '(?:' +
                           '(?:[^()]+)'  +
-                          '|(?:\\g<parentheses>+)' +
+                          '|(?:\\g<parenthesis>+)' +
                         ')*?' +
-                      '\\))'  +
+                      '\\))++' +
                     ')' +
-                    '(?=\\s*(?:\\.|\\)))'
+                    '(?=\\s*(?:\\.))'
 
           captures:
-            2:
+            0:
               patterns: [
                 { include: '#std_environment' }
               ]
         }
 
         {
-          comment: 'matches the rest without dots or opening parentheses'
+          comment: 'matches the rest without dots or opening parenthesis'
           match:   '(?<!\\.)(?:[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)++(?!\\s*(?:\\.|\\())'
           name:    'variable.assignment.scilab'
         }
@@ -941,8 +944,8 @@ repository:
             { include: '#std_environment' }
           ]
         2:
-          name: 'punctuation.definition.arguments.begin.scilab'
+          name: 'punctuation.brace.round.scilab'
         3:
-          name: 'punctuation.definition.arguments.end.scilab'
+          name: 'punctuation.brace.round.scilab'
 
     }
