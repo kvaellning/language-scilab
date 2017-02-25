@@ -738,6 +738,7 @@ repository:
           match:  '[\\+\\-\\*/\\\\]{2,}(?<!\\*\\*)'
           name:   'keyword.operator.invalid.illegal.scilab'
         }
+        { include: 'source.scilab.version-specific#invalid_operator_combinations'}
       ]
     }
 

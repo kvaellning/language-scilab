@@ -1,6 +1,7 @@
 ### 0.8.1
   - changed an assignment pattern which lead to catastrophic backtrcking in the Regex-Engine
   - fix online version change
+  - distinguish operator erro between Scilab 6 and Scilab 5
 
 ### 0.8.0
   - support Scilab 6.0.0 predefined functions
