@@ -6,7 +6,7 @@ repository:
       match: '//.*+'
       name: 'comment.line.double-slash.scilab'
     }
-    
+
   invalid_operator_combinations:
     {
       match:  '[\\&\\|]{2,}'  + # match invalid doubling
@@ -126,7 +126,7 @@ repository:
     {
       comment: 'Scilab 5.4.1 pre-defined (primitive-)functions beginning with c'
       match:  '(?<![\\w%\$\\?!#\\.])' + # standard begin
-                '(?:Calendar|ClipBoard|c_link|calerf|call|callblk|captions|cd|cdfbet|cdfbin|cdfchi|cdfchn|cdff|cdffnc|cdfgam|cdfbn|cdfnor|cdfpoi|cdft|ceil|champ|champ1|chdir|chol|clean|clear_pixmap|clearfun|clearglobal|closeEditor|closeXco|code2str|coeff|comp|completion|conj|contour2di|contr|convstr|copy|copyfile|corr|cos|coserror|createdir|cshep2dctree2|ctree3|ctree4|cumprod|cumsum|curblock|curblockc)' +
+                '(?:Calendar|ClipBoard|c_link|calerf|call|callblk|captions|cd|cdfbet|cdfbin|cdfchi|cdfchn|cdff|cdffnc|cdfgam|cdfbn|cdfnor|cdfpoi|cdft|ceil|champ|champ1|chdir|chol|clc|clean|clear_pixmap|clearfun|clearglobal|closeEditor|closeXco|code2str|coeff|comp|completion|conj|contour2di|contr|convstr|copy|copyfile|corr|cos|coserror|createdir|cshep2dctree2|ctree3|ctree4|cumprod|cumsum|curblock|curblockc)' +
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
@@ -243,7 +243,7 @@ repository:
     {
       comment: 'Scilab 5.4.1 pre-defined (primitive-)functions beginning with p'
       match:  '(?<![\\w%\$\\?!#\\.])' + # standard begin
-                '(?:PlaySound|parallel_concurrency|parallel_run|param3d|param3d1|part|pathconvert|pathsep|phase_simulation|plot2d|plot2d1|plot2d2|plot2d3|plot2d4|plot3d|plot3d1|pointer_xproperty|poly|ppol|pppdiv|predef|print|printfigure|printsetupbox|prod|progressionbar|prompt)' +
+                '(?:PlaySound|parallel_concurrency|parallel_run|param3d|param3d1|part|pathconvert|pathsep|phase_simulation|plot2d|plot2d1|plot2d2|plot2d3|plot2d4|plot3d|plot3d1|pointer_xproperty|poly|ppol|pppdiv|predef|print|printfigure|printsetupbox|prod|progressionbar|prompt|pwd)' +
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }
@@ -306,7 +306,7 @@ repository:
     {
       comment: 'Scilab 5.4.1 pre-defined (primitive-)functions beginning with w'
       match:  '(?<![\\w%\$\\?!#\\.])' + # standard begin
-                '(?:waitbar|warnBlockByUID|warning|where|whereis|winsid|with_embedded_jre|with_module|writb|write|write4b)' +
+                '(?:waitbar|warnBlockByUID|warning|what|where|whereis|winsid|with_embedded_jre|with_module|writb|write|write4b)' +
               '(?![\\w%\\$\\?!#\\.])' # standard end
       name:    'support.function.scilab'
     }

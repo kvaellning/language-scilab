@@ -1129,7 +1129,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][18].scopes).toEqual ['source.scilab']
 
     expect(tokens[0][19].value).toBe 'end'
-    expect(tokens[0][19].scopes).toEqual ['source.scilab', 'keyword.control.statement.scilab']
+    expect(tokens[0][19].scopes).toEqual ['source.scilab', 'keyword.control.scilab']
 
     expect(tokens[0][20].value).toBe ' endfunction'
     expect(tokens[0][20].scopes).toEqual ['source.scilab', 'storage.type.function.end.scilab']

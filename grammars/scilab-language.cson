@@ -576,7 +576,7 @@ repository:
     {
       comment: 'keywords that alter flow from within a block'
       name: 'keyword.control.statement.scilab'
-      match: '(?<!\\.)\\b(break|continue|return|end)\\b'
+      match: '(?<!\\.)\\b(break|continue|return)\\b'
     }
 
   keywords_loop:
@@ -604,7 +604,7 @@ repository:
     {
       comment: 'keywords which does not fit in any other category'
       name: 'keyword.control.scilab'
-      match: '(?<!\\.)\\b(clear|clearglobal|exit|pause|quit|then)\\b'
+      match: '(?<!\\.)\\b(abort|clear|end|exit|pause|quit|resume|then)\\b'
     }
 
   keywords_global:

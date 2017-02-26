@@ -2,6 +2,7 @@
   This version only improves Scilab 6 language support.
   - exclude 24 character restriction
   - allow multi-line comments
+  - add missing predefines which are not listed in the *primitives.txt* and *macros.txt*
 
 ### 0.8.1
   - changed an assignment pattern which lead to catastrophic backtrcking in the Regex-Engine
