@@ -1,6 +1,12 @@
 scopeName: 'source.scilab.version-specific'
 
 repository:
+  scilab_comment:
+    {
+      match: '//.*+'
+      name: 'comment.line.double-slash.scilab'
+    }
+
   invalid_operator_combinations:
     {
       match:  '[\\&\\|]{2,}'  + # match invalid doubling

@@ -1,5 +1,7 @@
 ### 0.8.2
-  - exclude 24 character restriction from Scilab 6
+  This version only improves Scilab 6 language support.
+  - exclude 24 character restriction
+  - allow multi-line comments
 
 ### 0.8.1
   - changed an assignment pattern which lead to catastrophic backtrcking in the Regex-Engine

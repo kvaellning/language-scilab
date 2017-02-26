@@ -3,7 +3,7 @@ name:      'Scilab'
 fileTypes: ['sci', 'sce']
 
 patterns: [
-  { include: '#scilab_comment' }
+  { include: 'source.scilab.version-specific#scilab_comment' }
 
   {
     comment: 'Scilab function definition (one line)'
@@ -31,7 +31,7 @@ patterns: [
         name: 'storage.type.function.begin.scilab'
       2:
         patterns: [
-          { include: '#scilab_comment'  }
+          { include: 'source.scilab.version-specific#scilab_comment'  }
           { include: '#function_declaration'  }
         ]
   }
@@ -62,8 +62,8 @@ patterns: [
         name:    'punctuation.separator.continuation.invalid.illegal.scilab'
 
     patterns: [
-      { include: '#scilab_comment'        }
-      { include: '#function_declaration'  }
+      { include: 'source.scilab.version-specific#scilab_comment'  }
+      { include: '#function_declaration'                          }
     ]
   }
 
@@ -139,7 +139,7 @@ repository:
     {
       patterns: [
 
-        { include: '#scilab_comment'  }
+        { include: 'source.scilab.version-specific#scilab_comment'  }
         { include: '#invalid_signs'   }
         { include: 'source.scilab.version-specific#name_too_long'   }
 
@@ -164,7 +164,7 @@ repository:
           end:   '(?=\\=)'
 
           patterns: [
-            { include: '#scilab_comment'    }
+            { include: 'source.scilab.version-specific#scilab_comment'    }
             { include: '#continuation_mark' }
 
             {
@@ -245,7 +245,7 @@ repository:
               name: 'keyword.operator.assignment.scilab'
 
           patterns: [
-            { include: '#scilab_comment'    }
+            { include: 'source.scilab.version-specific#scilab_comment'    }
             { include: '#continuation_mark' }
 
             {
@@ -303,7 +303,7 @@ repository:
                   name: 'punctuation.parens.begin.invalid.illegal.scilab'
             }
 
-            { include: '#scilab_comment' }
+            { include: 'source.scilab.version-specific#scilab_comment' }
 
             { include: '#std_environment' }
 
@@ -324,7 +324,7 @@ repository:
   function_returnContent:
     {
       patterns: [
-        { include: '#scilab_comment' }
+        { include: 'source.scilab.version-specific#scilab_comment' }
 
         {
           comment: 'invalid dot-accessor (.)'
@@ -752,12 +752,6 @@ repository:
   # ------------------------------
   # additional stuff which is present, but does not fit in another category
   # ------------------------------
-  scilab_comment:
-    {
-      match: '//.*+'
-      name: 'comment.line.double-slash.scilab'
-    }
-
   continuation_mark:
     {
       comment: 'continuation mark'
@@ -767,7 +761,7 @@ repository:
         1:
           name: 'punctuation.separator.continuation.scilab'
         2:
-          name:  'invalid.illegal.scilab'
+          name: 'invalid.illegal.scilab'
     }
 
   statement_terminator:
@@ -847,7 +841,7 @@ repository:
   assignment_retvalContent:
     {
       patterns: [
-        { include: 'scilab_comment'  }
+        { include: 'source.scilab.version-specific#scilab_comment'  }
         { include: 'source.scilab.version-specific#name_too_long'   }
 
         { include: '#builtins' }
