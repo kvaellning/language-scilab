@@ -73,6 +73,7 @@ patterns: [
     name: 'storage.type.function.end.scilab'
   }
 
+  { include: '#invalid_operators_all' } # check before assignments to get invalid operators with leading equal (=)
   { include: '#operators_assignment'  }
   { include: '#variable_assignment'   }
 
@@ -711,19 +712,20 @@ repository:
         }
         {
           comment: 'leading equal'
-          match:  '\\={1,}[&\\|><~\\*/\\\\:;]' + # standard for all but trailing minus (-) and plus (+)
-                  '|[\\=]{3,}[\\+|\\-]+'          # special cases for minus and plus, since the following operator is interpreted as (polarity) sign of a number
+          match:  '(?:\\={1,}[&\\|><~\\*/\\\\:;])' + # standard for all but trailing minus (-) and plus (+)
+                  '|(?:[\\=]{3,}[\\+|\\-]+)'         # special cases for minus and plus, since the following operator is interpreted as (polarity) sign of a number
           name:   'keyword.operator.invalid.illegal.scilab'
         }
         {
           comment: 'trailing dot (.)'
           match:  '(?:[&\\|><~\\+\\-\\*\\\\])\\.++'  + # every operator which does not make sense with a trailing dot
-                  '(?!\\s*(?:$|(?://.*)))'             # not followed by a comment or line-break (Scilab states that more than one dot is used as expression continuation over lines)
+                  '(?!\\s*(?:\\d|$|(?://.*)))'         # not followed by a comment or line-break (Scilab states that more than one dot is used as expression continuation over lines)
           name:   'keyword.operator.invalid.illegal.scilab'
         }
         {
           comment: 'trailing equal (=)'
-          match:  '[&\\|\\+\\-\\*/\\.\\\\]\\={1,}|[<~]\\={2,}'
+          match:  '(?:[&\\|\\+\\-\\*/\\.\\\\]\\={1,})'  +
+                  '|(?:[<~]\\={2,})'
           name:   'keyword.operator.invalid.illegal.scilab'
         }
         {
@@ -755,7 +757,7 @@ repository:
   continuation_mark:
     {
       comment: 'continuation mark'
-      match:   '(\\.{2,})(.*?)\\s*(?=(?:(?://)|$))'
+      match:   '(\\.{2,})\\s*(.*?)\\s*(?=(?:(?://)|$))'
 
       captures:
         1:

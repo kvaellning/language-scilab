@@ -1,3 +1,6 @@
+### 0.8.3
+  - fix a few problems with "invalid operators" (ruleset was to harsh)
+
 ### 0.8.2
   This version only improves Scilab 6 language support.
   - exclude 24 character restriction
