@@ -270,7 +270,7 @@ class SciViewWhereAmI
   # Implementation for updating the whole gutter
   # ---------------------------------------------------------
   updateGutterImpl: () =>
-    lineNumberElements = @editorView.rootElement?.querySelectorAll('.line-number')
+    lineNumberElements = @editorView.querySelectorAll('.line-number')
 
     for lineNumberElement in lineNumberElements
       @updateGutterLine(lineNumberElement)
@@ -282,7 +282,7 @@ class SciViewWhereAmI
   # ---------------------------------------------------------
   undo: () =>
     totalLines = @editor.getLineCount()
-    lineNumberElements = @editorView.rootElement?.querySelectorAll('.line-number')
+    lineNumberElements = @editorView.querySelectorAll('.line-number')
 
     for lineNumberElement in lineNumberElements
       row = Number(lineNumberElement.getAttribute('data-buffer-row'))

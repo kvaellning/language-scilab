@@ -1,3 +1,6 @@
+### 0.8.4
+  - delete deprecated usage of ``rootElement`` from Atom 1.19.0
+
 ### 0.8.3
   - fix a few problems with "invalid operators" (ruleset was to harsh)
 
