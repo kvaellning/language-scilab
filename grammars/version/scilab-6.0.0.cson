@@ -46,6 +46,22 @@ repository:
       ]
     }
 
+  operators:
+    {
+      patterns: [
+        {
+          comment: 'keyword operators that evaluate to True or False'
+          match: '&&|\\|{2}'
+          name: 'keyword.operator.logical.scilab'
+        }
+        {
+          comment: 'keyword operators perform a bitwise task on INTEGERS'
+          match: '&|\\||~'
+          name: 'keyword.operator.bitwise.scilab'
+        }
+      ]
+    }
+
   # -------------------------------------------------- #
   #  Scilab primitives as stated in scilab_primitives.txt
   # -------------------------------------------------- #
