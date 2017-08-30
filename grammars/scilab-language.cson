@@ -4,43 +4,13 @@ fileTypes: ['sci', 'sce']
 
 patterns: [
   { include: 'source.scilab.version-specific#scilab_comment' }
-
-  {
-    comment: 'Scilab function definition (one line)'
-    match:  '(?:(?:^|;)\\s*)' + # all in front
-            '(function)'                  + # function-tag
-            '(?!'   + # but there is nowhere
-              '.*?'  +
-              '(?:' +
-                '(?:\\.\\.)'  +   # continuation marks (will be handled by other pattern)
-                '|(?:\\))'    +   # or a closing parentheses (will be handled by other pattern)
-              ')'   +
-              '(?:\\s*//)?'  + # but only in front of comments
-            ')\\s+' +
-            '(' +
-              '(?:'  +
-                '[^;](?!//)'  +  # all remaining stuff without comments
-              ')++' +
-            ')'
-
-    name: 'meta.function.scilab'
-
-    captures:
-      1:
-        comment: 'function keyword'
-        name: 'storage.type.function.begin.scilab'
-      2:
-        patterns: [
-          { include: 'source.scilab.version-specific#scilab_comment'  }
-          { include: '#function_declaration'  }
-        ]
-  }
-
+  
   {
     comment: 'Scilab function definition (multiple lines)'
     begin:  '(?:' +
               '(?:(?:^|;)\\s*)'  + # any valid stuff before
-              '(function)\\s+'               + # function keyword
+              '(function)'       + # function keyword
+              '(?:\\s+|(?:\\s*(?=\\[)))'  +
             ')'     +
             '(?!;)' +
             '(?:'   +

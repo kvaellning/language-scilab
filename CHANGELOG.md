@@ -1,5 +1,9 @@
+### 0.8.6
+  - fix an error in the function patterns
+
 ### 0.8.5
   - add bitwise and logical ``and``/``or`` to Scilab 6.0.0 language
+
 ### 0.8.4
   - delete deprecated usage of ``rootElement`` from Atom 1.19.0
 
