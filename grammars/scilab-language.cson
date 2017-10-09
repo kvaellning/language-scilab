@@ -758,7 +758,7 @@ repository:
                   ')'    +
                   '\\s*' +
                   '(?!\\={2,})' + # more than one equal sign
-                  '(?=\\=)'
+                  '(\\=)([^;]*)'
 
           captures:
             1:
@@ -777,6 +777,15 @@ repository:
               name: 'meta.name.assignment.scilab'
               patterns: [
                 { include: '#std_environment'  }
+              ]
+            4:
+              name: 'meta.name.assignment.scilab'
+              patterns: [
+                { include: '#operators_assignment'  }
+              ]
+            5:
+              patterns:[
+                { include: '#std_environment' }
               ]
         }
         {

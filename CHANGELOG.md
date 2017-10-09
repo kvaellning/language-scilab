@@ -1,5 +1,6 @@
 ### 0.8.6
   - fix an error in the function patterns
+  - fix an error with assignments, matrices and strings
 
 ### 0.8.5
   - add bitwise and logical ``and``/``or`` to Scilab 6.0.0 language
