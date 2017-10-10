@@ -1,3 +1,6 @@
+### 0.8.7
+  - refix an assignment error introduced in patch ``0.8.5``
+  
 ### 0.8.6
   - fix an error in the function patterns
   - fix an error with assignments, matrices and strings

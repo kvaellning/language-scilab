@@ -1472,3 +1472,57 @@ describe "Scilab grammar", ->
     expect(tokens[0][15].scopes).toEqual ['source.scilab', 'punctuation.terminator.scilab']
 
     expect(tokens[0][16]).not.toBeDefined()
+    
+  it "checks problems with erroneous recognition of multiple assignments (refix of patch 0.8.5)", ->
+    tokens = grammar.tokenizeLines('html = \'<div style=\"\"margin-top:2mm; margin-bottom:2mm\"\">\'+ html +\'</div>\'')
+    
+    expect(tokens[0][0].value).toBe 'html'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'variable.assignment.scilab']
+    
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab']
+    
+    expect(tokens[0][2].value).toBe '='
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'keyword.operator.assignment.scilab']
+    
+    expect(tokens[0][3].value).toBe ' '
+    expect(tokens[0][3].scopes).toEqual ['source.scilab']
+    
+    expect(tokens[0][4].value).toBe '\''
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'punctuation.definition.string.begin.scilab']
+    
+    expect(tokens[0][5].value).toBe '<div style='
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'string.quoted.single.scilab']
+    
+    expect(tokens[0][6].value).toBe '\"\"'
+    expect(tokens[0][6].scopes).toEqual ['source.scilab', 'string.quoted.single.scilab', 'constant.character.escape.scilab']
+    
+    expect(tokens[0][7].value).toBe 'margin-top:2mm; margin-bottom:2mm'
+    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'string.quoted.single.scilab']
+    
+    expect(tokens[0][8].value).toBe '\"\"'
+    expect(tokens[0][8].scopes).toEqual ['source.scilab', 'string.quoted.single.scilab', 'constant.character.escape.scilab']
+    
+    expect(tokens[0][9].value).toBe '>'
+    expect(tokens[0][9].scopes).toEqual ['source.scilab', 'string.quoted.single.scilab']
+    
+    expect(tokens[0][10].value).toBe '\''
+    expect(tokens[0][10].scopes).toEqual ['source.scilab', 'punctuation.definition.string.end.scilab']
+    
+    expect(tokens[0][11].value).toBe '+'
+    expect(tokens[0][11].scopes).toEqual ['source.scilab', 'keyword.operator.arithmetic.scilab']
+    
+    expect(tokens[0][12].value).toBe ' html '
+    expect(tokens[0][12].scopes).toEqual ['source.scilab']
+    
+    expect(tokens[0][13].value).toBe '+'
+    expect(tokens[0][13].scopes).toEqual ['source.scilab', 'keyword.operator.arithmetic.scilab']
+    
+    expect(tokens[0][14].value).toBe '\''
+    expect(tokens[0][14].scopes).toEqual ['source.scilab', 'punctuation.definition.string.begin.scilab']
+    
+    expect(tokens[0][15].value).toBe '</div>'
+    expect(tokens[0][15].scopes).toEqual ['source.scilab', 'string.quoted.single.scilab']
+    
+    expect(tokens[0][16].value).toBe '\''
+    expect(tokens[0][16].scopes).toEqual ['source.scilab', 'punctuation.definition.string.end.scilab']
