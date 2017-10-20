@@ -1526,3 +1526,37 @@ describe "Scilab grammar", ->
     
     expect(tokens[0][16].value).toBe '\''
     expect(tokens[0][16].scopes).toEqual ['source.scilab', 'punctuation.definition.string.end.scilab']
+
+  it "checks operator combination .\' in assignments", ->
+    tokens = grammar.tokenizeLines('foo=foobar.\'')
+    
+    expect(tokens[0][0].value).toBe 'foo'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'variable.assignment.scilab']
+    
+    expect(tokens[0][1].value).toBe '='
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'keyword.operator.assignment.scilab']
+
+    expect(tokens[0][2].value).toBe 'foobar'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab']
+
+    expect(tokens[0][3].value).toBe '.\''
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'keyword.operator.arithmetic.matrix.scilab']
+    
+    expect(tokens[0][4]).not.toBeDefined()
+    
+  it "checks operator combination .\' in assignments (using support function)", ->
+    tokens = grammar.tokenizeLines('foo=bar.\'')
+    
+    expect(tokens[0][0].value).toBe 'foo'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.name.assignment.scilab', 'variable.assignment.scilab']
+    
+    expect(tokens[0][1].value).toBe '='
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'keyword.operator.assignment.scilab']
+    
+    expect(tokens[0][2].value).toBe 'bar'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'support.function.scilab']
+    
+    expect(tokens[0][3].value).toBe '.\''
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'keyword.operator.arithmetic.matrix.scilab']
+    
+    expect(tokens[0][4]).not.toBeDefined()

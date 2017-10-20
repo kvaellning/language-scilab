@@ -1,3 +1,6 @@
+### 0.9.1
+   - add matrix based arithmetic operators
+
 ### 0.9.0
    - wherami-implementation accepts now also custom configuration keys
    

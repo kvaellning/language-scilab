@@ -114,7 +114,7 @@ repository:
 
         { include: '#statement_terminator' }
 
-        { include: '#strings'  }
+        { include: '#strings'      }
         { include: '#struct_tlist' }
 
         # {
@@ -453,7 +453,7 @@ repository:
                     '(?=\\d)|'              + # trailing dot and number afterwards (struct error)
                     '(?=\\s|\\Z)'           + # lonely trailing dot
                   ')'
-
+      
         captures:
           1:
             name: 'punctuation.accessor.invalid.illegal.scilab'
@@ -469,12 +469,19 @@ repository:
       match: '/\\.' # feedback operator
       name: 'keyword.operator.CACSD.scilab'
     }
+    
+  operators_vector_matrix:
+    {
+      comment: 'Vector/Matrix operators'
+      match:   '\\.(?:\\*|/|\\^|\')'
+      name:    'keyword.operator.arithmetic.matrix.scilab'
+    }
 
   operators_arithmetic:
     {
       comment: 'Arithmetic operators'
       match: '\\+|-|\\*|/|\\\\|\\^|\\*\\*'  +  # elementary operators
-              '|\\.(\\^|(\\*|/|\\\\)\\.?)'       # vector / matrix / kronecker operators
+              '|\\.(\\^|(\\*|/|\\\\)\\.?)'     # vector / matrix / kronecker operators
       name: 'keyword.operator.arithmetic.scilab'
     }
 
@@ -495,9 +502,10 @@ repository:
   operators:
     {
       patterns: [
-        { include: '#operator_linear_system' }
-        { include: '#operators_arithmetic'   }
-        { include: '#operators_comparison'   }
+        { include: '#operator_linear_system'  }
+        { include: '#operators_vector_matrix' }
+        { include: '#operators_arithmetic'    }
+        { include: '#operators_comparison'    }
 
         { include: 'source.scilab.version-specific#operators' }
       ]
@@ -553,7 +561,7 @@ repository:
     {
       comment: 'matrix/vector access symbols : & $'
       match: '(?<![\\w%\\$\\?!#\'\"]):(?![\\w%\\$\\?!#\'\"])' + # (:) is only a constant if nothing is written in front or behind
-               '|(?<![\\w%\\$\\?!#\'\"\\+\\-\\*\\\\])\\$'         # ($) is only a constant if nothing is written in front
+               '|(?<![\\w%\\$\\?!#\'\"\\+\\-\\*\\\\])\\$'       # ($) is only a constant if nothing is written in front
       name : 'support.constant.scilab'
     }
 
@@ -789,7 +797,7 @@ repository:
                   ')'    +
                   '\\s*' +
                   '(?!\\={2,})' + # more than one equal sign
-                  '(\\=)((?:[^\'\";](?!/{2,}))*)'
+                  '(\\=)((?:[^\'\";\\.](?!/{2,}))*)'
 
           captures:
             1:
