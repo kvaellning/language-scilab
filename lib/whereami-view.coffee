@@ -3,8 +3,8 @@
 module.exports =
 
 class SciViewWhereAmI
-
-  constructor: (@editor) ->
+  
+  constructor: (@editor, configKeyName=undefined) ->
     if @editor.getGrammar().scopeName.indexOf('source.scilab') == -1
       return
 
@@ -35,10 +35,11 @@ class SciViewWhereAmI
     @totalLines = @editor.getLineCount()
 
     @hasScopeInformation = false # it might be that the grammar is loaded after the anchors there determined. This is used to signal that state.
+    @updateWholeGutter   = false # used to determine if the whole gutter should be redrawn. This is the case if the anchors have changed.
 
-    @updateWholeGutter = false # used to determine if the whole gutter should be redrawn. This is the case if the anchors have changed.
-
-    @isActive = atom.config.get('scilab-language.whereamiActive')
+    @isActive = false # active state, will be set/updated on call of setConfigVar
+    
+    @setConfigVar(configKeyName) # set config variable to passed value
 
     try
       # ------
@@ -62,16 +63,6 @@ class SciViewWhereAmI
       @subscriptions.add @editor.onDidStopChanging(@updateGutter)
 
     @subscriptions.add @editor.onDidSave(@updatePane)
-
-    # ------
-    # Subscribe to Scilab whereami flag-changes
-    @subscriptions.add atom.config.onDidChange 'scilab-language.whereamiActive', =>
-      @isActive = atom.config.get('scilab-language.whereamiActive')
-
-      if @isActive
-        @updatePane()
-      else
-        @undo()
 
     # ------
     # Subscribe if the user scrolls around
@@ -105,7 +96,6 @@ class SciViewWhereAmI
   Spacer: (totalLines, currentIndex) ->
     width = Math.max(0, totalLines.toString().length - currentIndex.toString().length)
     Array(width + 1).join '&nbsp;'
-
 
   # ---------------------------------------------------------
   # Updates the gutter on save.
@@ -196,7 +186,6 @@ class SciViewWhereAmI
 
     @updateWholeGutter = true
 
-
   # ---------------------------------------------------------
   # calculate the line number based on the available anchors
   # ---------------------------------------------------------
@@ -213,7 +202,6 @@ class SciViewWhereAmI
     else
       return -1 # do nothing
 
-
   # ---------------------------------------------------------
   # Update the line numbers on the editor
   # ---------------------------------------------------------
@@ -227,7 +215,6 @@ class SciViewWhereAmI
       @updateGutterImpl()
     else
       atom.views.updateDocument () => @updateGutterImpl()
-
 
   # ---------------------------------------------------------
   # Updates one line of the line-number gutter
@@ -265,7 +252,6 @@ class SciViewWhereAmI
 
       lineNumberElement.innerHTML = "#{whereamiText}<div class=\"icon-right\"></div>"
 
-
   # ---------------------------------------------------------
   # Implementation for updating the whole gutter
   # ---------------------------------------------------------
@@ -291,3 +277,26 @@ class SciViewWhereAmI
 
       if lineNumberElement.innerHTML.indexOf('•') == -1
         lineNumberElement.innerHTML = "#{absoluteText}<div class=\"icon-right\"></div>"
+
+  # ---------------------------------------------------------
+  # ---------------------------------------------------------
+  setConfigVar: (configKeyName=undefined) =>
+    if @confKeyNameLast?
+      @subscriptions.remove atom.config.onDidChange @confKeyNameLast
+      
+    if configKeyName?
+      @confKeyNameLast = configKeyName
+    else
+      @confKeyNameLast = 'scilab-language.whereamiActive' # default
+    
+    @isActive = atom.config.get(@confKeyNameLast)
+    
+    # ------
+    # Subscribe to Scilab whereami flag-changes
+    @subscriptions.add atom.config.onDidChange @confKeyNameLast, =>
+      @isActive = atom.config.get(@confKeyNameLast)
+      
+      if @isActive
+        @updatePane()
+      else
+        @undo()

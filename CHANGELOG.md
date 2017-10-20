@@ -1,3 +1,6 @@
+### 0.9.0
+   - wherami-implementation accepts now also custom configuration keys
+   
 ### 0.8.7
   - refix an assignment error introduced in patch ``0.8.5``
   
