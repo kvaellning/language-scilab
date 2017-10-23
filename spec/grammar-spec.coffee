@@ -708,10 +708,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][10].value).toBe '1'
     expect(tokens[0][10].scopes).toEqual ['source.scilab', 'constant.numeric.scilab']
 
-    expect(tokens[0][11].value).toBe ''
-    expect(tokens[0][11].scopes).toEqual ['source.scilab']
-
-    expect(tokens[0][12]).not.toBeDefined()
+    expect(tokens[0][11]).not.toBeDefined()
 
   it 'checks assignment \"foo.disp=1\"', ->
     tokens = grammar.tokenizeLines('foo.disp=1')
@@ -731,10 +728,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][4].value).toBe '1'
     expect(tokens[0][4].scopes).toEqual ['source.scilab', 'constant.numeric.scilab']
 
-    expect(tokens[0][5].value).toBe ''
-    expect(tokens[0][5].scopes).toEqual ['source.scilab']
-
-    expect(tokens[0][6]).not.toBeDefined()
+    expect(tokens[0][5]).not.toBeDefined()
 
   it "checks assignment \"foo(a)(b)(c)=foo;\"", ->
     tokens = grammar.tokenizeLines('foo(a)(b)(c)=foo;')
