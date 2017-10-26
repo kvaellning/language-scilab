@@ -1,7 +1,9 @@
 #### 0.9.1
   - add matrix based arithmetic operators
   - fix a bug that the number delimiter in constants was recognized as error in assignments
-
+  - support independent ``where-am-i``-views<br>
+    To use this feature, you can pass a ``configKey`` representing the name of the option in the ``config.json``, as well as name a gutter name which is used to identify your instance.
+  
 ### 0.9.0
   - wherami-implementation accepts now also custom configuration keys
    
