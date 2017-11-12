@@ -775,11 +775,57 @@ repository:
       match: ';'
       name: 'punctuation.terminator.scilab'
     }
-
+  
   variable_assignment:
     {
       patterns: [
         {
+          #######################################################################
+          # The following lines were an idea --> with really bad performance... #
+          #######################################################################
+          
+          # match: '((?:\\.)?[\\w%\\$\\?!#\\)]+(?:\\(.*\\))?)'  +
+          #        '\\s*(\\=)\\s*'                              +
+          #        '((?:(?:.(?!/{2,}))*[\\Z$;,]*?)++)?'
+          # 
+          # captures:
+          #   1:
+          #     patterns: [
+          #       { include:  '#variable_assignment'  }
+          # 
+          #       {
+          #         comment: 'catch the dot-accessor before it will be marked invalid'
+          #         match:    '\\.'
+          #         name:     'punctuation.accessor.scilab'
+          #       }
+          # 
+          #       { include: '#struct_tlist'  }
+          #       { include: '#assignment_retvalContent'  }
+          # 
+          #       # { include:  '#std_environment'      }
+          #     ]
+          #   2:
+          #     patterns: [
+          #       { include:  '#operators_assignment' }
+          #     ]
+          #   3:
+          #     patterns: [
+          #       {
+          #         match: '([;,]+)\\s*(.*)'
+          #         captures:
+          #           1:
+          #             patterns: [
+          #               { include: '#std_environment' }
+          #             ]
+          #           2:
+          #             patterns: [
+          #               { include: '#variable_assignment'      }
+          #               { include: '#assignment_retvalContent' }
+          #             ]
+          #       }
+          # 
+          #       { include:  '#std_environment'  }
+          #     ]
           match:  '(?:'  +
                     '((?:(?<=[\\w%\\$\\?!#\\)])\\.\\s*)?'  +  # recognize a valid leading dot
                     '(?:'  +
@@ -797,8 +843,15 @@ repository:
                   ')'    +
                   '\\s*' +
                   '(?!\\={2,})' + # more than one equal sign
-                  '(\\=)((?:[^\'\";\\.\\d](?!/{2,}))*)'
-
+                  '(\\=)'       + # equal
+                  '('     +
+                    '(?:' +
+                      '(?:' +
+                        '(?:\\.\')|[^\'\";]'  + # hate the .' operator, because he's special. Screw this guy!
+                      ')(?!/{2,})' +
+                    ')++' +
+                  ')?'
+          
           captures:
             1:
               name: 'meta.name.assignment.scilab'
@@ -808,7 +861,7 @@ repository:
                   match:    '\\.'
                   name:     'punctuation.accessor.scilab'
                 }
-
+                
                 { include: '#struct_tlist'  }
                 { include: '#assignment_retvalContent'  }
               ]
@@ -827,20 +880,27 @@ repository:
               ]
         }
         {
-         comment: 'assignment of multiple variables (one line)'
-         match:   '(\\[)([^\\]/]+)(\\])(?!\\s*\\={2,})(?=\\s*\\=)'
-
-         name: 'meta.name.assignment.scilab'
-
-         captures:
-           1:
-             name: 'punctuation.section.brackets.begin.scilab'
-           2:
-             patterns: [
-               { include: '#assignment_retvalContent'  }
-             ]
-           3:
-             name: 'punctuation.section.brackets.end.scilab'
+          comment:  'assignment of multiple variables (one line)'
+          match:    '(?<parenthesis>' +
+                      '(\\[)' + 
+                      '(' +
+                        '(?:[^\\[\\]/]++)|(?:\\g<parenthesis>+?)' +
+                      ')' +
+                      '(\\])'  +
+                      '(?!\\s*\\={2,})(?=\\s*\\=)'  +
+                    ')'
+                    
+          name: 'meta.name.assignment.scilab'
+          
+          captures:
+            2:
+              name: 'punctuation.section.brackets.begin.scilab'
+            3:
+              patterns: [
+                { include: '#assignment_retvalContent'  }
+              ]
+            4:
+              name: 'punctuation.section.brackets.end.scilab'
         }
 
         # NOTE:
@@ -887,6 +947,7 @@ repository:
               ]
             2:
               patterns: [
+                #{ include: '#assignment_retvalContent'}
                 { include: '#std_environment' }
               ]
         }
@@ -912,7 +973,7 @@ repository:
 
         {
           comment: 'matches the rest without dots or opening parenthesis'
-          match:   '(?<!\\.)(?:[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)++(?!\\s*(?:\\.|\\())'
+          match:   '(?<!\\.\\()(?:[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*)++(?!\\s*(?:\\.|\\())'
           name:    'variable.assignment.scilab'
         }
 

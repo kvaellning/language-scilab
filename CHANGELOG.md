@@ -1,3 +1,7 @@
+#### 0.9.2
+  - fix an issue that functions like ``hex2dec`` were not recognized as builtin<br>
+    (Issue introduced in ``0.9.1``.)
+
 #### 0.9.1
   - add matrix based arithmetic operators
   - fix a bug that the number delimiter in constants was recognized as error in assignments
@@ -6,7 +10,9 @@
   
 ### 0.9.0
   - wherami-implementation accepts now also custom configuration keys
-   
+
+<hr>
+
 ### 0.8.7
   - refix an assignment error introduced in patch ``0.8.5``
   
