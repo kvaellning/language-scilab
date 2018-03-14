@@ -96,7 +96,7 @@ class SciViewWhereAmI
   destroy: () ->
     @subscriptions.dispose()
     @undo()
-    @gutter.destroy()
+    @gutter?.destroy()
 
   # ---------------------------------------------------------
   # Calculates the amount of soft-wrapping
