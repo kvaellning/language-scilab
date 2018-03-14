@@ -45,10 +45,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][2].value).toBe 'Foo'
     expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
 
-    expect(tokens[0][3].value).toBe ''
-    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab']
-
-    expect(tokens[0][4]).not.toBeDefined()
+    expect(tokens[0][3]).not.toBeDefined()
 
     # endfunction
     expect(tokens[1][0].value).toBe 'endfunction'
@@ -231,10 +228,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][2].value).toBe 'Foo'
     expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
 
-    expect(tokens[0][3].value).toBe ''
-    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab']
-
-    expect(tokens[0][4]).not.toBeDefined()
+    expect(tokens[0][3]).not.toBeDefined()
 
   it 'checks \"function foo = Foo\"', ->
     tokens = grammar.tokenizeLines('function foo = Foo')
@@ -260,10 +254,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][6].value).toBe 'Foo'
     expect(tokens[0][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
 
-    expect(tokens[0][7].value).toBe ''
-    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab']
-
-    expect(tokens[0][8]).not.toBeDefined()
+    expect(tokens[0][7]).not.toBeDefined()
 
   it 'checks \"function Foo // bar\"', ->
     tokens = grammar.tokenizeLines('function Foo // bar')
