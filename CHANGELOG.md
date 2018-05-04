@@ -1,5 +1,8 @@
-#### 0.9.3
+#### 0.10.0
   - support Scilab 6.0.1 function & constant predefines (may be incomplete)
+
+#### 0.9.3
+  - fix an error with the gutter element for ``where-am-i``
 
 #### 0.9.2
   - fix an issue that functions like ``hex2dec`` were not recognized as builtin<br>
