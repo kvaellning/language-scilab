@@ -1,3 +1,6 @@
+#### 0.9.3
+  - support Scilab 6.0.1 function & constant predefines (may be incomplete)
+
 #### 0.9.2
   - fix an issue that functions like ``hex2dec`` were not recognized as builtin<br>
     (Issue introduced in ``0.9.1``.)
@@ -7,7 +10,7 @@
   - fix a bug that the number delimiter in constants was recognized as error in assignments
   - support independent ``where-am-i``-views<br>
     To use this feature, you can pass a ``configKey`` representing the name of the option in the ``config.json``, as well as name a gutter name which is used to identify your instance.
-  
+
 ### 0.9.0
   - wherami-implementation accepts now also custom configuration keys
 
@@ -15,7 +18,7 @@
 
 ### 0.8.7
   - refix an assignment error introduced in patch ``0.8.5``
-  
+
 ### 0.8.6
   - fix an error in the function patterns
   - fix an error with assignments, matrices and strings

@@ -33,9 +33,10 @@
       "enum": [
         "Scilab 5.4.1",
         "Scilab 5.5.2",
-        "Scilab 6.0.0"
+        "Scilab 6.0.0",
+        "Scilab 6.0.1"
       ],
-      "default": "Scilab 6.0.0",
+      "default": "Scilab 6.0.1",
       "order": 2
     }
   },
