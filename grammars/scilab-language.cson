@@ -107,7 +107,7 @@ repository:
 
         { include: '#constants_matrix_vector' }
 
-        { include: '#constants'    }
+        { include: '#constants_scilab'  }
         { include: '#keywords'     }
 
         { include: 'source.scilab.version-specific#functions'  }
@@ -131,7 +131,8 @@ repository:
       comment: 'builtin functions & constants'
       patterns: [
         { include: 'source.scilab.version-specific#functions' }
-        { include: '#constants'                       }
+        { include: '#constants_matrix_vector'                 }
+        { include: '#constants_scilab'                        }
       ]
     }
 
@@ -519,11 +520,6 @@ repository:
           match: '\\(|\\)'
           name:  'punctuation.brace.round.scilab'
         }
-        {
-          comment: 'denotes cell arrays'
-          match:   '\\{|\\}'
-          name:    'punctuation.brace.cell.scilab'
-        }
       ]
     }
   # ------------------------------
@@ -550,9 +546,10 @@ repository:
       comment: 'Scilab built-in constants'
       match:  '(?<![\\w%\\$\\?!#\\.])'  +
                 '(?:' +
-                  '%(?:pi|e|eps|i|inf|io|nan|t|T|f|F|s|z)' + # constants which yield values
-                  '|SCI|SCIHOME|TMPDIR|varargin|varargout'         + # other variables
-                  '|(?:\\[\\])'                            + # the empty matrix []
+                  '%(?:pi|e|eps|i|inf|io|nan|t|T|f|F|s|z)'  + # constants which yield values
+                  '|SCI|SCIHOME|TMPDIR|varargin|varargout'  + # other variables
+                  '|(?:\\[\\s*\\])'                         + # the empty matrix []
+                  '|(?:\\{\\s*\\})'                         + # the empty matrix {}
                 ')(?![\\w%\\$\\?!#\\.])'
       name: 'support.constant.scilab'
     }
@@ -563,14 +560,6 @@ repository:
       match: '(?<![\\w%\\$\\?!#\'\"]):(?![\\w%\\$\\?!#\'\"])' + # (:) is only a constant if nothing is written in front or behind
                '|(?<![\\w%\\$\\?!#\'\"\\+\\-\\*\\\\])\\$'       # ($) is only a constant if nothing is written in front
       name : 'support.constant.scilab'
-    }
-
-  constants:
-    {
-      patterns: [
-        { include: '#constants_scilab'        }
-        { include: '#constants_matrix_vector' }
-      ]
     }
 
   # ------------------------------

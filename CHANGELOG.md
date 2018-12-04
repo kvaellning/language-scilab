@@ -1,3 +1,6 @@
+#### 0.11.0
+  - add ``{}`` constant and accept optional whitespace in between
+    
 #### 0.10.0
   - support Scilab 6.0.1 function & constant predefines (may be incomplete)
 
