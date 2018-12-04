@@ -26,6 +26,7 @@ repository:
         }
       ]
     }
+    
   invalid_operator_combinations:
     {
       match: ''
@@ -87,6 +88,79 @@ repository:
                   '(?![\\w%\\$\\?!#\\.])'
           name: 'support.constant.invalid.illegal.scilab'
         }
+      ]
+    }
+    
+  string_single:
+    {
+      comment: 'single quoted strings'
+      
+      begin: '(?<![\\w\\]\\)\\.])\''
+      end: '\'(?!\')'
+      
+      contentName: 'string.quoted.single.scilab'
+      
+      beginCaptures:
+        0:
+          name: 'punctuation.definition.string.begin.scilab'
+      endCaptures:
+        0:
+          name: 'punctuation.definition.string.end.scilab'
+          
+      patterns: [
+        {
+          match: '\'\'|""'
+          name: 'constant.character.escape.scilab'
+        }
+      ]
+    }
+  
+  string_double:
+    {
+      comment: 'double quoted strings'
+      
+      begin: '\"'
+      end: '\"(?!\")'
+      
+      contentName: 'string.quoted.double.scilab'
+      
+      beginCaptures:
+        0:
+          name: 'punctuation.definition.string.begin.scilab'
+      endCaptures:
+        0:
+          name: 'punctuation.definition.string.end.scilab'
+          
+      patterns: [
+        {
+          match: '\'\'|""'
+          name: 'constant.character.escape.scilab'
+        }
+      ]
+    }
+      
+  strings:
+    {
+      patterns: [
+        { include: '#string_single' }
+        { include: '#string_double' }
+        
+        # {
+        #   comment: 'mixed string quotes were allowed in Scilab 5.x'
+        # 
+        #   begin: '\''
+        #   end:   '\"(?!\")'
+        # 
+        #   contentName: 'string.quoted.invalid.illegal.scilab'
+        # }
+        # {
+        #   comment: 'mixed string quotes were allowed in Scilab 5.x'
+        # 
+        #   begin: '\"'
+        #   end:   '\'(?!\')'
+        # 
+        #   contentName: 'string.quoted.invalid.illegal.scilab'
+        # }
       ]
     }
 

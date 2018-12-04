@@ -115,7 +115,8 @@ repository:
 
         { include: '#statement_terminator' }
 
-        { include: '#strings'      }
+        { include: 'source.scilab.version-specific#strings'  }
+        
         { include: '#struct_tlist' }
 
         # {
@@ -616,65 +617,6 @@ repository:
       {  include:  '#keywords_other'            }
       {  include:  '#keywords_global'           }
     ]
-
-  # ------------------------------
-  # strings
-  # ------------------------------
-  string_single:
-    {
-      comment: 'single quoted strings'
-
-      begin: '(?<![\\w\\]\\)\\.])\''
-      end: '\'(?!\')'
-
-      contentName: 'string.quoted.single.scilab'
-
-      beginCaptures:
-        0:
-          name: 'punctuation.definition.string.begin.scilab'
-      endCaptures:
-        0:
-          name: 'punctuation.definition.string.end.scilab'
-
-      patterns: [
-        {
-          match: '\'\'|""'
-          name: 'constant.character.escape.scilab'
-        }
-      ]
-    }
-
-  string_double:
-    {
-      comment: 'double quoted strings'
-
-      begin: '"'
-      end: '"(?!")'
-
-      contentName: 'string.quoted.double.scilab'
-
-      beginCaptures:
-        0:
-          name: 'punctuation.definition.string.begin.scilab'
-      endCaptures:
-        0:
-          name: 'punctuation.definition.string.end.scilab'
-
-      patterns: [
-        {
-          match: '\'\'|""'
-          name: 'constant.character.escape.scilab'
-        }
-      ]
-    }
-
-  strings:
-    {
-      patterns: [
-        { include: '#string_single' }
-        { include: '#string_double' }
-      ]
-    }
 
   # ------------------------------
   # all kinds of invalid stuff

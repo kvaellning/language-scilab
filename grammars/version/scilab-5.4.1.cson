@@ -38,6 +38,32 @@ repository:
       name: 'support.constant.matrix.scilab'
     }
 
+  strings:
+    {
+      begin: '(?<![\\w\\]\\)\\.])(?:(\')|(\"))'
+      end: '(?:(\')|(\"))(?![\'\"])'
+
+      contentName: 'string.quoted.scilab'
+
+      beginCaptures:
+        1:
+          name: 'punctuation.definition.string.single.begin.scilab'
+        2:
+          name: 'punctuation.definition.string.double.begin.scilab'
+      endCaptures:
+        1:
+          name: 'punctuation.definition.string.single.end.scilab'
+        2:
+          name: 'punctuation.definition.string.double.end.scilab'
+
+      patterns: [
+        {
+          match: '\'\'|""'
+          name: 'constant.character.escape.scilab'
+        }
+      ]
+    }
+
   functions:
     {
       patterns: [

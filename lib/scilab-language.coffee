@@ -28,7 +28,7 @@ module.exports =
         else
           @createWhereAmI()
 
-    # ------
+    # -------
     # subscribe to grammar change events
     @subscriptions.add atom.config.onDidChange 'scilab-language.languageVersion', =>
       @setUsedBuiltins()
