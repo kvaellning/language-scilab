@@ -27,6 +27,16 @@ repository:
       match: '&|\\||~'
       name: 'keyword.operator.logical.scilab'
     }
+  
+  constants_empty:
+    {
+      comment: 'empty matrix identififiers'
+      match:  '(?<![\\w%\\$\\?!#\\.])'  +
+                '(?:[\\[\\{]\\s*[\\]\\}])' + # empty matrix [] and {} and mixings
+              '(?![\\w%\\$\\?!#\\.])'
+              
+      name: 'support.constant.matrix.scilab'
+    }
 
   functions:
     {

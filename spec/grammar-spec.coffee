@@ -631,6 +631,39 @@ describe "Scilab grammar", ->
   # it 'checks invalid declaration \"function Foo(\"', ->
   #   tokens = grammar.tokenizeLines('function Foo(')
   #
+
+  it 'checks invalid declaration \"[}\"', ->
+    tokens = grammar.tokenizeLines('[}')
+
+    expect(tokens[0][0].value).toBe '[}'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'support.constant.invalid.illegal.scilab']
+    
+    expect(tokens[0][1]).not.toBeDefined()
+
+  it 'checks invalid declaration \"[   }\"', ->
+    tokens = grammar.tokenizeLines('[   }')
+    
+    expect(tokens[0][0].value).toBe '[   }'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'support.constant.invalid.illegal.scilab']
+    
+    expect(tokens[0][1]).not.toBeDefined()
+
+  it 'checks invalid declaration \"{]\"', ->
+    tokens = grammar.tokenizeLines('{]')
+
+    expect(tokens[0][0].value).toBe '{]'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'support.constant.invalid.illegal.scilab']
+    
+    expect(tokens[0][1]).not.toBeDefined()
+  
+  it 'checks invalid declaration \"{]\"', ->
+    tokens = grammar.tokenizeLines('{   ]')
+
+    expect(tokens[0][0].value).toBe '{   ]'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'support.constant.invalid.illegal.scilab']
+    
+    expect(tokens[0][1]).not.toBeDefined()
+    
    it 'checks assignment \"foo =struct(); //foobar() = 1;\"', ->
     tokens = grammar.tokenizeLines('foo =struct(); //foobar() = 1;')
 
@@ -1360,7 +1393,7 @@ describe "Scilab grammar", ->
     expect(tokens[0][13].scopes).toEqual ['source.scilab']
 
     expect(tokens[0][14].value).toBe '[]'
-    expect(tokens[0][14].scopes).toEqual ['source.scilab', 'support.constant.scilab']
+    expect(tokens[0][14].scopes).toEqual ['source.scilab', 'support.constant.matrix.scilab']
 
     expect(tokens[0][15].value).toBe ';'
     expect(tokens[0][15].scopes).toEqual ['source.scilab', 'punctuation.terminator.scilab']

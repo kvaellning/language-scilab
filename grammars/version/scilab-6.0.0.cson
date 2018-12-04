@@ -61,6 +61,34 @@ repository:
         }
       ]
     }
+  
+  constants_empty:
+    {
+      patterns: [
+        {
+          comment: 'empty matrix identififiers'
+          match:  '(?<![\\w%\\$\\?!#\\.])'  +
+                    '(?:\\[\\s*\\])' +
+                  '(?![\\w%\\$\\?!#\\.])'
+          name: 'support.constant.matrix.scilab'
+        }
+        {
+          comment: 'empty cell identififiers'
+          match:  '(?<![\\w%\\$\\?!#\\.])'  +
+                    '(?:\\{\\s*\\})' + # empty cell {}
+                  '(?![\\w%\\$\\?!#\\.])'
+          name: 'support.constant.cell.scilab'
+        }
+        {
+          comment: 'invalid mixings (allowed in Scilab 5.x)'
+          match:  '(?<![\\w%\\$\\?!#\\.])'  +
+                    '(?:\\[\\s*\\})'  + # matrix begin / cell   end mixing
+                    '|(?:\\{\\s*\\])' + # cell   begin / matrix end mixing
+                  '(?![\\w%\\$\\?!#\\.])'
+          name: 'support.constant.invalid.illegal.scilab'
+        }
+      ]
+    }
 
   # -------------------------------------------------- #
   #  Scilab primitives as stated in scilab_primitives.txt

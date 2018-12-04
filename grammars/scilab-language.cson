@@ -105,10 +105,11 @@ repository:
 
         { include: '#simple_function_call'  }
 
-        { include: '#constants_matrix_vector' }
-
-        { include: '#constants_scilab'  }
-        { include: '#keywords'     }
+        { include: '#constants_matrix_vector'                       }
+        { include: '#constants_scilab'                              }
+        { include: 'source.scilab.version-specific#constants_empty' }
+        
+        { include: '#keywords'  }
 
         { include: 'source.scilab.version-specific#functions'  }
 
@@ -130,9 +131,10 @@ repository:
     {
       comment: 'builtin functions & constants'
       patterns: [
-        { include: 'source.scilab.version-specific#functions' }
-        { include: '#constants_matrix_vector'                 }
-        { include: '#constants_scilab'                        }
+        { include: 'source.scilab.version-specific#functions'       }
+        { include: '#constants_matrix_vector'                       }
+        { include: '#constants_scilab'                              }
+        { include: 'source.scilab.version-specific#constants_empty' }
       ]
     }
 
@@ -548,8 +550,6 @@ repository:
                 '(?:' +
                   '%(?:pi|e|eps|i|inf|io|nan|t|T|f|F|s|z)'  + # constants which yield values
                   '|SCI|SCIHOME|TMPDIR|varargin|varargout'  + # other variables
-                  '|(?:\\[\\s*\\])'                         + # the empty matrix []
-                  '|(?:\\{\\s*\\})'                         + # the empty matrix {}
                 ')(?![\\w%\\$\\?!#\\.])'
       name: 'support.constant.scilab'
     }
