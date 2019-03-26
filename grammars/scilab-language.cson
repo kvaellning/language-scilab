@@ -535,7 +535,7 @@ repository:
               '\\B(?:\\.[0-9]+)'            +  # numbers with leading dot (.) (interpreted as zero starting)
               '|\\b(?:[0-9]+\\.?[0-9]*)'    +  # "normal" numbers with optional dot (.) separator
             ')'  +
-            '(?:(?:E|e)(?:\\+|-)?[0-9]+)?'  +  # optional exponential notation
+            '(?:(?:[EeDd])(?:\\+|-)?[0-9]+)?'  +  # optional exponential notation
             '([a-zA-Z_%\\$\\?!#])?'            # invalid trailing dot
       name: 'constant.numeric.scilab'
       captures:

@@ -1,8 +1,11 @@
+#### 0.12.0
+  - add ``d`` and ``D`` constant for exponential notation
+
 #### 0.11.0
   - add ``{}`` constant and accept optional whitespace in between
   - refine language specific handling of empty matrices / cells (``[]``, ``{}``)
   - refine language specific handling of string quotes (``"``, ``'``)
-  
+
 #### 0.10.0
   - support Scilab 6.0.1 function & constant predefines (may be incomplete)
 
