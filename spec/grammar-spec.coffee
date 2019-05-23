@@ -86,6 +86,39 @@ describe "Scilab grammar", ->
     expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'comment.line.double-slash.scilab']
 
     expect(tokens[0][3]).not.toBeDefined()
+  
+  it 'checks \"function 0_Foöo+()\"', ->
+    tokens = grammar.tokenizeLines('function 0_Foöo+()')
+
+    # function Foo()
+    expect(tokens[0][0].value).toBe 'function'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
+
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[0][2].value).toBe '0'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab', 'invalid.illegal.scilab']
+
+    expect(tokens[0][3].value).toBe '_Fo'
+    expect(tokens[0][3].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
+    
+    expect(tokens[0][4].value).toBe 'ö'
+    expect(tokens[0][4].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab', 'invalid.illegal.scilab']
+
+    expect(tokens[0][5].value).toBe 'o'
+    expect(tokens[0][5].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab']
+
+    expect(tokens[0][6].value).toBe '+'
+    expect(tokens[0][6].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'entity.name.function.scilab', 'invalid.illegal.scilab']
+
+    expect(tokens[0][7].value).toBe '('
+    expect(tokens[0][7].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.definition.parameters.begin.scilab']
+
+    expect(tokens[0][8].value).toBe ')'
+    expect(tokens[0][8].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'meta.function.parameters.scilab', 'punctuation.definition.parameters.end.scilab']
+
+    expect(tokens[0][9]).not.toBeDefined()
 
   it 'checks \"function Foo(foobar)\"', ->
     tokens = grammar.tokenizeLines('function Foo(foobar)')

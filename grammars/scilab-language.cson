@@ -96,7 +96,7 @@ repository:
         { include: '#numbers'           }
 
         { include: 'source.scilab.version-specific#name_too_long'         }
-        { include: '#invalid_signs'         }
+        { include: '#invalid_chars'         }
         { include: '#invalid_operators_all' }
 
         { include: '#operators'   }
@@ -144,9 +144,9 @@ repository:
   function_declaration:
     {
       patterns: [
-
+        
         { include: 'source.scilab.version-specific#scilab_comment'  }
-        { include: '#invalid_signs'   }
+        { include: '#invalid_chars'   }
         { include: 'source.scilab.version-specific#name_too_long'   }
 
         # ----------------
@@ -255,8 +255,15 @@ repository:
             { include: '#continuation_mark' }
 
             {
-              match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+              match: '[a-zA-Z0-9_%\\$\\?!#\\+\\-\\*\\/\\\\][\\w%\\$\\?!#\\+\\-\\*\\/\\\\]*'
               name: 'entity.name.function.scilab'
+              
+              captures:
+                0:
+                  patterns:
+                    [
+                      { include: '#invalid_function_chars' }
+                    ]
             }
           ]
         }
@@ -264,8 +271,15 @@ repository:
         # ----------------
         # function name
         {
-          match: '[a-zA-Z_%\\$\\?!#][\\w%\\$\\?!#]*'
+          match: '[a-zA-Z0-9_%\\$\\?!#\\+\\-\\*\\/\\\\][\\w%\\$\\?!#\\+\\-\\*\\/\\\\]*'
           name: 'entity.name.function.scilab'
+          
+          captures:
+            0:
+              patterns:
+                [
+                  { include: '#invalid_function_chars' }
+                ]
         }
 
         # ----------------
@@ -679,10 +693,24 @@ repository:
       ]
     }
 
-  invalid_signs:
+  invalid_chars:
     {
-      match: '[^\\w!\\?\"\\$%\\&/\\(\\)\\=\\[\\]\\\\+\\-\\*\\^~\'#<>\\|\\s:;,\\.\\{\\}]'
+      match: '[^_a-zA-Z0-9\\!\\?\"\\$%\\&/\\(\\)\\=\\[\\]\\\\+\\-\\*\\^~\'#<>\\|\\s:;,\\.\\{\\}]'
       name: 'invalid.illegal.scilab'
+    }
+    
+  invalid_function_chars:
+    {
+      patterns: [
+        {
+          match: '^[0-9]'
+          name: 'invalid.illegal.scilab'
+        }
+        {
+          match: '[^_a-zA-Z0-9\\!\\?\\$#]'
+          name: 'invalid.illegal.scilab'
+        }
+      ]
     }
 
   # ------------------------------
