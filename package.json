@@ -1,6 +1,6 @@
 {
   "name": "scilab-language",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "Scilab language support in Atom with whereami-compatible line numberings, snippets, built-in functions & constant, and more.",
   "keywords": [
     "scilab",
