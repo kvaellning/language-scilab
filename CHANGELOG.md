@@ -1,3 +1,6 @@
+#### 0.12.1
+  - better handling for comments in function headers
+  
 #### 0.12.0
   - add ``d`` and ``D`` constant for exponential notation
 

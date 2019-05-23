@@ -72,6 +72,21 @@ describe "Scilab grammar", ->
 
     expect(tokens[0][5]).not.toBeDefined()
 
+  it 'checks \"function //Foo()\"', ->
+    tokens = grammar.tokenizeLines('function //Foo()')
+
+    # function Foo()
+    expect(tokens[0][0].value).toBe 'function'
+    expect(tokens[0][0].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'storage.type.function.begin.scilab']
+
+    expect(tokens[0][1].value).toBe ' '
+    expect(tokens[0][1].scopes).toEqual ['source.scilab', 'meta.function.scilab']
+
+    expect(tokens[0][2].value).toBe '//Foo()'
+    expect(tokens[0][2].scopes).toEqual ['source.scilab', 'meta.function.scilab', 'comment.line.double-slash.scilab']
+
+    expect(tokens[0][3]).not.toBeDefined()
+
   it 'checks \"function Foo(foobar)\"', ->
     tokens = grammar.tokenizeLines('function Foo(foobar)')
 
