@@ -4,8 +4,8 @@ module.exports =
 
 class SciViewWhereAmI
   
-  constructor: (@editor, gutterName='whereami-scilab', @configKeyName='scilab-language.whereamiActive') ->
-    if @editor.getGrammar().scopeName.indexOf('source.scilab') == -1
+  constructor: (@editor, @grammarId='source.scilab', @configKeyName='scilab-language.whereamiActive') ->
+    if @editor.getGrammar().scopeName.indexOf(@grammarId) == -1
       return
     
     @subscriptions = new CompositeDisposable()
@@ -13,12 +13,6 @@ class SciViewWhereAmI
     @editorBuffer  = @editor.buffer
 
     @lineNumber = @editor.gutterWithName('line-number')
-    
-    @gutter = @editor.addGutter
-      name:    gutterName
-      visible: false
-
-    @gutter.view = this
 
     @anchors = []
 
@@ -96,8 +90,7 @@ class SciViewWhereAmI
   destroy: () ->
     @subscriptions.dispose()
     @undo()
-    @gutter?.destroy()
-
+    
   # ---------------------------------------------------------
   # Calculates the amount of soft-wrapping
   # ---------------------------------------------------------
@@ -176,8 +169,8 @@ class SciViewWhereAmI
         return unless scopes?.length
 
         if scopes.length == 1
-         @hasScopeInformation = false
-         return
+          @hasScopeInformation = false
+          return
 
         @hasScopeInformation = true
 
@@ -214,9 +207,12 @@ class SciViewWhereAmI
   # Update the line numbers on the editor
   # ---------------------------------------------------------
   updateGutter: () =>
-    if !@isActive | !@hasScopeInformation | @editor.isDestroyed()
+    if !@isActive | @editor.isDestroyed()
       return
-
+    
+    if !@hasScopeInformation
+      @updateAnchors()
+    
     # If the gutter is updated asynchronously, we need to do the same thing
     # otherwise our changes will just get reverted back.
     if @editorView.isUpdatedSynchronously()
@@ -233,6 +229,10 @@ class SciViewWhereAmI
   # @returns  new offset
   # ---------------------------------------------------------
   updateGutterLine: (lineNumberElement) =>
+    # check if the pane has the right grammar
+    if @editor.getGrammar().scopeName.indexOf(@grammarId) == -1
+      return
+    
     # convert to number
     # The row is used to determine the new line number
     row = lineNumberElement.getAttribute('data-buffer-row') * 1
@@ -241,14 +241,13 @@ class SciViewWhereAmI
       return
 
     if isFinite(lineNumberElement.innerText) # check finite of text. If not finite, then a soft wrap linebreak occured.
-      whereami  = @lineNumberFromAnchor(row)
-      applyStyle = true
+      whereami    = @lineNumberFromAnchor(row)
+      applyStyle  = whereami > -1
 
       # leave unchanged if not inside a function-region
       if whereami == -1
         if @updateWholeGutter
           whereami   = row
-          applyStyle = false
         else
           return
 

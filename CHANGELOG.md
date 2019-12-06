@@ -1,3 +1,6 @@
+#### 0.13.1
+  - fix an exception for deleted gutters on grammar change
+
 #### 0.13.0
   - better handling for comments in function headers
   - better check for invalid characters in function names
